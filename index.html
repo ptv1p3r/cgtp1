@@ -87,6 +87,7 @@
 
         //CAMERA CONTROL
         controls = new THREE.OrbitControls(camera);
+
         //controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.maxDistance = DISTANCIA_MAX;
         controls.minDistance = DISTANCIA_MIN;
@@ -106,6 +107,7 @@
         window.addEventListener( 'resize', onWindowResize, false );
 
     }
+
 
     /**
      * Metodo que é chamado a cada frame
