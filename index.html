@@ -135,7 +135,7 @@
 
         //CAMERA
         camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-        camera.position.set(0, -170, 5);
+        camera.position.set(0, -180, 1);
         //camera.lookAt(scene.position);
 
 
@@ -187,6 +187,8 @@
 
     function createEarth() {
         var geometry = new THREE.PlaneBufferGeometry(1000,1000,1);
+
+        scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
 
         //var material = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
         material = new THREE.MeshBasicMaterial();
