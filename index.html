@@ -135,8 +135,8 @@
 
         //CAMERA
         camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-        camera.position.set(0, 100, DISTANCIA_MAX);
-        camera.lookAt(scene.position);
+        camera.position.set(0, -170, 5);
+        //camera.lookAt(scene.position);
 
 
         //RENDERER
@@ -175,7 +175,7 @@
         requestAnimationFrame(animate);
 
         if (earthMesh != undefined) {
-            earthMesh.rotation.y = Date.now() * TERRA_ROTACAO_VELOCIDADE;
+            //earthMesh.rotation.y = Date.now() * TERRA_ROTACAO_VELOCIDADE;
             //cloudMesh.rotation.y = Date.now() * NUVENS_ROTACAO_VELOCIDADE;
 
             controls.update();
@@ -186,10 +186,10 @@
     }
 
     function createEarth() {
-        var geometry = new THREE.PlaneBufferGeometry(500,500,1);
+        var geometry = new THREE.PlaneBufferGeometry(1000,1000,1);
 
         //var material = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
-        material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide});
+        material = new THREE.MeshBasicMaterial();
         material.map = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');            // Diffuse Texture
 
         material.bumpMap = THREE.ImageUtils.loadTexture('images/earthbump4k.jpg');       // Bump Texture
