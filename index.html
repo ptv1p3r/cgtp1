@@ -158,7 +158,7 @@
 
         createEarth();
 
-        createEarthClouds();
+        //createEarthClouds();
 
         createSkyBox();
 
@@ -176,7 +176,7 @@
 
         if (earthMesh != undefined) {
             earthMesh.rotation.y = Date.now() * TERRA_ROTACAO_VELOCIDADE;
-            cloudMesh.rotation.y = Date.now() * NUVENS_ROTACAO_VELOCIDADE;
+            //cloudMesh.rotation.y = Date.now() * NUVENS_ROTACAO_VELOCIDADE;
 
             controls.update();
 
@@ -186,10 +186,10 @@
     }
 
     function createEarth() {
-        var geometry = new THREE.SphereGeometry(175,32,32);
+        var geometry = new THREE.PlaneBufferGeometry(500,500,1);
 
         //var material = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
-        material = new THREE.MeshPhongMaterial();
+        material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide});
         material.map = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');            // Diffuse Texture
 
         material.bumpMap = THREE.ImageUtils.loadTexture('images/earthbump4k.jpg');       // Bump Texture
