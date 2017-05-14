@@ -14,51 +14,53 @@
 <!--</div>-->
 
 <!--<div id="gameDiv" style="display: none">-->
-    <!--<table id ="headerBox" >-->
-        <!--<tbody>-->
-        <!--<tr>-->
-            <!--<td>World@War Server Player's:</td>-->
-            <!--<td><div id="playersCount"></div></td>-->
-            <!--<td>Server Time:</td>-->
-            <!--<td><div id="serverTime"></div></td>-->
-            <!--<td>Balance:</td>-->
-            <!--<td><div id="playerBalance"></div></td>-->
-            <!--<td>Influence:0</td>-->
-            <!--<td>Settings</td>-->
-            <!--<td><button id="logOut">Logout</button></td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-    <!--</table>-->
+<div id="gameDiv">
+    <table id ="headerBox" >
+        <tbody>
+        <tr>
+            <td>World@War Server Player's:</td>
+            <td><div id="playersCount"></div></td>
+            <td>Server Time:</td>
+            <td><div id="serverTime"></div></td>
+            <td>Balance:</td>
+            <td><div id="playerBalance"></div></td>
+            <td>Influence:0</td>
+            <td>Settings</td>
+            <td><button id="logOut">Logout</button></td>
+        </tr>
+        </tbody>
+    </table>
     <!--<canvas id ="myCanvas" style="display: none"></canvas>-->
-    <!--<table id ="footerBox" >-->
-        <!--<tbody>-->
-        <!--<tr>-->
-            <!--<td>1</td>-->
-            <!--<td>2</td>-->
-            <!--<td>3</td>-->
-            <!--<td>4</td>-->
-            <!--<td>5</td>-->
-            <!--<td>6</td>-->
-            <!--<td>7</td>-->
-            <!--<td>8</td>-->
-            <!--<td>9</td>-->
-            <!--<td>10</td>-->
-        <!--</tr>-->
-        <!--<tr>-->
-            <!--<td>1</td>-->
-            <!--<td>2</td>-->
-            <!--<td>3</td>-->
-            <!--<td>4</td>-->
-            <!--<td>5</td>-->
-            <!--<td>6</td>-->
-            <!--<td>7</td>-->
-            <!--<td>New Messages:</td>-->
-            <!--<td>Messages</td>-->
-            <!--<td>friends online:</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-    <!--</table>-->
-<!--</div>-->
+    <canvas id ="myCanvas"></canvas>
+    <table id ="footerBox" >
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>New Messages:</td>
+            <td>Messages</td>
+            <td>friends online:</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <!--<div id="pnlPlayerInfo" style="display: none">-->
     <!--<fieldset>-->
@@ -80,7 +82,7 @@
     <!--</form>-->
 <!--</div>-->
 
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<!--<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>-->
 <script src="js/three.js"></script>
 <script src="js/date.format.js"></script>
 <script src="js/OrbitControls.js"></script>
@@ -92,17 +94,17 @@
     var signDiv = document.getElementById('signDiv');
     var gameDiv = document.getElementById('gameDiv');
     var myCanvas = document.getElementById('myCanvas');
-    var btnLogout = document.getElementById('logOut');
-    var btnCityLights = document.getElementById('cityLights');
-    var signDivUsername = document.getElementById('signDiv-username');
-    var signDivSignIn = document.getElementById('signDiv-signIn');
-    var signDivSignUp = document.getElementById('signDiv-signUp');
-    var signDivPassword = document.getElementById('signDiv-password');
-
-    var pnlChat = document.getElementById('pnlChat');
-    var pnlChatText = document.getElementById('Chat-Text');
-    var pnlChatForm = document.getElementById('Chat-Form');
-    var pnlChatInput= document.getElementById('Chat-Input');
+//    var btnLogout = document.getElementById('logOut');
+//    var btnCityLights = document.getElementById('cityLights');
+//    var signDivUsername = document.getElementById('signDiv-username');
+//    var signDivSignIn = document.getElementById('signDiv-signIn');
+//    var signDivSignUp = document.getElementById('signDiv-signUp');
+//    var signDivPassword = document.getElementById('signDiv-password');
+//
+//    var pnlChat = document.getElementById('pnlChat');
+//    var pnlChatText = document.getElementById('Chat-Text');
+//    var pnlChatForm = document.getElementById('Chat-Form');
+//    var pnlChatInput= document.getElementById('Chat-Input');
 
 //    class Player {
 //        constructor(id,name,user,countryid,balance,gpspositionsid){
@@ -159,7 +161,7 @@
 //        bolCityLightsON = !bolCityLightsON;
 //
 //        //cloudMesh.material.needsUpdate = true;
-//        earthMesh.material.needsUpdate = true;
+        earthMesh.material.needsUpdate = true;
 //    };
 //
 //    initChat();
@@ -187,7 +189,7 @@
 //            alert("Sign up unsuccessul.");
 //    });
 //
-//    animate();
+    //animate();
 //
 //    socket.on("serverStatus", function (data) {
 //        document.getElementById('playersCount').innerHTML = data.playerCount;
@@ -218,11 +220,11 @@
 
 
         //RENDERER
-//        renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
-//        renderer.setClearColor(0x000000);
-//        renderer.setPixelRatio(window.devicePixelRatio);
-//        renderer.setSize(WIDTH, HEIGHT);
-//        document.body.appendChild(renderer.domElement);
+        renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
+        renderer.setClearColor(0x000000);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(WIDTH, HEIGHT);
+        document.body.appendChild(renderer.domElement);
 
         //CAMERA CONTROL
         controls = new THREE.OrbitControls(camera);
@@ -246,9 +248,9 @@
 
         createSkyBox();
 
-        //animate();
+        animate();
 
-        //window.addEventListener( 'resize', onWindowResize, false );
+        window.addEventListener( 'resize', onWindowResize, false );
 
     }
 
