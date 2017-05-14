@@ -42,12 +42,13 @@
         HEIGHT = window.innerHeight,
         VIEW_ANGLE = 45,
         ASPECT = WIDTH / HEIGHT,
-        NEAR = 0.1,
+        NEAR = 1,
         FAR = 10000,
         DISTANCIA_MAX = 1000,
-        DISTANCIA_MIN = 500;
+        DISTANCIA_MIN = 0;
 
-    var scene, renderer, camera, controls, cloudMesh, earthMesh, material, bolCityLightsON=false;
+
+    var scene, renderer, camera, controls, cloudMesh, floorMesh, material, bolCityLightsON=false;
 //
 //    btnCityLights.onclick = function(){
 //        if (bolCityLightsON){
@@ -74,7 +75,7 @@
 
         //CAMERA
         camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-        camera.position.set(0, -180, 1);
+        camera.position.z = 1.8;
         //camera.lookAt(scene.position);
 
 
@@ -96,26 +97,40 @@
         var light = new THREE.AmbientLight(0xffffff, 1.0);
         scene.add(light);
 
-        createEarth();
+        createFloor();
 
         //createEarthClouds();
 
-        createSkyBox();
+        //createSkyBox();
 
         animate();
 
         window.addEventListener( 'resize', onWindowResize, false );
 
+        document.addEventListener('keydown', keyboard, false)
+
     }
 
 
+    function keyboard() {
+
+        var speed = 10;
+
+        if (event.keyCode == 87) {
+            camera.position.x += speed;
+
+        } else if (event.keyCode == 83) {
+            camera.position.x -= speed;
+        }
+    }
+    
     /**
      * Metodo que é chamado a cada frame
      */
     function animate() {
         requestAnimationFrame(animate);
 
-        if (earthMesh != undefined) {
+        if (floorMesh != undefined) {
             //earthMesh.rotation.y = Date.now() * TERRA_ROTACAO_VELOCIDADE;
             //cloudMesh.rotation.y = Date.now() * NUVENS_ROTACAO_VELOCIDADE;
 
@@ -126,11 +141,11 @@
 
     }
 
-    function createEarth() {
-        var geometry = new THREE.PlaneBufferGeometry(1000,1000,1);
+    function createFloor() {
+        var geometry = new THREE.PlaneGeometry(1000,1000);
 
         scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
-//
+
         //var material = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
         material = new THREE.MeshBasicMaterial();
         material.map = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');            // Diffuse Texture
@@ -139,8 +154,18 @@
         material.bumpScale = 0.05;
         material.specularMap = THREE.ImageUtils.loadTexture('images/earthspec4k.jpg');   // Spectacular Texture
         material.specular = new THREE.Color('grey');
-        earthMesh = new THREE.Mesh(geometry, material);
-        scene.add(earthMesh);
+
+
+        floorMesh = new THREE.Mesh(geometry, material);
+
+        floorMesh.position.x = 500;
+        floorMesh.position.y = -1.8;
+        floorMesh.position.z = -500;
+
+
+        floorMesh.rotation.x = -Math.PI/2;  // deita a mesh
+
+        scene.add(floorMesh);
     }
 
     function createEarthClouds() {
