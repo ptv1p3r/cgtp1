@@ -54,15 +54,6 @@
     </table>
 </div>
 
-<!--<div id="pnlPlayerInfo" style="display: none">-->
-    <!--<fieldset>-->
-        <!--<legend>Personal info:</legend>-->
-        <!--Name:  <div id="playerName"></div><br>-->
-        <!--Country: <select id="countries"></select><br><br>-->
-        <!--Current location: <div id="playerLocation"></div><br>-->
-        <!--<button id="cityLights">City Lights</button><br>-->
-    <!--</fieldset>-->
-<!--</div>-->
 <script src="js/three.js"></script>
 <script src="js/date.format.js"></script>
 <script src="js/OrbitControls.js"></script>
@@ -70,8 +61,6 @@
 <script>
     var gameDiv = document.getElementById('gameDiv');
     var myCanvas = document.getElementById('myCanvas');
-//    var btnLogout = document.getElementById('logOut');
-//    var btnCityLights = document.getElementById('cityLights');
 
 //    class Player {
 //        constructor(id,name,user,countryid,balance,gpspositionsid){
@@ -91,24 +80,9 @@
         NEAR = 0.1,
         FAR = 10000,
         DISTANCIA_MAX = 1000,
-        DISTANCIA_MIN = 500,
-        TERRA_ROTACAO_VELOCIDADE = -0.00001,
-        NUVENS_ROTACAO_VELOCIDADE = -0.00001;
+        DISTANCIA_MIN = 500;
 
     var scene, renderer, camera, controls, cloudMesh, earthMesh, material, bolCityLightsON=false;
-    var playerLoggedIn = false, playersMesh, gpsPositionsList = {}, playerProfile;
-
-
-//
-//    btnLogout.onclick = function(){
-//        playerLoggedIn = false;
-//        signDiv.style.display = 'block';
-//        gameDiv.style.display = 'none';
-//        myCanvas.style.display = 'none';
-//        pnlPlayerInfo.style.display = 'none';
-//        socket.disconnect();
-//        document.location.reload(true); //reload da pagina
-//    };
 //
 //    btnCityLights.onclick = function(){
 //        if (bolCityLightsON){
@@ -226,61 +200,6 @@
         scene.add(skyBoxMesh);
     }
 
-//    function createPlayerPositions(playersList) {
-//        var geom = new THREE.Geometry();
-//        var position;
-//
-//        //var geom = new THREE.SphereGeometry(180,32,32);
-//        //var cubeMat = new THREE.MeshLambertMaterial({color: 0x000000,opacity:0.6, emissive:0xffffff});
-//        var cubeMat = new THREE.MeshLambertMaterial({color: "red",opacity:0.6});
-//
-//        for (var i= 0; i < playersList.player.length; i++){ // percorre todos os players
-//
-//            for (var g=0; g < gpsPositionsList.length; g++) { // percorre todos os pontos
-//
-//                if(playersList.player[i].gpspositionsid == gpsPositionsList[g].id){ // relacao player ponto gps
-//                    position = latLongToVector3(gpsPositionsList[g].lat, gpsPositionsList[g].lon, 175);
-//
-//                    // cria o marcador
-//                    var cube = new THREE.Mesh(new THREE.CubeGeometry(5,5,1+300/8,1,1,1,cubeMat));
-//
-//                    // posiciona o marcador
-//                    cube.position.set(position.x,position.y,position.z);
-//                    cube.lookAt( new THREE.Vector3(0,0,0) );
-//
-//                    // merge dos marcadores com a mesh pai
-//                    //THREE.GeometryUtils.merge(geom,cube);
-//                    cube.updateMatrix();
-//                    geom.merge(cube.geometry,cube.matrix);
-//                }
-//            }
-//        }
-//
-//        playersMesh = new THREE.Mesh(geom,cubeMat); // cria player mesh
-//        playersMesh.name = 'playersMesh'; // nome para a mesh
-//
-//        earthMesh.add(playersMesh); // adiciona a mesh player à mesh terra
-//    }
-//
-//    function createPlayer(){
-//        socket.on("playerProfile", function (player) {
-//            playerProfile = new Player(player.id,player.name,player.user,player.countryid,player.balance,player.gpspositionsid);
-//
-//            document.getElementById('playerName').innerHTML = playerProfile.name;
-//            document.getElementById('playerBalance').innerHTML = playerProfile.balance;
-//        });
-//
-//    }
-//
-//    function getPlayerLocation(playerGpsPoint){
-//
-//        for (var i=0; i < gpsPositionsList.length; i++) { // percorre todos os pontos
-//            if(playerGpsPoint == gpsPositionsList[i].id){
-//                return gpsPositionsList[i].name;
-//            }
-//        }
-//    }
-
     /**
      * Metodo que efetua o render da scene e camera
      */
@@ -297,81 +216,6 @@
         renderer.setSize( window.innerWidth, window.innerHeight );
         render();
     }
-
-//
-//    function createLabel(id, name, text, x, y, object){
-//        var label;
-//
-//        if(object==null){
-//            label = document.createElement('div');
-//        } else {
-//            label=object;
-//        }
-//
-//        //label = document.createElement('div');
-//        label.style.position = 'absolute';
-//        label.name = name;
-//        label.id = id;
-//        label.style.width = 100;
-//        label.style.height = 100;
-//        label.style.backgroundColor = "transparent";
-//        label.style.color ="white";
-//        label.innerHTML = text;
-//        label.style.top = x + 'px';
-//        label.style.left = y + 'px';
-//
-//        document.body.appendChild(label);
-//    }
-//
-//    function createInputField(id, x, y) {
-//        var field = document.createElement("INPUT");
-//        field.setAttribute("type", "text");
-//        field.style.position = 'absolute';
-//        field.style.top = x + 'px';
-//        field.style.left = y + 'px';
-//        field.id = id;
-//
-//        document.body.appendChild(field);
-//    }
-//
-//    function createComboBox(id) {
-//        var combo_box = document.createElement('select');
-//        combo_box.name = id;
-//        combo_box.id = id;
-//        combo_box.style.top = '0px';
-//        combo_box.style.left = '0px';
-//
-//        var choice = document.createElement('option');
-//        choice.value = '1';
-//        choice.appendChild(document.createTextNode('EU - Europe'));
-//        combo_box.appendChild(choice);
-//
-//        choice = document.createElement('option');
-//        choice.value = '2';
-//        choice.appendChild(document.createTextNode('AF - Africa'));
-//        combo_box.appendChild(choice);
-//
-//        choice = document.createElement('option');
-//        choice.value = '3';
-//        choice.appendChild(document.createTextNode('AU - Australia'));
-//
-//        combo_box.appendChild(choice);
-//        document.body.appendChild(combo_box);
-//    }
-//
-//    function createButton(id, title, x, y, data) {
-//        var btn = document.createElement("button");
-//        var t = document.createTextNode(title);
-//        btn.appendChild(t);
-//        btn.id = id;
-//        btn.style.position = 'absolute';
-//        btn.style.top = x + 'px';
-//        btn.style.left = y + 'px';
-//        btn.onclick = data;
-//
-//        document.body.appendChild(btn);
-//    }
-
 
 </script>
 </body>
