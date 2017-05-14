@@ -2,19 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>World@war pré-alpha</title>
+    <title>Computação Gráfica ISMAT 2017 TP1</title>
     <!--<link rel="stylesheet" href="css/world@war.css">-->
 </head>
 <body>
-<!--<div id="signDiv">-->
-    <!--Username: <input id="signDiv-username" type="text"></input><br>-->
-    <!--Password: <input id="signDiv-password" type="password"></input>-->
-    <!--<button id="signDiv-signIn">Sign In</button>-->
-    <!--<button id="signDiv-signUp">Sign Up</button>-->
-<!--</div>-->
 
-<!--<div id="gameDiv" style="display: none">-->
-<div id="gameDiv">
+<div id="gameDiv" style="display: block">
     <table id ="headerBox" >
         <tbody>
         <tr>
@@ -30,8 +23,7 @@
         </tr>
         </tbody>
     </table>
-    <!--<canvas id ="myCanvas" style="display: none"></canvas>-->
-    <canvas id ="myCanvas"></canvas>
+    <canvas id ="myCanvas" style="display: block"></canvas>
     <table id ="footerBox" >
         <tbody>
         <tr>
@@ -71,40 +63,15 @@
         <!--<button id="cityLights">City Lights</button><br>-->
     <!--</fieldset>-->
 <!--</div>-->
-
-<!--<div id="pnlChat" style="display: none">-->
-    <!--<div id="Chat-TextHeader">World@War chat server :</div>-->
-    <!--<div id="Chat-Text">-->
-        <!--<div>Welcome to World@War</div>-->
-    <!--</div>-->
-    <!--<form id="Chat-Form">-->
-        <!--<input id="Chat-Input" type="text">-->
-    <!--</form>-->
-<!--</div>-->
-
-<!--<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>-->
 <script src="js/three.js"></script>
 <script src="js/date.format.js"></script>
 <script src="js/OrbitControls.js"></script>
 
 <script>
-    var pnlPlayerInfo = document.getElementById("pnlPlayerInfo");
-    var playerName = document.getElementById("playerName");
-    var playerBalance = document.getElementById("playerBalance");
-    var signDiv = document.getElementById('signDiv');
     var gameDiv = document.getElementById('gameDiv');
     var myCanvas = document.getElementById('myCanvas');
 //    var btnLogout = document.getElementById('logOut');
 //    var btnCityLights = document.getElementById('cityLights');
-//    var signDivUsername = document.getElementById('signDiv-username');
-//    var signDivSignIn = document.getElementById('signDiv-signIn');
-//    var signDivSignUp = document.getElementById('signDiv-signUp');
-//    var signDivPassword = document.getElementById('signDiv-password');
-//
-//    var pnlChat = document.getElementById('pnlChat');
-//    var pnlChatText = document.getElementById('Chat-Text');
-//    var pnlChatForm = document.getElementById('Chat-Form');
-//    var pnlChatInput= document.getElementById('Chat-Input');
 
 //    class Player {
 //        constructor(id,name,user,countryid,balance,gpspositionsid){
@@ -131,15 +98,7 @@
     var scene, renderer, camera, controls, cloudMesh, earthMesh, material, bolCityLightsON=false;
     var playerLoggedIn = false, playersMesh, gpsPositionsList = {}, playerProfile;
 
-//    socket = io(); // inicia conecao pelo socket
-//
-//    signDivSignIn.onclick = function(){
-//        socket.emit('signIn',{username:signDivUsername.value,password:signDivPassword.value});
-//    };
-//
-//    signDivSignUp.onclick = function(){
-//        socket.emit('signUp',{username:signDivUsername.value,password:signDivPassword.value});
-//    };
+
 //
 //    btnLogout.onclick = function(){
 //        playerLoggedIn = false;
@@ -164,45 +123,6 @@
         //earthMesh.material.needsUpdate = true;
 //    };
 //
-//    initChat();
-//
-//    socket.on('signInResponse',function(data){
-//        if(data.success){
-//            playerLoggedIn = true;
-//
-//            signDiv.style.display = 'none';
-//            gameDiv.style.display = 'block';
-//            myCanvas.style.display = 'block';
-//            pnlPlayerInfo.style.display = 'block';
-//            pnlChat.style.display = 'block';
-//
-//            init();
-//
-//        } else
-//            alert("Sign in unsuccessul.");
-//    });
-//
-//    socket.on('signUpResponse',function(data){
-//        if(data.success){
-//            alert("Sign up successul.");
-//        } else
-//            alert("Sign up unsuccessul.");
-//    });
-//
-    //animate();
-//
-//    socket.on("serverStatus", function (data) {
-//        document.getElementById('playersCount').innerHTML = data.playerCount;
-//        document.getElementById('serverTime').innerHTML = dateFormat(data.timestamp,'yyyy-mm-dd HH:MM:ss') ;
-//    });
-//
-//    socket.on("playersList", function (data) {
-//        if (earthMesh != undefined) {
-//            earthMesh.remove(earthMesh.getObjectByName('playersMesh'));
-//            createPlayerPositions(data);
-//            document.getElementById('playerLocation').innerHTML = getPlayerLocation(playerProfile.gpspositionsid);
-//        }
-//    });
 
     init();
 
@@ -236,12 +156,6 @@
         var light = new THREE.AmbientLight(0xffffff, 1.0);
         scene.add(light);
 
-        //createGpsPositions();
-
-        //createPlayer();
-
-        //createCountries();
-
         createEarth();
 
         createEarthClouds();
@@ -270,65 +184,6 @@
         }
 
     }
-
-    /**
-     * Metodo de inicializacao do Chat
-     */
-//    function initChat(){
-//        socket.on('addToChat',function(data){ // Recebe do servidor mensagem
-//            pnlChatText.innerHTML += "<div>" + data + "</div>";
-//        });
-//
-//        pnlChat.onmouseover = function () { // desligar os orbitcontrols no elemento html
-//            controls.enabled =false;
-//        };
-//
-//        pnlChat.onmouseout = function () { // ligar os orbitcontrols no elemento html
-//            controls.enabled =true;
-//        };
-//
-//        pnlChatForm.onsubmit = function (e) { // evento de envio para o servidor
-//            e.preventDefault(); // para nao fazer refresh da pagina com o enter
-//            socket.emit('senChatMsgToServer',{ // envia para o servidor
-//                user : playerProfile.user,
-//                msg  : pnlChatInput.value
-//            });
-//            pnlChatInput.value = ''; // limpa no final
-//        };
-//    }
-//
-//    function createGpsPositions(){
-//        socket.on("gpsPositionsList", function (data) {
-//            gpsPositionsList = data.gpspoints;
-//        });
-//    }
-//
-//    function createCountries(){
-//        var countries = document.getElementById("countries");
-//        socket.on("countriesList", function (data) {
-//            for(var i = 0; i < data.country.length; i++) {
-//                var opt = data.country[i];
-//                var el = document.createElement("option");
-//                el.textContent = opt.name;
-//                el.name = opt.id;
-//                el.value = opt.id;
-//
-//                if (opt.id==playerProfile.countryid){ // seleciona o pais do player
-//                    el.selected = true;
-//                }
-//                countries.appendChild(el);
-//            }
-//
-//        });
-//
-//        countries.onmouseover = function () { // desligar os orbitcontrols no elemento html
-//            controls.enabled =false;
-//        };
-//        countries.onmouseout = function () { // ligar os orbitcontrols no elemento html
-//            controls.enabled =true;
-//        }
-//
-//    }
 
     function createEarth() {
         var geometry = new THREE.SphereGeometry(175,32,32);
@@ -514,25 +369,6 @@
 //        document.body.appendChild(btn);
 //    }
 
-    /**
-     * Metodo que converte posicoes latitude e longitude para posicoes em um esfera
-     */
-//    function latLongToVector3(lat, lon, radius) {
-//       // var phi = (lat)*Math.PI/180;
-//       // var theta = (lon-180)*Math.PI/180;
-//     /*
-//        var x = -(radius+heigth) * Math.cos(phi) * Math.cos(theta);
-//        var y = (radius+heigth) * Math.sin(phi);
-//        var z = (radius+heigth) * Math.cos(phi) * Math.sin(theta);*/
-//
-//        var phi   = (90-lat)*(Math.PI/180);
-//        var theta = (lon+180)*(Math.PI/180);
-//        var x = -((radius ) * Math.sin(phi)*Math.cos(theta));
-//        var z = ((radius ) * Math.sin(phi)*Math.sin(theta));
-//        var y = ((radius ) * Math.cos(phi));
-//
-//        return new THREE.Vector3(x,y,z);
-//    }
 
 </script>
 </body>
