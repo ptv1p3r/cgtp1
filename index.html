@@ -7,17 +7,7 @@
 </head>
 <body>
 
-<div id="gameDiv" style="display: block">
-    <table id ="headerBox" >
-        <tbody>
-        </tbody>
-    </table>
-    <canvas id ="myCanvas" style="display: block"></canvas>
-    <table id ="footerBox" >
-        <tbody>
-        </tbody>
-    </table>
-</div>
+<canvas id ="myCanvas" style="display: block"></canvas>
 
 <script src="js/three.js"></script>
 <script src="js/date.format.js"></script>
@@ -26,17 +16,6 @@
 <script>
     var gameDiv = document.getElementById('gameDiv');
     var myCanvas = document.getElementById('myCanvas');
-
-//    class Player {
-//        constructor(id,name,user,countryid,balance,gpspositionsid){
-//            this.id             = id;
-//            this.name           = name;
-//            this.user           = user;
-//            this.countryid      = countryid;
-//            this.balance        = balance;
-//            this.gpspositionsid = gpspositionsid;
-//        };
-//    }
 
     var WIDTH = window.innerWidth,
         HEIGHT = window.innerHeight,
@@ -47,70 +26,106 @@
         DISTANCIA_MAX = 1000,
         DISTANCIA_MIN = 0;
 
+    var scene, renderer, camera, controls, cloudMesh, floorMesh, material;
 
-    var scene, renderer, camera, controls, cloudMesh, floorMesh, material, bolCityLightsON=false;
-//
-//    btnCityLights.onclick = function(){
-//        if (bolCityLightsON){
-//            earthMesh.material.map = THREE.ImageUtils.loadTexture('images/earthlights1k.jpg');
-//        } else {
-//            earthMesh.material.map = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');
-//        }
-//
-//        bolCityLightsON = !bolCityLightsON;
-//
-//        //cloudMesh.material.needsUpdate = true;
-        //earthMesh.material.needsUpdate = true;
-//    };
-//
+    class Obj{
+        constructor(){}
+    }
 
-    init();
+    class Cube extends Obj{
+        constructor(size,position){
+            super();
+            this.geometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
+            this.material = new THREE.MeshBasicMaterial();
+            this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-    /**
-     * Metodo que inicia a cena
-     */
-    function init(){
-        //SCENE
-        scene = new THREE.Scene();
+            this.mesh.position.x = position.x;
+            this.mesh.position.y = position.y;
+            this.mesh.position.z = position.z;
+        }
 
-        //CAMERA
-        camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-        camera.position.z = 1.8;
-        //camera.lookAt(scene.position);
+        update(){
+            this.mesh.rotation.x += 0.1;
+            this.mesh.rotation.y += 0.1;
+        }
+
+        getMesh(){
+            return this.mesh;
+        }
+    }
+
+    class Aplication{
+        constructor() {
+            this.objects = [];
+
+            this.createScene();
+        }
+
+        createScene() {
+            //SCENE
+            scene = new THREE.Scene();
+
+            //CAMERA
+            camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+            camera.position.z = 1.8;
+            //camera.lookAt(scene.position);
 
 
-        //RENDERER
-        renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
-        renderer.setClearColor(0x000000);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(WIDTH, HEIGHT);
-        document.body.appendChild(renderer.domElement);
+            //RENDERER
+            renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
+            renderer.setClearColor(0x000000);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(WIDTH, HEIGHT);
+            document.body.appendChild(renderer.domElement);
 
-        //CAMERA CONTROL
-        controls = new THREE.OrbitControls(camera);
+            //CAMERA CONTROL
+            controls = new THREE.OrbitControls(camera);
 
-        //controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.maxDistance = DISTANCIA_MAX;
-        controls.minDistance = DISTANCIA_MIN;
+            //controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.maxDistance = DISTANCIA_MAX;
+            controls.minDistance = DISTANCIA_MIN;
 
-        //LIGHTS
-        var light = new THREE.AmbientLight(0xffffff, 1.0);
-        scene.add(light);
+            //LIGHTS
+            var light = new THREE.AmbientLight(0xffffff, 1.0);
+            scene.add(light);
 
-        createFloor();
+            createFloor();
 
-        //createEarthClouds();
+            window.addEventListener( 'resize', onWindowResize, false );
 
-        //createSkyBox();
+            document.addEventListener('keydown', keyboard, false);
 
-        animate();
+            this.render();
+        }
 
-        window.addEventListener( 'resize', onWindowResize, false );
+        render(){
+            requestAnimationFrame(() => {
+                this.render();
+            });
 
-        document.addEventListener('keydown', keyboard, false)
+            renderer.render(scene, camera);
+        }
+
+        add(mesh) {
+            if (Array.isArray(mesh)) {
+                for (var index in mesh) {
+                    this.objects.push(mesh[index]);
+                    scene.add(mesh[index].getMesh());
+                }
+            } else {
+                this.objects.push(mesh);
+                scene.add(mesh.getMesh());
+            }
+        }
 
     }
 
+    let app = new Aplication();
+
+    let objs = [
+        new Cube({with: 4, height: 5, depth:10},{x:5,y:4,z:-2})
+    ];
+    app.add(objs);
 
     function keyboard() {
 
@@ -122,23 +137,6 @@
         } else if (event.keyCode == 83) {
             camera.position.x -= speed;
         }
-    }
-    
-    /**
-     * Metodo que é chamado a cada frame
-     */
-    function animate() {
-        requestAnimationFrame(animate);
-
-        if (floorMesh != undefined) {
-            //earthMesh.rotation.y = Date.now() * TERRA_ROTACAO_VELOCIDADE;
-            //cloudMesh.rotation.y = Date.now() * NUVENS_ROTACAO_VELOCIDADE;
-
-            controls.update();
-
-            render();
-        }
-
     }
 
     function createFloor() {
@@ -190,13 +188,6 @@
         });
         var skyBoxMesh  = new THREE.Mesh(geometry2, material2); // cria mesh com geometria e material
         scene.add(skyBoxMesh);
-    }
-
-    /**
-     * Metodo que efetua o render da scene e camera
-     */
-    function render() {
-        renderer.render(scene, camera);
     }
 
     /**
