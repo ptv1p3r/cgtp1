@@ -139,9 +139,8 @@
             //controls.minDistance = DISTANCIA_MIN;
 
             controls = new THREE.FirstPersonControls( camera );
-            controls.movementSpeed = 1000;
             controls.lookSpeed = 0.125;
-            controls.lookVertical = false;
+            controls.lookVertical = true;
 
             //LIGHTS
             var light = new THREE.AmbientLight(0xffffff, 1.0);
