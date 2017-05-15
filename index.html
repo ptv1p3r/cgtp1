@@ -25,7 +25,8 @@
         NEAR = 1,
         FAR = 10000,
         DISTANCIA_MAX = 1000,
-        DISTANCIA_MIN = 0;
+        DISTANCIA_MIN = 0,
+        SPEED = 200;
 
     var scene, renderer, camera, controls, material;
 
@@ -139,8 +140,10 @@
             //controls.minDistance = DISTANCIA_MIN;
 
             controls = new THREE.FirstPersonControls( camera );
-            controls.lookSpeed = 0.125;
+            controls.movementSpeed = SPEED;
+            controls.lookSpeed = 0.01;
             controls.lookVertical = true;
+
 
             //LIGHTS
             var light = new THREE.AmbientLight(0xffffff, 1.0);
@@ -148,7 +151,7 @@
 
             window.addEventListener( 'resize', this.onWindowResize, false );
 
-            document.addEventListener('keydown', this.onKeyboardPress, false);
+            //document.addEventListener('keydown', this.onKeyboardPress, false);
 
             this.render();
         }
@@ -162,36 +165,25 @@
 
         onKeyboardPress() {
 
-            var speed = 2;
-
             if(event.keyCode === 87){ // W key
-                camera.position.x += -Math.sin(camera.rotation.y) * speed;
-                camera.position.z += -Math.cos(camera.rotation.y) * speed;
+                camera.position.x += -Math.sin(camera.rotation.y) * SPEED;
+                camera.position.z += -Math.cos(camera.rotation.y) * SPEED;
             }
 
             if(event.keyCode === 83){ // S key
-                camera.position.x += Math.sin(camera.rotation.y) * speed;
-                camera.position.z += Math.cos(camera.rotation.y) * speed;
+                camera.position.x += Math.sin(camera.rotation.y) * SPEED;
+                camera.position.z += Math.cos(camera.rotation.y) * SPEED;
             }
 
 
             if(event.keyCode === 65){ // A key
-                camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * speed;
-                camera.position.z += Math.cos(camera.rotation.y - Math.PI/2) * speed;
+                camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * SPEED;
+                camera.position.z += Math.cos(camera.rotation.y - Math.PI/2) * SPEED;
             }
 
             if(event.keyCode === 68){ // D key
-                camera.position.x += -Math.sin(camera.rotation.y - Math.PI/2) * speed;
-                camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * speed;
-            }
-
-            //TEMP KEYS PARA RODAR A CAMERA
-            if(event.keyCode === 81){ // Q key
-                camera.rotation.y += Math.PI*speed/100;
-            }
-
-            if(event.keyCode === 69){ // E key
-                camera.rotation.y -= Math.PI*speed/100;
+                camera.position.x += -Math.sin(camera.rotation.y - Math.PI/2) * SPEED;
+                camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * SPEED;
             }
 
             renderer.render(scene, camera);
