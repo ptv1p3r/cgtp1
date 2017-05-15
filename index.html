@@ -152,13 +152,38 @@
         }
 
         onKeyboardPress() {
-            var speed = 10;
 
-            if (event.keyCode == 87) {
-                camera.position.x += speed;
-            } else if (event.keyCode == 83) {
-                camera.position.x -= speed;
+            if(event.keyCode === 87){ // W key
+                camera.position.x += Math.sin(camera.rotation.y) * 0.2;
+                camera.position.z += -Math.cos(camera.rotation.y) * 0.2;
             }
+
+            if(event.keyCode === 83){ // S key
+                camera.position.x -= Math.sin(camera.rotation.y) * 0.2;
+                camera.position.z -= -Math.cos(camera.rotation.y) * 0.2;
+            }
+
+
+            if(event.keyCode === 65){ // A key
+                camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * 0.2;
+                camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * 0.2;
+            }
+
+            if(event.keyCode === 68){ // D key
+                camera.position.x += Math.sin(camera.rotation.y + Math.PI/2) * 0.2;
+                camera.position.z += -Math.cos(camera.rotation.y + Math.PI/2) * 0.2;
+            }
+
+            //TEMP KEYS PARA RODAR A CAMERA
+            if(event.keyCode === 81){ // Q key
+                camera.rotation.y += Math.PI*0.02;
+            }
+
+            if(event.keyCode === 69){ // E key
+                camera.rotation.y -= Math.PI*0.02;
+            }
+
+            renderer.render(scene, camera);
         }
 
         render(){
@@ -189,6 +214,8 @@
         new Floor({width: 1000, height: 1000},{x:500,y:-1.8,z:-500}),
         new Cube({width: 4, height: 5, depth:10},{x:5,y:4,z:-2}),
         new Tree({x:2225,y:4,z:-2})
+        new Floor({width: 1000, height: 1000}, {x:0,y:-1.8,z:-500}),
+        new Cube({width: 4, height: 5, depth:10}, {x:5,y:4,z:-2})
     ];
     app.add(objs);
 
