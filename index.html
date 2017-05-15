@@ -11,6 +11,8 @@
 
 <script src="js/three.js"></script>
 <script src="js/OrbitControls.js"></script>
+<script src="js/FirstPersonControls.js"></script>
+
 
 <script>
     var gameDiv = document.getElementById('gameDiv');
@@ -26,6 +28,9 @@
         DISTANCIA_MIN = 0;
 
     var scene, renderer, camera, controls, material;
+
+    var clock = new THREE.Clock();
+
 
     class Obj{
         constructor(){}
@@ -127,11 +132,16 @@
             document.body.appendChild(renderer.domElement);
 
             //CAMERA CONTROL
-            controls = new THREE.OrbitControls(camera);
+            //controls = new THREE.OrbitControls(camera);
 
             //controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.maxDistance = DISTANCIA_MAX;
-            controls.minDistance = DISTANCIA_MIN;
+            //controls.maxDistance = DISTANCIA_MAX;
+            //controls.minDistance = DISTANCIA_MIN;
+
+            controls = new THREE.FirstPersonControls( camera );
+            controls.movementSpeed = 1000;
+            controls.lookSpeed = 0.125;
+            controls.lookVertical = false;
 
             //LIGHTS
             var light = new THREE.AmbientLight(0xffffff, 1.0);
@@ -193,6 +203,7 @@
                 this.render();
             });
 
+            controls.update( clock.getDelta() );
             renderer.render(scene, camera);
         }
 
