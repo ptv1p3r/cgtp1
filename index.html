@@ -38,23 +38,11 @@
 
             var loader = new THREE.ObjectLoader();
             loader.load("models/coconut-tree.json", function ( obj ) {
+                obj.position.x = position.x;
+                obj.position.y = position.y;
+                obj.position.z = position.z;
                 scene.add( obj );
             });
-
-
-            //loader.load( "models/coconut-tree.json", function ( geometry, materials ) {
-               // this.mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial( materials ) );
-               // scene.add( mesh );
-//                this.mesh.position.x = position.x;
-//                this.mesh.position.y = position.y;
-//                this.mesh.position.z = position.z;
-                //scene.add( mesh );
-            //});
-//            this.geometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
-//            this.material = new THREE.MeshBasicMaterial();
-//            this.mesh = new THREE.Mesh(this.geometry, this.material);
-//
-
         }
 
         update(){
@@ -201,7 +189,7 @@
     let objs = [
         new Floor({width: 1000, height: 1000},{x:500,y:-1.8,z:-500}),
         new Cube({width: 4, height: 5, depth:10},{x:5,y:4,z:-2}),
-        new Tree({x:5,y:4,z:-2})
+        new Tree({x:2225,y:4,z:-2})
     ];
     app.add(objs);
 
