@@ -54,6 +54,32 @@
         }
     }
 
+    class Floor extends Obj{
+        constructor(size,position){
+            super();
+            this.geometry = new THREE.PlaneGeometry(size.width,size.height);
+            this.material = new THREE.MeshBasicMaterial();
+
+            this.material.map = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');            // Diffuse Texture
+            this.material.bumpMap = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');       // Bump Texture
+            this.material.bumpScale = 0.05;
+            this.material.specularMap = THREE.ImageUtils.loadTexture('images/earthspec4k.jpg');   // Spectacular Texture
+            this.material.specular = new THREE.Color('grey');
+
+            this.mesh = new THREE.Mesh(this.geometry, this.material);
+
+            this.mesh.position.x = position.x;
+            this.mesh.position.y = position.y;
+            this.mesh.position.z = position.z;
+            this.mesh.rotation.x = -Math.PI/2;
+        }
+
+
+        getMesh(){
+            return this.mesh;
+        }
+    }
+
     class Aplication{
         constructor() {
             this.objects = [];
@@ -89,13 +115,28 @@
             var light = new THREE.AmbientLight(0xffffff, 1.0);
             scene.add(light);
 
-            createFloor();
+            window.addEventListener( 'resize', this.onWindowResize, false );
 
-            window.addEventListener( 'resize', onWindowResize, false );
-
-            document.addEventListener('keydown', keyboard, false);
+            document.addEventListener('keydown', this.onKeyboardPress, false);
 
             this.render();
+        }
+
+        onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            this.render();
+        }
+
+        onKeyboardPress() {
+            var speed = 10;
+
+            if (event.keyCode == 87) {
+                camera.position.x += speed;
+            } else if (event.keyCode == 83) {
+                camera.position.x -= speed;
+            }
         }
 
         render(){
@@ -123,82 +164,32 @@
     let app = new Aplication();
 
     let objs = [
-        new Cube({with: 4, height: 5, depth:10},{x:5,y:4,z:-2})
+        new Floor({width: 1000, height: 1000},{x:500,y:-1.8,z:-500}),
+        new Cube({width: 4, height: 5, depth:10},{x:5,y:4,z:-2})
     ];
     app.add(objs);
 
-    function keyboard() {
-
-        var speed = 10;
-
-        if (event.keyCode == 87) {
-            camera.position.x += speed;
-
-        } else if (event.keyCode == 83) {
-            camera.position.x -= speed;
-        }
-    }
-
-    function createFloor() {
-        var geometry = new THREE.PlaneGeometry(1000,1000);
-
-        scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
-
-        //var material = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
-        material = new THREE.MeshBasicMaterial();
-        material.map = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');            // Diffuse Texture
-
-        material.bumpMap = THREE.ImageUtils.loadTexture('images/earthbump4k.jpg');       // Bump Texture
-        material.bumpScale = 0.05;
-        material.specularMap = THREE.ImageUtils.loadTexture('images/earthspec4k.jpg');   // Spectacular Texture
-        material.specular = new THREE.Color('grey');
-
-
-        floorMesh = new THREE.Mesh(geometry, material);
-
-        floorMesh.position.x = 500;
-        floorMesh.position.y = -1.8;
-        floorMesh.position.z = -500;
-
-
-        floorMesh.rotation.x = -Math.PI/2;  // deita a mesh
-
-        scene.add(floorMesh);
-    }
-
-    function createEarthClouds() {
-        var geometry1   = new THREE.SphereGeometry(177, 32, 32);
-        var material1  = new THREE.MeshPhongMaterial({
-            map         : new THREE.ImageUtils.loadTexture('images/earthcloudmap2.jpg'),
-            side        : THREE.DoubleSide,
-            opacity     : 0.3,
-            transparent : true,
-            depthWrite  : false
-        });
-        cloudMesh = new THREE.Mesh(geometry1, material1);
-        earthMesh.add(cloudMesh);
-    }
-
-    function createSkyBox() {
-        // SKYBOX
-        var geometry2  = new THREE.SphereGeometry(1000, 32, 32);
-        var material2  = new THREE.MeshBasicMaterial({
-            map   : new THREE.ImageUtils.loadTexture('images/skybox1.jpg'),
-            side  : THREE.BackSide
-        });
-        var skyBoxMesh  = new THREE.Mesh(geometry2, material2); // cria mesh com geometria e material
-        scene.add(skyBoxMesh);
-    }
+//    function keyboard() {
+//
+//        var speed = 10;
+//
+//        if (event.keyCode == 87) {
+//            camera.position.x += speed;
+//
+//        } else if (event.keyCode == 83) {
+//            camera.position.x -= speed;
+//        }
+//    }
 
     /**
      * Metodo que controla o redimensionamento da janela do browser
      */
-    function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        Aplication.render();
-    }
+//    function onWindowResize() {
+//        camera.aspect = window.innerWidth / window.innerHeight;
+//        camera.updateProjectionMatrix();
+//        renderer.setSize( window.innerWidth, window.innerHeight );
+//        render();
+//    }
 
 </script>
 </body>
