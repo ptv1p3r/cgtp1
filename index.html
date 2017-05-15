@@ -153,34 +153,36 @@
 
         onKeyboardPress() {
 
+            var speed = 2;
+
             if(event.keyCode === 87){ // W key
-                camera.position.x += Math.sin(camera.rotation.y) * 0.2;
-                camera.position.z += -Math.cos(camera.rotation.y) * 0.2;
+                camera.position.x += -Math.sin(camera.rotation.y) * speed;
+                camera.position.z += -Math.cos(camera.rotation.y) * speed;
             }
 
             if(event.keyCode === 83){ // S key
-                camera.position.x -= Math.sin(camera.rotation.y) * 0.2;
-                camera.position.z -= -Math.cos(camera.rotation.y) * 0.2;
+                camera.position.x += Math.sin(camera.rotation.y) * speed;
+                camera.position.z += Math.cos(camera.rotation.y) * speed;
             }
 
 
             if(event.keyCode === 65){ // A key
-                camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * 0.2;
-                camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * 0.2;
+                camera.position.x += Math.sin(camera.rotation.y - Math.PI/2) * speed;
+                camera.position.z += Math.cos(camera.rotation.y - Math.PI/2) * speed;
             }
 
             if(event.keyCode === 68){ // D key
-                camera.position.x += Math.sin(camera.rotation.y + Math.PI/2) * 0.2;
-                camera.position.z += -Math.cos(camera.rotation.y + Math.PI/2) * 0.2;
+                camera.position.x += -Math.sin(camera.rotation.y - Math.PI/2) * speed;
+                camera.position.z += -Math.cos(camera.rotation.y - Math.PI/2) * speed;
             }
 
             //TEMP KEYS PARA RODAR A CAMERA
             if(event.keyCode === 81){ // Q key
-                camera.rotation.y += Math.PI*0.02;
+                camera.rotation.y += Math.PI*speed/100;
             }
 
             if(event.keyCode === 69){ // E key
-                camera.rotation.y -= Math.PI*0.02;
+                camera.rotation.y -= Math.PI*speed/100;
             }
 
             renderer.render(scene, camera);
