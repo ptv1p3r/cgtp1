@@ -80,9 +80,19 @@
         }
     }
 
-    class Cube extends Obj{
+    class Totem extends Obj{
         constructor(size,position){
             super();
+
+            var sph = new THREE.Mesh(
+                new THREE.SphereGeometry(50, 16, 16),
+                new THREE.MeshBasicMaterial({color: 0xff00ff})
+            );
+            sph.position.x = position.x;
+            sph.position.y = position.y + 250;
+            sph.position.z = position.z;
+
+
             this.geometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
             this.material = new THREE.MeshBasicMaterial();
             this.mesh = new THREE.Mesh(this.geometry, this.material);
@@ -90,6 +100,8 @@
             this.mesh.position.x = position.x;
             this.mesh.position.y = position.y;
             this.mesh.position.z = position.z;
+
+            this.mesh.add(sph);
         }
 
         update(){
@@ -165,8 +177,6 @@
             document.addEventListener( 'keydown', this.onKeyDown, false );      //Listener da tecla ativada
             document.addEventListener( 'keyup', this.onKeyUp, false );          //listener para desativar as teclas
             window.addEventListener( 'resize', this.onWindowResize, false );    //listener para o resize
-
-
 
             this.render();
 
@@ -316,7 +326,7 @@
 
     let objs = [
         new Floor({width: 5000, height: 5000},{x:500,y:-1.8,z:-500}),
-        new Cube({width: 4, height: 5, depth:10},{x:5,y:4,z:-2}),
+        new Totem({width: 40, height: 550, depth:10},{x:5,y:4,z:-2}),
         new Tree({x:-500,y:0,z:-200}),
         new Tree({x:-1000,y:0,z:-800})
     ];
