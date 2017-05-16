@@ -132,6 +132,8 @@
         constructor() {
             this.objects = [];
 
+            this.checkCompatibility(); //verifica a compatibilidade do PointerLockControls com o browser
+
             this.createScene();
         }
 
@@ -164,7 +166,7 @@
             document.addEventListener( 'keyup', this.onKeyUp, false );          //listener para desativar as teclas
             window.addEventListener( 'resize', this.onWindowResize, false );    //listener para o resize
 
-            this.checkCompatibility(); //verifica a compatibilidade do PointerLockControls com o browser
+
 
             this.render();
 
@@ -264,34 +266,33 @@
             });
 
             if ( controlsEnabled ) { //Aplica o movimento com o WASD
+                var time = performance.now();
+                var delta = ( time - prevTime ) / 1000;
 
-            var time = performance.now();
-            var delta = ( time - prevTime ) / 1000;
+                velocity.x -= velocity.x * 10.0 * delta;
+                velocity.z -= velocity.z * 10.0 * delta;
 
-            velocity.x -= velocity.x * 10.0 * delta;
-            velocity.z -= velocity.z * 10.0 * delta;
+                if ( moveForward ) {
+                    velocity.z -= MOVEMENT_SPEED * delta;
+                }
 
-            if ( moveForward ) {
-                velocity.z -= MOVEMENT_SPEED * delta;
+                if ( moveBackward ) {
+                    velocity.z += MOVEMENT_SPEED * delta;
+                }
+
+                if ( moveLeft ) {
+                    velocity.x -= MOVEMENT_SPEED * delta;
+                }
+
+                if ( moveRight ) {
+                    velocity.x += MOVEMENT_SPEED * delta;
+                }
+
+                controls.getObject().translateX( velocity.x * delta );
+                controls.getObject().translateZ( velocity.z * delta );
+
+                prevTime = time;
             }
-
-            if ( moveBackward ) {
-                velocity.z += MOVEMENT_SPEED * delta;
-            }
-
-            if ( moveLeft ) {
-                velocity.x -= MOVEMENT_SPEED * delta;
-            }
-
-            if ( moveRight ) {
-                velocity.x += MOVEMENT_SPEED * delta;
-            }
-
-            controls.getObject().translateX( velocity.x * delta );
-            controls.getObject().translateZ( velocity.z * delta );
-
-            prevTime = time;
-        }
 
             //controls.update( clock.getDelta() );
             renderer.render(scene, camera);
