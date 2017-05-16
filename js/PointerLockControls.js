@@ -17,19 +17,61 @@ THREE.PointerLockControls = function ( camera ) {
 
 	var PI_2 = Math.PI / 2;
 
-	var onMouseMove = function ( event ) {
+    var angle = 0.872664626;	//radianos aproximadamente 50 graus
+	var upperAngle = angle;
+	var lowerAngle = -angle;
+    var turningSpeed = 0.002;
+
+
+    var onMouseMove = function ( event ) {
 
 		if ( scope.enabled === false ) return;
 
 		var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
 		var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-		yawObject.rotation.y -= movementX * 0.002;
-		pitchObject.rotation.x -= movementY * 0.002;
+        // Original, o de baixo foi alterado para respeitar os 50 graus de rotacao
+        // yawObject.rotation.y -= movementX * 0.002;
+        // pitchObject.rotation.x -= movementY * 0.002;
+
+        if ( movementX > 0 && yawObject.rotation.y > lowerAngle) {	// DIREITA (D)
+            yawObject.rotation.y -= movementX * turningSpeed;
+            // console.log(movementX);
+            // console.log(yawObject.rotation.y);
+
+        } else if ( movementX < 0 && yawObject.rotation.y < upperAngle) {	// ESQUERDA (A)
+            yawObject.rotation.y -= movementX * turningSpeed;
+            // console.log(movementX);
+            // console.log(yawObject.rotation.y);
+        }
+
+        if ( movementY > 0 && pitchObject.rotation.x > -angle) {	// CIMA (W)
+            pitchObject.rotation.x -= movementY * turningSpeed;
+            // console.log(movementY);
+            // console.log(pitchObject.rotation.x);
+
+        } else if ( movementY < 0 && pitchObject.rotation.x < angle) {	// BAIXO (S)
+            pitchObject.rotation.x -= movementY * turningSpeed;
+            // console.log(movementY);
+            // console.log(pitchObject.rotation.x);
+        }
+
+
 
 		pitchObject.rotation.x = Math.max( - PI_2, Math.min( PI_2, pitchObject.rotation.x ) );
 
 	};
+
+    this.updatePosition = function () {
+
+		upperAngle = yawObject.rotation.y + angle;
+		lowerAngle = yawObject.rotation.y - angle;
+
+		// console.log('Upper -> ' + upperAngle);
+		// console.log('Angulo -> ' + yawObject.rotation.y);
+		// console.log('Lower -> ' + lowerAngle);
+		//console.log('----------')
+    };
 
 	this.dispose = function() {
 
