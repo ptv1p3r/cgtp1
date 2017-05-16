@@ -85,7 +85,7 @@
             super();
 
             var sph = new THREE.Mesh(
-                new THREE.SphereGeometry(50, 16, 16),
+                new THREE.SphereGeometry(25, 16, 16),
                 new THREE.MeshBasicMaterial({color: 0xff00ff})
             );
             sph.position.x = position.x;
@@ -94,7 +94,8 @@
 
 
             this.geometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
-            this.material = new THREE.MeshBasicMaterial();
+            var woodTexture = THREE.ImageUtils.loadTexture('images/wood-texture.jpg'); //new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
+            this.material = new THREE.MeshBasicMaterial({map:woodTexture,side:THREE.DoubleSide});
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
@@ -265,9 +266,8 @@
 
         onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
             renderer.setSize( window.innerWidth, window.innerHeight );
-            //this.render();
+            camera.updateProjectionMatrix();
         }
 
         render(){
