@@ -155,19 +155,17 @@
             controls = new THREE.PointerLockControls( camera );
             scene.add( controls.getObject() );
 
-            //KEY LISTENERS
-            document.addEventListener( 'keydown', this.onKeyDown, false );   //Listener da tecla ativada
-            document.addEventListener( 'keyup', this.onKeyUp, false );   //listener para desativar as teclas
-
-
             //LIGHTS
             var light = new THREE.AmbientLight(0xffffff, 1.0);
             scene.add(light);
 
-            window.addEventListener( 'resize', this.onWindowResize, false );
+            //KEY LISTENERS
+            document.addEventListener( 'keydown', this.onKeyDown, false );      //Listener da tecla ativada
+            document.addEventListener( 'keyup', this.onKeyUp, false );          //listener para desativar as teclas
+            window.addEventListener( 'resize', this.onWindowResize, false );    //listener para o resize
 
             this.checkCompatibility(); //verifica a compatibilidade do PointerLockControls com o browser
-            animate();
+
             this.render();
 
         }
@@ -209,7 +207,6 @@
         };
 
         checkCompatibility () {
-
             if ( havePointerLock ) {
                 var element = document.body;
 
@@ -266,29 +263,7 @@
                 this.render();
             });
 
-            //controls.update( clock.getDelta() );
-            renderer.render(scene, camera);
-        }
-
-        add(mesh) {
-            if (Array.isArray(mesh)) {
-                for (var index in mesh) {
-                    this.objects.push(mesh[index]);
-                    scene.add(mesh[index].getMesh());
-                }
-            } else {
-                this.objects.push(mesh);
-                scene.add(mesh.getMesh());
-            }
-        }
-
-    }
-
-    //Aplica o movimento com o WASD
-    function animate() {
-        requestAnimationFrame( animate );
-
-        if ( controlsEnabled ) {
+            if ( controlsEnabled ) { //Aplica o movimento com o WASD
 
             var time = performance.now();
             var delta = ( time - prevTime ) / 1000;
@@ -318,7 +293,22 @@
             prevTime = time;
         }
 
-        renderer.render( scene, camera );
+            //controls.update( clock.getDelta() );
+            renderer.render(scene, camera);
+        }
+
+        add(mesh) {
+            if (Array.isArray(mesh)) {
+                for (var index in mesh) {
+                    this.objects.push(mesh[index]);
+                    scene.add(mesh[index].getMesh());
+                }
+            } else {
+                this.objects.push(mesh);
+                scene.add(mesh.getMesh());
+            }
+        }
+
     }
 
     let app = new Aplication();
