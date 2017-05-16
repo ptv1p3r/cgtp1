@@ -69,7 +69,7 @@
         FAR = 10000,
         DISTANCIA_MAX = 1000,
         DISTANCIA_MIN = 0,
-        SPEED = 200;
+        MOVEMENT_SPEED = 4000;    //movement speed
 
     var scene, renderer, camera, controls, material;
 
@@ -89,49 +89,6 @@
     var instructions = document.getElementById( 'instructions' );   //janela de instrucoes
 
     var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-
-    //Verifica se o browser e compativel com o PointerLockControls
-    if ( havePointerLock ) {
-        var element = document.body;
-
-        var pointerlockchange = function ( event ) {
-
-            if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-                controlsEnabled = true;
-                controls.enabled = true;
-                blocker.style.display = 'none';
-            } else {
-                controls.enabled = false;
-                blocker.style.display = '-webkit-box';
-                blocker.style.display = '-moz-box';
-                blocker.style.display = 'box';
-                instructions.style.display = '';
-            }
-        };
-
-
-        var pointerlockerror = function ( event ) {
-            instructions.style.display = '';
-        };
-
-        // Hook pointer lock state change events
-        document.addEventListener( 'pointerlockchange', pointerlockchange, false );
-        document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
-        document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
-        document.addEventListener( 'pointerlockerror', pointerlockerror, false );
-        document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
-        document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
-
-        instructions.addEventListener( 'click', function ( event ) {
-            instructions.style.display = 'none';
-            // Ask the browser to lock the pointer
-            element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-            element.requestPointerLock();
-        }, false );
-
-    } else {
-        instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
-    }
 
     class Obj{
         constructor(){}
@@ -221,7 +178,7 @@
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-            camera.position.z = 1.8;
+            camera.position.y = 180;
             //camera.lookAt(scene.position);
 
             //RENDERER
@@ -235,45 +192,9 @@
             controls = new THREE.PointerLockControls( camera );
             scene.add( controls.getObject() );
 
-            // Activa tecla selecionada
-            var onKeyDown = function ( event ) {
-                switch ( event.keyCode ) {
-                    case 87: // w
-                        moveForward = true;
-                        break;
-                    case 65: // a
-                        moveLeft = true;
-                        break;
-                    case 83: // s
-                        moveBackward = true;
-                        break;
-                    case 68: // d
-                        moveRight = true;
-                        break;
-                }
-            };
-
-            // Desativa todas as teclas
-            var onKeyUp = function ( event ) {
-                switch( event.keyCode ) {
-                    case 87: // w
-                        moveForward = false;
-                        break;
-                    case 65: // a
-                        moveLeft = false;
-                        break;
-                    case 83: // s
-                        moveBackward = false;
-                        break;
-                    case 68: // d
-                        moveRight = false;
-                        break;
-                }
-            };
-
-
-            document.addEventListener( 'keydown', onKeyDown, false );   //Listener da tecla ativada
-            document.addEventListener( 'keyup', onKeyUp, false );   //listener para desativar as teclas
+            //KEY LISTENERS
+            document.addEventListener( 'keydown', this.onKeyDown, false );   //Listener da tecla ativada
+            document.addEventListener( 'keyup', this.onKeyUp, false );   //listener para desativar as teclas
 
 
             //LIGHTS
@@ -282,8 +203,91 @@
 
             window.addEventListener( 'resize', this.onWindowResize, false );
 
+            this.checkCompatibility(); //verifica a compatibilidade do PointerLockControls com o browser
             animate();
             this.render();
+
+        }
+
+        onKeyUp ( event ) {
+            switch( event.keyCode ) {
+
+                case 87: // w
+                    moveForward = false;
+                    break;
+                case 65: // a
+                    moveLeft = false;
+                    break;
+                case 83: // s
+                    moveBackward = false;
+                    break;
+                case 68: // d
+                    moveRight = false;
+                    break;
+            }
+        };
+
+        onKeyDown ( event ) {
+            switch ( event.keyCode ) {
+
+                case 87: // w
+                    moveForward = true;
+                    break;
+                case 65: // a
+                    moveLeft = true;
+                    break;
+                case 83: // s
+                    moveBackward = true;
+                    break;
+                case 68: // d
+                    moveRight = true;
+                    break;
+            }
+        };
+
+        checkCompatibility () {
+
+            if ( havePointerLock ) {
+                var element = document.body;
+
+                var pointerlockchange = function ( event ) {
+
+                    if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+                        controlsEnabled = true;
+                        controls.enabled = true;
+                        blocker.style.display = 'none';
+                    } else {
+                        controls.enabled = false;
+                        blocker.style.display = '-webkit-box';
+                        blocker.style.display = '-moz-box';
+                        blocker.style.display = 'box';
+                        instructions.style.display = '';
+                    }
+                };
+
+
+                var pointerlockerror = function ( event ) {
+                    instructions.style.display = '';
+                };
+
+                // Hook pointer lock state change events
+                document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+                document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+                document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+                document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+                document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+                document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+
+                instructions.addEventListener( 'click', function ( event ) {
+                    instructions.style.display = 'none';
+                    // Ask the browser to lock the pointer
+                    element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+                    element.requestPointerLock();
+                }, false );
+
+            } else {
+                instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+            }
 
         }
 
@@ -325,25 +329,24 @@
 
             var time = performance.now();
             var delta = ( time - prevTime ) / 1000;
-            var movementSpeed = 2000;    //movement speed
 
             velocity.x -= velocity.x * 10.0 * delta;
             velocity.z -= velocity.z * 10.0 * delta;
 
             if ( moveForward ) {
-                velocity.z -= movementSpeed * delta;
+                velocity.z -= MOVEMENT_SPEED * delta;
             }
 
             if ( moveBackward ) {
-                velocity.z += movementSpeed * delta;
+                velocity.z += MOVEMENT_SPEED * delta;
             }
 
             if ( moveLeft ) {
-                velocity.x -= movementSpeed * delta;
+                velocity.x -= MOVEMENT_SPEED * delta;
             }
 
             if ( moveRight ) {
-                velocity.x += movementSpeed * delta;
+                velocity.x += MOVEMENT_SPEED * delta;
             }
 
             controls.getObject().translateX( velocity.x * delta );
