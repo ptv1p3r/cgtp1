@@ -151,6 +151,9 @@
             this.createScene();
         }
 
+        /**
+         * Metodo que cria a cena da aplicação
+         */
         createScene() {
             //SCENE
             scene = new THREE.Scene();
@@ -187,12 +190,12 @@
 
         }
 
+
         /**
          * Metodo que controla o evento KeyUp do teclado
          */
         onKeyUp ( event ) {
             switch( event.keyCode ) {
-
                 case 87: // w
                     moveForward = false;
                     break;
@@ -213,7 +216,6 @@
          */
         onKeyDown ( event ) {
             switch ( event.keyCode ) {
-
                 case 87: // w
                     moveForward = true;
                     break;
@@ -286,6 +288,9 @@
             camera.updateProjectionMatrix();
         }
 
+        /**
+         * Metodo que efetua o render da cena
+         */
         render(){
             requestAnimationFrame(() => {
                 this.render();
@@ -337,6 +342,9 @@
             renderer.render(scene, camera);
         }
 
+        /**
+         * Metodo que adiciona mesh a partir de uma lista de objectos
+         */
         add(mesh) {
             if (Array.isArray(mesh)) {
                 for (var index in mesh) {
