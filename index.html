@@ -151,6 +151,7 @@
             this.createScene();
         }
 
+
         createScene() {
             //SCENE
             scene = new THREE.Scene();
@@ -191,7 +192,6 @@
          */
         onKeyUp ( event ) {
             switch( event.keyCode ) {
-
                 case 87: // w
                     moveForward = false;
                     break;
@@ -207,13 +207,11 @@
             }
         };
 
-
         /**
          * Metodo que controla o evento KeyDown do teclado
          */
         onKeyDown ( event ) {
             switch ( event.keyCode ) {
-
                 case 87: // w
                     moveForward = true;
                     break;
@@ -351,8 +349,13 @@
 
     }
 
-    let app = new Aplication();
 
+    let app = new Aplication(); // instancia nova aplicação
+
+    /**
+     * Lista de objectos da cena
+     * @type {[*]}
+     */
     let objs = [
         new Floor({width: 10000, height: 10000},{x:500,y:-1.8,z:-500}),
         new Totem({width: 40, height: 550, depth:10},{x:5,y:4,z:-2}),
@@ -362,6 +365,10 @@
         new Tree({x:-200,y:0,z:-100}),new Tree({x:-3800,y:0,z:-500}),
         new Tree({x:-900,y:0,z:-280}),new Tree({x:-200,y:0,z:-780})
     ];
+
+    /**
+     * Metodo que adiciona a lista de objectos a cena
+     */
     app.add(objs);
 
 </script>
