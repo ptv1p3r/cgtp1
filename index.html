@@ -58,6 +58,25 @@
         constructor(){}
     }
 
+    class Wood extends Obj{
+        constructor(position){
+            super();
+
+            var loader = new THREE.ObjectLoader();
+            loader.load("models/fire-wood.json", function ( obj ) {
+                obj.position.x = position.x;
+                obj.position.y = position.y;
+                obj.position.z = position.z;
+                scene.add( obj );
+            });
+        }
+
+        getMesh(){
+            return this.mesh;
+        }
+    }
+
+
     class Tree extends Obj{
         constructor(position){
             super();
@@ -69,11 +88,6 @@
                 obj.position.z = position.z;
                 scene.add( obj );
             });
-        }
-
-        update(){
-//            this.mesh.rotation.x += 0.1;
-//            this.mesh.rotation.y += 0.1;
         }
 
         getMesh(){
@@ -143,6 +157,7 @@
     }
 
     class Aplication{
+
         /**
          * Metodo construtor
          */
@@ -382,13 +397,14 @@
      * @type {[*]}
      */
     let objs = [
-        new Floor({width: 10000, height: 10000},{x:500,y:-1.8,z:-500}),
+        new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
         new Totem({width: 40, height: 550, depth:10},{x:5,y:4,z:-2}),
         new Tree({x:-500,y:0,z:-200}),new Tree({x:-1000,y:0,z:-800}),
         new Tree({x:-700,y:0,z:-400}),new Tree({x:-1800,y:0,z:-300}),
         new Tree({x:-100,y:0,z:-200}),new Tree({x:-2000,y:0,z:-800}),
         new Tree({x:-200,y:0,z:-100}),new Tree({x:-3800,y:0,z:-500}),
-        new Tree({x:-900,y:0,z:-280}),new Tree({x:-200,y:0,z:-780})
+        new Tree({x:-900,y:0,z:-280}),new Tree({x:-200,y:0,z:-780}),
+        new Wood({x:40,y:100,z:10})
     ];
 
     /**
