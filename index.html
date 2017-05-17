@@ -151,7 +151,6 @@
             this.createScene();
         }
 
-
         createScene() {
             //SCENE
             scene = new THREE.Scene();
@@ -177,6 +176,8 @@
             var light = new THREE.AmbientLight(0xffffff, 1.0);
             scene.add(light);
 
+            this.createSkyBox();
+
             //KEY LISTENERS
             document.addEventListener( 'keydown', this.onKeyDown, false );      //Listener da tecla ativada
             document.addEventListener( 'keyup', this.onKeyUp, false );          //listener para desativar as teclas
@@ -186,12 +187,12 @@
 
         }
 
-
         /**
          * Metodo que controla o evento KeyUp do teclado
          */
         onKeyUp ( event ) {
             switch( event.keyCode ) {
+
                 case 87: // w
                     moveForward = false;
                     break;
@@ -212,6 +213,7 @@
          */
         onKeyDown ( event ) {
             switch ( event.keyCode ) {
+
                 case 87: // w
                     moveForward = true;
                     break;
@@ -345,6 +347,18 @@
                 this.objects.push(mesh);
                 scene.add(mesh.getMesh());
             }
+        }
+
+        createSkyBox() {
+            // SKYBOX
+            var geometry2  = new THREE.SphereGeometry(6000, 200, 200);
+            var material2  = new THREE.MeshBasicMaterial({
+                map   : new THREE.ImageUtils.loadTexture('images/sky.jpg'),
+                side  : THREE.BackSide
+            });
+
+            var skyBoxMesh  = new THREE.Mesh(geometry2, material2); // cria mesh com geometria e material
+            scene.add(skyBoxMesh);
         }
 
     }
