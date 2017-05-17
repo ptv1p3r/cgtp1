@@ -151,7 +151,9 @@
             this.createScene();
         }
 
-
+        /**
+         * Metodo que cria a cena da aplicação
+         */
         createScene() {
             //SCENE
             scene = new THREE.Scene();
@@ -284,6 +286,9 @@
             camera.updateProjectionMatrix();
         }
 
+        /**
+         * Metodo que efetua o render da cena
+         */
         render(){
             requestAnimationFrame(() => {
                 this.render();
@@ -335,6 +340,9 @@
             renderer.render(scene, camera);
         }
 
+        /**
+         * Metodo que adiciona mesh a partir de uma lista de objectos
+         */
         add(mesh) {
             if (Array.isArray(mesh)) {
                 for (var index in mesh) {
