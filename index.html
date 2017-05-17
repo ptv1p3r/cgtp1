@@ -184,6 +184,10 @@
 
         }
 
+
+        /**
+         * Metodo que controla o evento KeyUp do teclado
+         */
         onKeyUp ( event ) {
             switch( event.keyCode ) {
 
@@ -202,6 +206,10 @@
             }
         };
 
+
+        /**
+         * Metodo que controla o evento KeyDown do teclado
+         */
         onKeyDown ( event ) {
             switch ( event.keyCode ) {
 
@@ -220,6 +228,9 @@
             }
         };
 
+        /**
+         * Metodo que verifica compatibilidade do browser
+         */
         checkCompatibility () {
             if ( havePointerLock ) {
                 var element = document.body;
@@ -265,6 +276,9 @@
 
         }
 
+        /**
+         * Metodo que controla o evento Window Resize do browser
+         */
         onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
             renderer.setSize( window.innerWidth, window.innerHeight );
