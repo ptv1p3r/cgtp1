@@ -129,20 +129,6 @@
         constructor(position){
             super();
 
-//            var loader = new THREE.JSONLoader();
-//            loader.load( "models/coconut-tree.json", function( geometry, materials ) {
-//
-//                var mesh = new THREE.Mesh( geometry, new THREE.MultiMaterial(materials) );
-//                mesh.scale.set( 1, 1, 1 );
-//
-//                mesh.position.y = position.y;
-//                mesh.position.z = position.z;
-//                mesh.position.x = position.x;
-//
-//                scene.add( mesh );
-//
-//            } );
-
             var mtLoader = new THREE.MTLLoader();
             mtLoader.load( "models/DeadTree1.mtl", function (materials) {
 
@@ -162,13 +148,6 @@
 
             })
 
-//            var loader = new THREE.ObjectLoader();
-//            loader.load("models/coconut-tree.json", function ( obj, materials ) {
-//                obj.position.x = position.x;
-//                obj.position.y = position.y;
-//                obj.position.z = position.z;
-//                scene.add( obj );
-//            });
         }
 
         getMesh(){
@@ -251,7 +230,7 @@
         createScene() {
             //SCENE
             scene = new THREE.Scene();
-            scene.fog = new THREE.Fog(0xCCCFBC, 0.1, 2000);
+            //scene.fog = new THREE.Fog(0xFFFFFF, 0.1, 2000);
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -267,12 +246,12 @@
             var audioLoader = new THREE.AudioLoader();
 
             //Carrega o som e set o buffer de audio
-            audioLoader.load( 'sounds/348997_klankbeeld_horror-ambience-160531-0886.ogg', function( buffer ) {
-                sound.setBuffer( buffer );
-                sound.setLoop(true);
-                sound.setVolume(0.5);
-                sound.play();
-            });
+//            audioLoader.load( 'sounds/348997_klankbeeld_horror-ambience-160531-0886.ogg', function( buffer ) {
+//                sound.setBuffer( buffer );
+//                sound.setLoop(true);
+//                sound.setVolume(0.5);
+//                sound.play();
+//            });
 
             //RENDERER
             renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
@@ -471,7 +450,7 @@
             // SKYBOX
             var geometry2  = new THREE.SphereGeometry(6000, 200, 200);
             var material2  = new THREE.MeshBasicMaterial({
-                map   : new THREE.ImageUtils.loadTexture('images/sky.jpg'),
+                map   : new THREE.ImageUtils.loadTexture('images/dark_sky.jpg'),
                 side  : THREE.BackSide
             });
 
