@@ -119,9 +119,11 @@
             loader.load( 'models/rock_stone.obj', function ( object ) {
 
                 var rockTexture = THREE.ImageUtils.loadTexture('images/lava_rock_texture_04.jpg'); //new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
+                var material = new THREE.MeshBasicMaterial({map:rockTexture});
+
                 object.traverse( function ( child ) {
                     if ( child instanceof THREE.Mesh ) {
-                        child.material = rockTexture;
+                        child.material = material;
                     }
                 } );
 
