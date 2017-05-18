@@ -251,7 +251,7 @@
         createScene() {
             //SCENE
             scene = new THREE.Scene();
-            //scene.fog = new THREE.Fog(0xCCCFBC, 0.1, 2000);
+            scene.fog = new THREE.Fog(0xCCCFBC, 0.1, 2000);
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -267,12 +267,12 @@
             var audioLoader = new THREE.AudioLoader();
 
             //Carrega o som e set o buffer de audio
-//            audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
-//                sound.setBuffer( buffer );
-//                sound.setLoop(true);
-//                sound.setVolume(0.5);
-//                sound.play();
-//            });
+            audioLoader.load( 'sounds/348997_klankbeeld_horror-ambience-160531-0886.ogg', function( buffer ) {
+                sound.setBuffer( buffer );
+                sound.setLoop(true);
+                sound.setVolume(0.5);
+                sound.play();
+            });
 
             //RENDERER
             renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
