@@ -115,23 +115,44 @@
     class Rocks extends Obj{
         constructor(position){
             super();
-            var loader = new THREE.OBJLoader();
-            loader.load( 'models/rock_stone.obj', function ( object ) {
+//            var loader = new THREE.OBJLoader();
+//            loader.load( 'models/rock_stone.obj', function ( object ) {
+//
+//                var rockTexture = THREE.ImageUtils.loadTexture('images/lava_rock_texture_04.jpg'); //new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
+//                var material = new THREE.MeshBasicMaterial({map:rockTexture});
+//
+//                object.traverse( function ( child ) {
+//                    if ( child instanceof THREE.Mesh ) {
+//                        child.material = material;
+//                    }
+//                } );
+//
+//                object.position.x = position.x;
+//                object.position.y = position.y;
+//                object.position.z = position.z;
+//                scene.add( object );
+//            } );
 
-                var rockTexture = THREE.ImageUtils.loadTexture('images/lava_rock_texture_04.jpg'); //new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
-                var material = new THREE.MeshBasicMaterial({map:rockTexture});
 
-                object.traverse( function ( child ) {
-                    if ( child instanceof THREE.Mesh ) {
-                        child.material = material;
-                    }
-                } );
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/Rock1.mtl", function (materials) {
 
-                object.position.x = position.x;
-                object.position.y = position.y;
-                object.position.z = position.z;
-                scene.add( object );
-            } );
+                materials.preload();
+
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+
+                objLoader.load( "models/Rock1.obj", function (object) {
+                    object.scale.set( 50, 50, 50);
+                    object.position.x = position.x;
+                    object.position.y = position.y;
+                    object.position.z = position.z;
+                    scene.add( object );
+
+                });
+
+            })
+
         }
 
         getMesh(){
