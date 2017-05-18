@@ -51,6 +51,8 @@
 
     var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
+    var sound = null;
+
     class Obj{
         constructor(){}
     }
@@ -94,6 +96,10 @@
                     object.position.x = position.x;
                     object.position.y = position.y;
                     object.position.z = position.z;
+
+                    object.castShadow = true;
+                    object.receiveShadow = false;
+
                     scene.add( object );
 
                 });
@@ -251,7 +257,7 @@
         createScene() {
             //SCENE
             scene = new THREE.Scene();
-            //scene.fog = new THREE.Fog(0xFFFFFF, 0.1, 2000);
+            scene.fog = new THREE.Fog(0xFFFFFF, 0.1, 2000);
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -263,27 +269,28 @@
             camera.add( listener );
 
             // Cria um audio source global
-            var sound = new THREE.Audio( listener );
+            sound = new THREE.Audio( listener );
             var audioLoader = new THREE.AudioLoader();
 
             //Carrega o som e set o buffer de audio
-//            audioLoader.load( 'sounds/348997_klankbeeld_horror-ambience-160531-0886.ogg', function( buffer ) {
-//                sound.setBuffer( buffer );
-//                sound.setLoop(true);
-//                sound.setVolume(0.5);
-//                sound.play();
-//            });
+            audioLoader.load( 'sounds/348997_klankbeeld_horror-ambience-160531-0886.ogg', function( buffer ) {
+                sound.setBuffer( buffer );
+                sound.setLoop(true);
+                sound.setVolume(0.5);
+                sound.play();
+            });
 
             //RENDERER
             renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
             renderer.setClearColor(0x000000);
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(WIDTH, HEIGHT);
+
+            document.body.appendChild(renderer.domElement);
+
             renderer.shadowMapEnabled = true;
             // to antialias the shadow
             renderer.shadowMapType = THREE.PCFSoftShadowMap;
-
-            document.body.appendChild(renderer.domElement);
 
             //CAMERA CONTROL
             controls = new THREE.PointerLockControls( camera );
@@ -353,6 +360,10 @@
                 case 68: // d
                     moveRight = true;
                     break;
+                case 27: // d
+                    sound.stop();
+                    break;
+
             }
         };
 
