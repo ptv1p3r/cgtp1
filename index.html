@@ -299,7 +299,7 @@
                 sound.setBuffer( buffer );
                 sound.setLoop(true);
                 sound.setVolume(0.5);
-                sound.play();
+                //sound.play();
             });
 
             //RENDERER
@@ -329,19 +329,19 @@
 
             //LIGHTS
             var ambientlight = new THREE.AmbientLight(0x212223);
-            scene.add(ambientlight);
+           // scene.add(ambientlight);
 
-            // White directional light at half intensity shining from the top.
             var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
             directionalLight.position.set(100, 100, 50);
             directionalLight.castShadow = true;
             directionalLight.shadowDarkness = 0.5;
             directionalLight.shadowCameraVisible = true;
 
-            scene.add( directionalLight );
+            //scene.add( directionalLight );
 
             var spotLight = new THREE.SpotLight( 0xffffff );
             spotLight.position.set( 700, 1000, 100 );
+            spotLight.intensity = 0.2;
 
             spotLight.castShadow = true;
             spotLight.shadowCameraVisible = true;
@@ -350,7 +350,7 @@
             spotLight.shadowMapHeight = 2048;
 
             spotLight.shadowCameraNear = 100;
-            spotLight.shadowCameraFar = 2000;
+            spotLight.shadowCameraFar = 2048;
             spotLight.shadowCameraFov = 30;
 
             scene.add( spotLight );
