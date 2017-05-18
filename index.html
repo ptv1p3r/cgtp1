@@ -276,7 +276,7 @@
             scene = new THREE.Scene();
 
             //scene.fog = new THREE.Fog(0xd5c7e8, 0.5, 2000);
-            scene.fog = new THREE.Fog(0xCCCFBC, 0.5, 2000);
+            //scene.fog = new THREE.Fog(0xCCCFBC, 0.5, 2000); a usar
 
 
             //CAMERA
@@ -583,9 +583,15 @@
         new Rocks({x:4000,y:0,z:10}),
         new Rocks({x:-300,y:0,z:10}),new Rocks({x:-600,y:0,z:10}),
         new Rocks({x:-1000,y:0,z:10}),new Rocks({x:-1500,y:0,z:-600}),
-        new Rocks({x:-1500,y:0,z:600}),new Tree({x:-1500,y:0,z:10}, 3),
+        // Desvio
+        new Rocks({x:-1500,y:0,z:600}),
+        new Tree({x:-1500,y:0,z:10}, 3),
+        // cemiterio
         new Rocks({x:-2000,y:0,z:900}),new Rocks({x:-2000,y:0,z:1200}),
-        new Tree({x:-2500,y:0,z:1250}, 3)
+        new Tree({x:-2500,y:0,z:1250}, 3),
+        // casa
+        new Rocks({x:-2000,y:0,z:-1200}),new Tree({x:-2500,y:0,z:-1250},3),
+
     ];
 
     /**
