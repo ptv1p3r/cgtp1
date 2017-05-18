@@ -237,12 +237,7 @@
             //this.material = new THREE.MeshBasicMaterial();
             this.material = new THREE.MeshLambertMaterial();
 
-            this.material.map = THREE.ImageUtils.loadTexture('images/floor.jpg');            // Diffuse Texture
-//            this.material.bumpMap = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');       // Bump Texture
-//            this.material.bumpScale = 0.05;
-//            this.material.specularMap = THREE.ImageUtils.loadTexture('images/earthspec4k.jpg');   // Spectacular Texture
-//            this.material.specular = new THREE.Color('grey');
-
+            this.material.map = THREE.ImageUtils.loadTexture('images/floor.jpg');
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
@@ -279,7 +274,8 @@
         createScene() {
             //SCENE
             scene = new THREE.Scene();
-            scene.fog = new THREE.Fog(0xFFFFFF, 0.5, 3000);
+            scene.fog = new THREE.Fog(0xd5c7e8, 0.5, 2000);
+
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
