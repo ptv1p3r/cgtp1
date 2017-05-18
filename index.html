@@ -57,32 +57,53 @@
         constructor(){}
     }
 
-    class Wood extends Obj{
-        constructor(position){
+    class RockStack extends Obj{
+        constructor(position, stackColor){
             super();
 
-            var mtLoader = new THREE.MTLLoader();
-            mtLoader.load( "models/CobbleStones.mtl", function (materials) {
+            var materialPath;
 
-                materials.preload();
+            switch (stackColor) {
 
-                var objLoader = new THREE.OBJLoader();
-                objLoader.setMaterials(materials);
+                case 1:
+                    materialPath = "images/rock1.jpg";
+                    break;
 
-                objLoader.load( "models/CobbleStones.obj", function (object) {
-                    object.scale.set( 1, 1, 1);
-                    object.position.x = position.x;
-                    object.position.y = position.y;
-                    object.position.z = position.z;
+                case 2:
+                    materialPath = "images/rock2.jpg";
+                    break;
 
-                    object.castShadow = true;
-                    object.receiveShadow = false;
+                case 3:
+                    materialPath = "images/rock3.jpg";
+                    break;
 
-                    scene.add( object );
+                case 4:
+                    materialPath = "images/rock4.jpg";
+                    break;
 
+
+            }
+
+            var material = new THREE.MeshLambertMaterial();
+            material.map = new THREE.ImageUtils.loadTexture(materialPath);
+
+            var objLoader = new THREE.OBJLoader();
+            objLoader.load( "models/blender_rocks.obj", function (object) {
+                object.scale.set( 50, 50, 50);
+                object.position.x = position.x;
+                object.position.y = position.y;
+                object.position.z = position.z;
+
+                object.traverse( function ( child ) {
+                    if ( child instanceof THREE.Mesh ) {
+                        child.castShadow = true;
+                        child.material = material;
+                    }
                 });
 
-            })
+                scene.add( object );
+
+            });
         }
 
         getMesh(){
@@ -572,6 +593,14 @@
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
         new Tree({x:3000,y:0,z:-200}, 4),new Tree({x:3000,y:0,z:200}, 4),
         new Tree({x:4000,y:0,z:-200}, 1),new Tree({x:4000,y:0,z:200}, 2),
+//        new Tree({x:300,y:0,z:-100}, 3),new Tree({x:540,y:0,z:500}, 4),
+
+        new RockStack({x:40,y:100,z:10}, 1),new RockStack({x:100,y:120,z:10}, 2),
+        new RockStack({x:55,y:555,z:10}, 2),new RockStack({x:80,y:200,z:10}, 3),
+        new RockStack({x:440,y:220,z:10}, 3),new RockStack({x:450,y:850,z:10}, 4),
+        new RockStack({x:648,y:350,z:10}, 4),new RockStack({x:980,y:880,z:10}, 1),
+        new RockStack({x:400,y:380,z:10}, 1),new RockStack({x:780,y:655,z:10},2),
+
         new Rocks({x:300,y:0,z:10}),new Rocks({x:600,y:0,z:10}),
         new Rocks({x:1000,y:0,z:10}),new Rocks({x:1500,y:0,z:10}),
         new Rocks({x:2000,y:0,z:10}),new Rocks({x:2500,y:0,z:10}),
