@@ -251,6 +251,33 @@
         }
     }
 
+    class Path extends Obj {
+        constructor(position) {
+            super();
+            var geometry = new THREE.PlaneGeometry(1024, 512);
+            var material = new THREE.MeshLambertMaterial();
+
+            material.map = THREE.ImageUtils.loadTexture("images/dirt_road.jpg");
+
+            var mesh = new THREE.Mesh(geometry, material);
+
+            mesh.position.x = position.x;
+            mesh.position.y = position.y;
+            mesh.position.z = position.z;
+            mesh.rotation.x = -Math.PI / 2;
+
+            //this.mesh.castShadow = false;
+            mesh.receiveShadow = true;
+
+            scene.add(mesh);
+        }
+
+
+        getMesh() {
+            return this.mesh;
+        }
+    }
+
     class Floor extends Obj{
         constructor(size,position){
             super();
@@ -595,9 +622,9 @@
         new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
         new Rocks({x:1000,y:0,z:10}),new Rocks({x:1500,y:0,z:10}),
-        new Rocks({x:2000,y:0,z:10}),new Rocks({x:2500,y:0,z:10}),
-        new Rocks({x:3000,y:0,z:10}),new Rocks({x:3500,y:0,z:10}),
-        new Rocks({x:4000,y:0,z:10}),
+        new Path({x:2000,y:0,z:10}),new Rocks({x:2500,y:0,z:10}),
+        new Path({x:3000,y:0,z:10}),new Rocks({x:3500,y:0,z:10}),
+        new Path({x:4000,y:0,z:10}),
         new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
         new Rocks({x:-300,y:0,z:10}),new Rocks({x:-600,y:0,z:10}),
         new Rocks({x:-1000,y:0,z:10}),new Rocks({x:-1500,y:0,z:-600}),
