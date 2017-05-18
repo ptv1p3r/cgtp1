@@ -142,6 +142,10 @@
                     object.position.x = position.x;
                     object.position.y = position.y;
                     object.position.z = position.z;
+
+                    object.castShadow = true;
+                    object.receiveShadow = false;
+
                     scene.add( object );
 
                 });
@@ -203,6 +207,9 @@
             this.mesh.position.y = position.y;
             this.mesh.position.z = position.z;
             this.mesh.rotation.x = -Math.PI/2;
+
+            this.mesh.castShadow = false;
+            this.mesh.receiveShadow = true;
         }
 
 
@@ -258,6 +265,10 @@
             renderer.setClearColor(0x000000);
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(WIDTH, HEIGHT);
+            renderer.shadowMapEnabled = true;
+            // to antialias the shadow
+            renderer.shadowMapType = THREE.PCFSoftShadowMap;
+
             document.body.appendChild(renderer.domElement);
 
             //CAMERA CONTROL
@@ -265,8 +276,19 @@
             scene.add( controls.getObject() );
 
             //LIGHTS
-            var light = new THREE.AmbientLight(0xffffff, 1.0);
-            scene.add(light);
+            //var light = new THREE.AmbientLight(0xffffff, 1.0);
+           // scene.add(light);
+
+            // White directional light at half intensity shining from the top.
+            var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+            directionalLight.position.set(100, 100, 50);
+            directionalLight.castShadow = true;
+            directionalLight.shadowDarkness = 0.5;
+            directionalLight.shadowCameraVisible = true;
+
+            scene.add( directionalLight );
+
+
 
             this.createSkyBox();
 
