@@ -59,41 +59,6 @@
         constructor(position){
             super();
 
-//            var loader = new THREE.JSONLoader();
-//            loader.load( "models/coconut-tree.json", function( geometry, materials ) {
-//
-//                var mesh = new THREE.Mesh( geometry, new THREE.MultiMaterial(materials) );
-//                mesh.scale.set( 1, 1, 1 );
-//                mesh.position.y = position.y;
-//                mesh.position.z = position.z;
-//                mesh.position.x = position.x;
-//
-//                scene.add( mesh );
-//
-//            } );
-
-
-//            var mtLoader = new THREE.MTLLoader();
-//            mtLoader.setPath("models/");
-//            mtLoader.load( "coconut-tree.mtl", function (materials) {
-//
-//                materials.preload();
-//
-//                var objLoader = new THREE.OBJLoader();
-//                objLoader.setMaterials(materials);
-//
-//                objLoader.setPath("models/");
-//                objLoader.load( "coconut-tree.obj", function (object) {
-//
-//                    object.position.x = position.x;
-//                    object.position.y = position.y;
-//                    object.position.z = position.z;
-//                    scene.add( object );
-//
-//                });
-//
-//            })
-
             var loader = new THREE.ObjectLoader();
             loader.load("models/fire-wood.json", function( mesh) {
                 mesh.scale.set( 1, 1, 1 );
@@ -177,14 +142,6 @@
                 scene.add( mesh );
 
             } );
-
-//            var loader = new THREE.ObjectLoader();
-//            loader.load("models/coconut-tree.json", function ( obj, materials ) {
-//                obj.position.x = position.x;
-//                obj.position.y = position.y;
-//                obj.position.z = position.z;
-//                scene.add( obj );
-//            });
         }
 
         getMesh(){
@@ -215,11 +172,6 @@
             this.mesh.position.z = position.z;
 
             this.mesh.add(sph);
-        }
-
-        update(){
-            //this.mesh.rotation.x += 0.1;
-            //this.mesh.rotation.y += 0.1;
         }
 
         getMesh(){
@@ -278,6 +230,22 @@
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
             camera.position.y = 180;
             //camera.lookAt(scene.position);
+
+            //Cria AudioListener e adiciona a camera
+            var listener = new THREE.AudioListener();
+            camera.add( listener );
+
+            // Cria um audio source global
+            var sound = new THREE.Audio( listener );
+            var audioLoader = new THREE.AudioLoader();
+
+            //Carrega o som e set o buffer de audio
+            audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
+                sound.setBuffer( buffer );
+                sound.setLoop(true);
+                sound.setVolume(0.5);
+                sound.play();
+            });
 
             //RENDERER
             renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
@@ -505,11 +473,11 @@
         new Wood({x:440,y:220,z:10}),new Wood({x:450,y:850,z:10}),
         new Wood({x:648,y:350,z:10}),new Wood({x:980,y:880,z:10}),
         new Wood({x:400,y:380,z:10}),new Wood({x:780,y:655,z:10}),
-        new Rocks({x:400,y:0,z:10}),new Rocks({x:600,y:0,z:10}),
-        new Rocks({x:800,y:0,z:10}),new Rocks({x:300,y:0,z:10}),
-        new Rocks({x:700,y:0,z:10}),new Rocks({x:700,y:0,z:10}),
-        new Rocks({x:110,y:0,z:10}),new Rocks({x:900,y:0,z:10}),
-        new Rocks({x:550,y:0,z:10}),new Rocks({x:400,y:0,z:10})
+        new Rocks({x:400,y:100,z:10}),new Rocks({x:600,y:0,z:10}),
+        new Rocks({x:800,y:200,z:10}),new Rocks({x:300,y:0,z:10}),
+        new Rocks({x:700,y:110,z:10}),new Rocks({x:700,y:0,z:10}),
+        new Rocks({x:110,y:550,z:10}),new Rocks({x:900,y:0,z:10}),
+        new Rocks({x:550,y:770,z:10}),new Rocks({x:400,y:0,z:10})
     ];
 
     /**
