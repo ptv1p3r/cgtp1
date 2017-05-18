@@ -108,8 +108,11 @@
                     object.position.y = position.y;
                     object.position.z = position.z;
 
-                    object.castShadow = true;
-                    object.receiveShadow = false;
+                    object.traverse( function ( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            child.castShadow = true;
+                        }
+                    });
 
                     scene.add( object );
 
@@ -171,12 +174,15 @@
                         object.scale.set(1, 1, 1);
                     }
 
+                    object.traverse( function ( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            child.castShadow = true;
+                        }
+                    });
+
                     object.position.x = position.x;
                     object.position.y = position.y;
                     object.position.z = position.z;
-
-                    object.castShadow = true;
-                    object.receiveShadow = false;
 
                     scene.add( object );
                 });
