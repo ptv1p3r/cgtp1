@@ -240,12 +240,12 @@
             var audioLoader = new THREE.AudioLoader();
 
             //Carrega o som e set o buffer de audio
-            audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
-                sound.setBuffer( buffer );
-                sound.setLoop(true);
-                sound.setVolume(0.5);
-                sound.play();
-            });
+//            audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
+//                sound.setBuffer( buffer );
+//                sound.setLoop(true);
+//                sound.setVolume(0.5);
+//                sound.play();
+//            });
 
             //RENDERER
             renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
