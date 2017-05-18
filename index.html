@@ -95,9 +95,7 @@
 //            })
 
             var loader = new THREE.ObjectLoader();
-            loader.load("models/fire-wood.json", function( geometry, materials ) {
-
-                var mesh = new THREE.Mesh( geometry, new THREE.MultiMaterial(materials) );
+            loader.load("models/fire-wood.json", function( mesh) {
                 mesh.scale.set( 1, 1, 1 );
 
                 mesh.position.y = position.y;
@@ -114,6 +112,22 @@
         }
     }
 
+    class Rocks extends Obj{
+        constructor(position){
+            super();
+            var loader = new THREE.OBJLoader();
+            loader.load( 'models/rock_stone.obj', function ( object ) {
+                object.position.x = position.x;
+                object.position.y = position.y;
+                object.position.z = position.z;
+                scene.add( object );
+            } );
+        }
+
+        getMesh(){
+            return this.mesh;
+        }
+    }
 
     class Tree extends Obj{
         constructor(position){
@@ -134,7 +148,7 @@
             } );
 
 //            var loader = new THREE.ObjectLoader();
-//            loader.load("models/coconut-tree.json", function ( obj ) {
+//            loader.load("models/coconut-tree.json", function ( obj, materials ) {
 //                obj.position.x = position.x;
 //                obj.position.y = position.y;
 //                obj.position.z = position.z;
@@ -450,16 +464,17 @@
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
         new Totem({width: 40, height: 550, depth:10},{x:5,y:4,z:-2}),
-        new Tree({x:-500,y:250,z:-200}),new Tree({x:-1000,y:250,z:800}),
+        new Tree({x:500,y:250,z:-200}),new Tree({x:-1000,y:250,z:800}),
         new Tree({x:700,y:250,z:-400}),new Tree({x:-1800,y:250,z:-300}),
-        new Tree({x:-100,y:250,z:-200}),new Tree({x:-2000,y:250,z:800}),
+        new Tree({x:100,y:250,z:-200}),new Tree({x:-2000,y:250,z:800}),
         new Tree({x:200,y:250,z:-100}),new Tree({x:-3800,y:250,z:-500}),
-        new Tree({x:-900,y:250,z:-280}),new Tree({x:-200,y:200,z:780}),
+        new Tree({x:900,y:250,z:-280}),new Tree({x:-200,y:200,z:780}),
         new Wood({x:40,y:100,z:10}),new Wood({x:100,y:120,z:10}),
         new Wood({x:55,y:555,z:10}),new Wood({x:80,y:200,z:10}),
         new Wood({x:440,y:220,z:10}),new Wood({x:450,y:850,z:10}),
         new Wood({x:648,y:350,z:10}),new Wood({x:980,y:880,z:10}),
         new Wood({x:400,y:380,z:10}),new Wood({x:780,y:655,z:10}),
+        new Rocks({x:400,y:0,z:10})
     ];
 
     /**
