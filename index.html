@@ -284,7 +284,6 @@
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
             camera.position.y = 180;
-            //camera.lookAt(scene.position);
 
             //Cria AudioListener e adiciona a camera
             var listener = new THREE.AudioListener();
@@ -321,15 +320,14 @@
 
             document.body.appendChild(renderer.domElement);
 
-
-
             //CAMERA CONTROL
             controls = new THREE.PointerLockControls( camera );
             scene.add( controls.getObject() );
 
             //LIGHTS
             var ambientlight = new THREE.AmbientLight(0x212223);
-           // scene.add(ambientlight);
+            ambientlight.intensity = 0.5;
+            scene.add(ambientlight);
 
             var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
             directionalLight.position.set(100, 100, 50);
@@ -341,6 +339,7 @@
 
             var spotLight = new THREE.SpotLight( 0xffffff );
             spotLight.position.set( 700, 1000, 100 );
+            //spotLight.position.copy( camera.position );
             spotLight.intensity = 0.2;
 
             spotLight.castShadow = true;
@@ -561,22 +560,22 @@
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
         new Totem({width: 40, height: 550, depth:10},{x:5,y:4,z:-2}),
-        new Tree({x:500,y:0,z:-200}, 1),new Tree({x:-1000,y:0,z:800}, 1),
-        new Tree({x:700,y:0,z:-400}, 2),new Tree({x:-1800,y:0,z:-300}, 2),
-        new Tree({x:100,y:0,z:-200}, 3),new Tree({x:-2000,y:0,z:800}, 3),
-        new Tree({x:200,y:0,z:-100}, 4),new Tree({x:-3800,y:0,z:-500}, 4),
-        new Tree({x:900,y:0,z:-280}, 1),new Tree({x:-200,y:0,z:780}, 2),
-        new Tree({x:300,y:0,z:-100}, 3),new Tree({x:-100,y:0,z:500}, 4),
+        new Tree({x:500,y:0,z:-200}, 1),new Tree({x:150,y:0,z:800}, 1),
+        new Tree({x:700,y:0,z:-400}, 2),new Tree({x:350,y:0,z:-300}, 2),
+        new Tree({x:100,y:0,z:-200}, 3),new Tree({x:450,y:0,z:800}, 3),
+        new Tree({x:200,y:0,z:-100}, 4),new Tree({x:775,y:0,z:-500}, 4),
+        new Tree({x:900,y:0,z:-280}, 1),new Tree({x:445,y:0,z:780}, 2),
+        new Tree({x:300,y:0,z:-100}, 3),new Tree({x:540,y:0,z:500}, 4),
 //        new Wood({x:40,y:100,z:10}),new Wood({x:100,y:120,z:10}),
 //        new Wood({x:55,y:555,z:10}),new Wood({x:80,y:200,z:10}),
 //        new Wood({x:440,y:220,z:10}),new Wood({x:450,y:850,z:10}),
 //        new Wood({x:648,y:350,z:10}),new Wood({x:980,y:880,z:10}),
 //        new Wood({x:400,y:380,z:10}),new Wood({x:780,y:655,z:10}),
-        new Rocks({x:400,y:100,z:10}),new Rocks({x:600,y:0,z:10}),
-        new Rocks({x:800,y:200,z:10}),new Rocks({x:300,y:0,z:10}),
-        new Rocks({x:700,y:110,z:10}),new Rocks({x:700,y:0,z:10}),
+        new Rocks({x:400,y:1000,z:10}),new Rocks({x:600,y:0,z:10}),
+        new Rocks({x:800,y:2000,z:10}),new Rocks({x:300,y:0,z:10}),
+        new Rocks({x:700,y:1100,z:10}),new Rocks({x:700,y:0,z:10}),
         new Rocks({x:110,y:550,z:10}),new Rocks({x:900,y:0,z:10}),
-        new Rocks({x:550,y:770,z:10}),new Rocks({x:400,y:0,z:10})
+        new Rocks({x:550,y:770,z:10}),new Rocks({x:2500,y:0,z:10})
     ];
 
     /**
