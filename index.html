@@ -196,7 +196,7 @@
 
             var sph = new THREE.Mesh(
                 new THREE.SphereGeometry(25, 16, 16),
-                new THREE.MeshBasicMaterial({color: 0xff00ff})
+                new THREE.MeshLambertMaterial({color: 0xff00ff})
             );
             sph.position.x = position.x;
             sph.position.y = position.y + 250;
@@ -205,7 +205,7 @@
 
             this.geometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
             var woodTexture = THREE.ImageUtils.loadTexture('images/wood-texture.jpg'); //new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
-            this.material = new THREE.MeshBasicMaterial({map:woodTexture,side:THREE.DoubleSide});
+            this.material = new THREE.MeshLambertMaterial({map:woodTexture,side:THREE.DoubleSide});
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
@@ -228,7 +228,8 @@
         constructor(size,position){
             super();
             this.geometry = new THREE.PlaneGeometry(size.width,size.height);
-            this.material = new THREE.MeshBasicMaterial();
+            //this.material = new THREE.MeshBasicMaterial();
+            this.material = new THREE.MeshLambertMaterial();
 
             this.material.map = THREE.ImageUtils.loadTexture('images/floor.jpg');            // Diffuse Texture
 //            this.material.bumpMap = THREE.ImageUtils.loadTexture('images/earthmap4k.jpg');       // Bump Texture
@@ -243,7 +244,7 @@
             this.mesh.position.z = position.z;
             this.mesh.rotation.x = -Math.PI/2;
 
-            this.mesh.castShadow = false;
+            //this.mesh.castShadow = false;
             this.mesh.receiveShadow = true;
         }
 
@@ -272,7 +273,7 @@
         createScene() {
             //SCENE
             scene = new THREE.Scene();
-            scene.fog = new THREE.Fog(0xFFFFFF, 0.5, 2000);
+            //scene.fog = new THREE.Fog(0xFFFFFF, 0.5, 2000);
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -301,6 +302,14 @@
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(WIDTH, HEIGHT);
             renderer.shadowMapEnabled = true;
+            renderer.shadowMapSoft = true;
+            renderer.shadowCameraNear = 3;
+            renderer.shadowCameraFar = camera.far;
+            renderer.shadowCameraFov = 50;
+            renderer.shadowMapBias = 0.0039;
+            renderer.shadowMapDarkness = 0.5;
+            renderer.shadowMapWidth = 1024;
+            renderer.shadowMapHeight = 1024;
             // to antialias the shadow
             renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
@@ -313,8 +322,8 @@
             scene.add( controls.getObject() );
 
             //LIGHTS
-            //var light = new THREE.AmbientLight(0xffffff, 1.0);
-           // scene.add(light);
+            var ambientlight = new THREE.AmbientLight(0x212223);
+            scene.add(ambientlight);
 
             // White directional light at half intensity shining from the top.
             var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -325,20 +334,20 @@
 
             scene.add( directionalLight );
 
-//            var spotLight = new THREE.SpotLight( 0xffffff );
-//            spotLight.position.set( 700, 1000, 100 );
-//
-//            spotLight.castShadow = true;
-//            spotLight.shadowCameraVisible = true;
-//
-//            spotLight.shadowMapWidth = 2048;
-//            spotLight.shadowMapHeight = 2048;
-//
-//            spotLight.shadowCameraNear = 100;
-//            spotLight.shadowCameraFar = 2000;
-//            spotLight.shadowCameraFov = 30;
-//
-//            scene.add( spotLight );
+            var spotLight = new THREE.SpotLight( 0xffffff );
+            spotLight.position.set( 700, 1000, 100 );
+
+            spotLight.castShadow = true;
+            spotLight.shadowCameraVisible = true;
+
+            spotLight.shadowMapWidth = 2048;
+            spotLight.shadowMapHeight = 2048;
+
+            spotLight.shadowCameraNear = 100;
+            spotLight.shadowCameraFar = 2000;
+            spotLight.shadowCameraFov = 30;
+
+            scene.add( spotLight );
 
 
             this.createSkyBox();
@@ -552,11 +561,11 @@
         new Tree({x:200,y:0,z:-100}, 4),new Tree({x:-3800,y:0,z:-500}, 4),
         new Tree({x:900,y:0,z:-280}, 1),new Tree({x:-200,y:0,z:780}, 2),
         new Tree({x:300,y:0,z:-100}, 3),new Tree({x:-100,y:0,z:500}, 4),
-        new Wood({x:40,y:100,z:10}),new Wood({x:100,y:120,z:10}),
-        new Wood({x:55,y:555,z:10}),new Wood({x:80,y:200,z:10}),
-        new Wood({x:440,y:220,z:10}),new Wood({x:450,y:850,z:10}),
-        new Wood({x:648,y:350,z:10}),new Wood({x:980,y:880,z:10}),
-        new Wood({x:400,y:380,z:10}),new Wood({x:780,y:655,z:10}),
+//        new Wood({x:40,y:100,z:10}),new Wood({x:100,y:120,z:10}),
+//        new Wood({x:55,y:555,z:10}),new Wood({x:80,y:200,z:10}),
+//        new Wood({x:440,y:220,z:10}),new Wood({x:450,y:850,z:10}),
+//        new Wood({x:648,y:350,z:10}),new Wood({x:980,y:880,z:10}),
+//        new Wood({x:400,y:380,z:10}),new Wood({x:780,y:655,z:10}),
         new Rocks({x:400,y:100,z:10}),new Rocks({x:600,y:0,z:10}),
         new Rocks({x:800,y:200,z:10}),new Rocks({x:300,y:0,z:10}),
         new Rocks({x:700,y:110,z:10}),new Rocks({x:700,y:0,z:10}),
