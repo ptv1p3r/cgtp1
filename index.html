@@ -129,19 +129,46 @@
         constructor(position){
             super();
 
-            var loader = new THREE.JSONLoader();
-            loader.load( "models/coconut-tree.json", function( geometry, materials ) {
+//            var loader = new THREE.JSONLoader();
+//            loader.load( "models/coconut-tree.json", function( geometry, materials ) {
+//
+//                var mesh = new THREE.Mesh( geometry, new THREE.MultiMaterial(materials) );
+//                mesh.scale.set( 1, 1, 1 );
+//
+//                mesh.position.y = position.y;
+//                mesh.position.z = position.z;
+//                mesh.position.x = position.x;
+//
+//                scene.add( mesh );
+//
+//            } );
 
-                var mesh = new THREE.Mesh( geometry, new THREE.MultiMaterial(materials) );
-                mesh.scale.set( 1, 1, 1 );
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/DeadTree1.mtl", function (materials) {
 
-                mesh.position.y = position.y;
-                mesh.position.z = position.z;
-                mesh.position.x = position.x;
+                materials.preload();
 
-                scene.add( mesh );
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
 
-            } );
+                objLoader.load( "models/DeadTree1.obj", function (object) {
+                    object.scale.set( 1, 1, 1);
+                    object.position.x = position.x;
+                    object.position.y = position.y;
+                    object.position.z = position.z;
+                    scene.add( object );
+
+                });
+
+            })
+
+//            var loader = new THREE.ObjectLoader();
+//            loader.load("models/coconut-tree.json", function ( obj, materials ) {
+//                obj.position.x = position.x;
+//                obj.position.y = position.y;
+//                obj.position.z = position.z;
+//                scene.add( obj );
+//            });
         }
 
         getMesh(){
@@ -463,11 +490,11 @@
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
         new Totem({width: 40, height: 550, depth:10},{x:5,y:4,z:-2}),
-        new Tree({x:500,y:250,z:-200}),new Tree({x:-1000,y:250,z:800}),
-        new Tree({x:700,y:250,z:-400}),new Tree({x:-1800,y:250,z:-300}),
-        new Tree({x:100,y:250,z:-200}),new Tree({x:-2000,y:250,z:800}),
-        new Tree({x:200,y:250,z:-100}),new Tree({x:-3800,y:250,z:-500}),
-        new Tree({x:900,y:250,z:-280}),new Tree({x:-200,y:200,z:780}),
+        new Tree({x:500,y:0,z:-200}),new Tree({x:-1000,y:0,z:800}),
+        new Tree({x:700,y:0,z:-400}),new Tree({x:-1800,y:0,z:-300}),
+        new Tree({x:100,y:0,z:-200}),new Tree({x:-2000,y:0,z:800}),
+        new Tree({x:200,y:0,z:-100}),new Tree({x:-3800,y:0,z:-500}),
+        new Tree({x:900,y:0,z:-280}),new Tree({x:-200,y:0,z:780}),
         new Wood({x:40,y:100,z:10}),new Wood({x:100,y:120,z:10}),
         new Wood({x:55,y:555,z:10}),new Wood({x:80,y:200,z:10}),
         new Wood({x:440,y:220,z:10}),new Wood({x:450,y:850,z:10}),
