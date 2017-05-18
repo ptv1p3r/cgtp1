@@ -61,20 +61,28 @@
         constructor(position){
             super();
 
-            var loader = new THREE.ObjectLoader();
-            loader.load("models/fire-wood.json", function( mesh) {
-                mesh.scale.set( 1, 1, 1 );
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/CobbleStones.mtl", function (materials) {
 
-                mesh.position.y = position.y;
-                mesh.position.z = position.z;
-                mesh.position.x = position.x;
+                materials.preload();
 
-                mesh.castShadow = true;
-                mesh.receiveShadow = false;
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
 
-                scene.add( mesh );
+                objLoader.load( "models/CobbleStones.obj", function (object) {
+                    object.scale.set( 1, 1, 1);
+                    object.position.x = position.x;
+                    object.position.y = position.y;
+                    object.position.z = position.z;
 
-            });
+                    object.castShadow = true;
+                    object.receiveShadow = false;
+
+                    scene.add( object );
+
+                });
+
+            })
         }
 
         getMesh(){
