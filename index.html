@@ -428,6 +428,11 @@
 
             this.poleMesh.add(sph);
 
+            var spotlight = new THREE.SpotLight(0xffffff);
+            spotlight.position.set(sph.position.x,sph.position.y,sph.position.z);
+            spotlight.lookAt(sph);
+            scene.add(spotlight);
+
             //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
             this.poleMesh.castShadow = true;
@@ -513,21 +518,19 @@
             //LIGHTS
             var ambientlight = new THREE.AmbientLight(0xffffff);
             ambientlight.intensity = 0.2;
-            scene.add(ambientlight);
+            //scene.add(ambientlight);
 
-//            var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
-//           // directionalLight.position.set(100, 100, 50);
-//            directionalLight.position.set( -60, 20, 100 );
-//            directionalLight.castShadow = true;
-//            directionalLight.shadowDarkness = 0.2;
-//            directionalLight.shadowCameraVisible = true;
-//            directionalLight.shadowMapWidth = 2048;
-//            directionalLight.shadowMapHeight = 2048;
-//            directionalLight.shadowCameraNear = 100;
-//            directionalLight.shadowCameraFar = 2048;
-//            directionalLight.shadowCameraFov = 30;
-
-//  .          scene.add( directionalLight );
+            var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.02);
+            directionalLight.position.set( -4000, 4000, -4000 );
+            directionalLight.castShadow = true;
+            directionalLight.shadowDarkness = 0.2;
+            directionalLight.shadowCameraVisible = true;
+            directionalLight.shadowMapWidth = 2048;
+            directionalLight.shadowMapHeight = 2048;
+            directionalLight.shadowCameraNear = 100;
+            directionalLight.shadowCameraFar = 2048;
+            directionalLight.shadowCameraFov = 30;
+            //scene.add( directionalLight );
 
             var spotLight = new THREE.SpotLight( 0xffffff );
             spotLight.position.set( -4000, 4000, -4000 );
