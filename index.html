@@ -35,7 +35,7 @@
         ASPECT = WIDTH / HEIGHT,
         NEAR = 1,
         FAR = 10000,
-        MOVEMENT_SPEED = 4000;    //movement speed
+        MOVEMENT_SPEED = 40000;    //movement speed
 
     var scene, renderer, camera, controls, material;
 
@@ -251,21 +251,12 @@
     }
 
     class Path extends Obj {
-        constructor(position, type, rotation) {
+        constructor(position, rotation) {
             super();
             this.geometry = new THREE.PlaneGeometry(512, 256);
             this.material = new THREE.MeshLambertMaterial();
 
-            switch (type) {
-                case 1: //Direito
-                    this.material.map = THREE.ImageUtils.loadTexture("images/dirt_road.jpg");
-                    break;
-
-                case 2: //T
-                    this.material.map = THREE.ImageUtils.loadTexture("images/dirt_road_T.jpg");
-                    break;
-            }
-
+            this.material.map = THREE.ImageUtils.loadTexture("images/dirt_road.jpg");
 
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
@@ -277,13 +268,16 @@
             switch (rotation) {
                 case 1: //Vertical
                     this.mesh.rotation.x = -Math.PI / 2;
-                    this.mesh.rotation.z = Math.PI; //messed up a texture, TODO: fix that shit
                     break;
 
-                case 2: //Horizontal
+                case 2: // right
                     this.mesh.rotation.x = -Math.PI / 2;
-                    this.mesh.rotation.z = Math.PI / 2;
+                    this.mesh.rotation.z = Math.PI / 4;
                     break;
+
+                case 3:
+                    this.mesh.rotation.x = -Math.PI / 2;
+                    this.mesh.rotation.z = -Math.PI / 4;
             }
 
             this.mesh.receiveShadow = true;
@@ -678,19 +672,19 @@
         new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
 
-        new Path({x:149,y:0,z:10}, 1, 1),new Path({x:661,y:0,z:10}, 1, 1),
-        new Path({x:1173,y:0,z:10}, 1, 1),new Path({x:1685,y:0,z:10}, 1, 1),
-        new Path({x:2197,y:0,z:10}, 1, 1),new Path({x:2709,y:0,z:10}, 1, 1),
-        new Path({x:3221,y:0,z:10}, 1, 1),new Path({x:3733,y:0,z:10}, 1, 1),
-        new Path({x:4245,y:0,z:10}, 1, 1),
+        new Path({x:149,y:0,z:10}, 1),new Path({x:661,y:0,z:10}, 1),
+        new Path({x:1173,y:0,z:10}, 1),new Path({x:1685,y:0,z:10}, 1),
+        new Path({x:2197,y:0,z:10}, 1),new Path({x:2709,y:0,z:10}, 1),
+        new Path({x:3221,y:0,z:10}, 1),new Path({x:3733,y:0,z:10}, 1),
+        new Path({x:4245,y:0,z:10}, 1),
         new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
-        new Path({x:-363,y:0,z:10}, 1, 1),new Path({x:-875,y:0,z:10},1 ,1),
-        new Path({x:-1259,y:0,z:10}, 2, 2),//new Path({x:-1500,y:0,z:-600}),
+        new Path({x:-363,y:0,z:10}, 1),new Path({x:-875,y:0,z:10}, 1),
+        new Path({x:-1252.5,y:0,z:228.5}, 2), new Path({x:-1252.5,y:0,z:-208.5}, 3),
         // Desvio
-        new Path({x:-1500,y:0,z:600}, 2),
+       // new Path({x:-1500,y:0,z:600}, 2),
         new Tree({x:-1500,y:0,z:10}, 3),
         // cemiterio
-        new Path({x:-2000,y:0,z:900}, 2),new Rocks({x:-2000,y:0,z:1200}),
+        //new Path({x:-2000,y:0,z:900}, 2),new Rocks({x:-2000,y:0,z:1200}),
         new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
         new Tree({x:-1000,y:0,z:500}, 1),new Tree({x:-1900,y:0,z:500}, 1),
         new RockStack({x:-2500,y:0,z:-500},1),new RockStack({x:-2500,y:0,z:2000},1),
