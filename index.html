@@ -26,6 +26,8 @@
 
 <script>
     var myCanvas = document.getElementById('myCanvas');
+    var blocker = document.getElementById( 'blocker' );             //chama o blocker, para ativacao do utilizador e comecar o lock
+    var instructions = document.getElementById( 'instructions' );   //janela de instrucoes
 
     var WIDTH = window.innerWidth,
         HEIGHT = window.innerHeight,
@@ -45,12 +47,7 @@
     var moveLeft = false;
     var moveRight = false;
     var updateCam = 1;  //variavel para atualizar a camera, so passa a 1 apos o primeiro movimentos
-
-    var blocker = document.getElementById( 'blocker' ); //chama o blocker, para ativacao do utilizador e comecar o lock
-    var instructions = document.getElementById( 'instructions' );   //janela de instrucoes
-
     var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-
     var sound = null;
 
     class Obj{
@@ -293,7 +290,6 @@
 
         }
 
-
         getMesh() {
             return this.mesh;
         }
@@ -315,7 +311,6 @@
 
             this.mesh.castShadow = true;
         }
-
 
         getMesh(){
             return this.mesh;
@@ -673,8 +668,13 @@
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
-        new Tree({x:3000,y:0,z:-200}, 4),new Tree({x:3000,y:0,z:200}, 4),
-        new Tree({x:4000,y:0,z:-200}, 1),new Tree({x:4000,y:0,z:200}, 2),
+        new Tree({x:3000,y:0,z:-200}, 2),new Tree({x:3000,y:0,z:200}, 4),
+        new Tree({x:4000,y:0,z:-200}, 1),new Tree({x:3700,y:0,z:325}, 2),
+        new Tree({x:2652,y:0,z:-1355}, 3),new Tree({x:2500,y:0,z:1250}, 3),
+        new Tree({x:1500,y:0,z:-985}, 3),new Tree({x:1500,y:0,z:1125}, 3),
+        new Tree({x:800,y:0,z:-900}, 3),new Tree({x:800,y:0,z:500}, 3),
+        new Tree({x:200,y:0,z:-985}, 3),new Tree({x:200,y:0,z:725}, 3),
+        new Tree({x:-200,y:0,z:-200}, 3),new Tree({x:-200,y:0,z:200}, 3),
         new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
 
