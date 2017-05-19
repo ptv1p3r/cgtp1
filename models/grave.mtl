@@ -26,5 +26,5 @@ newmtl fence
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.1800 0.1800 0.1800
 	Ke 0.0000 0.0000 0.0000
-	map_Ka images/REDRUST4.JPG
-	map_Kd images/REDRUST4.JPG
+	map_Ka images/redrust4.jpg
+	map_Kd images/redrust4.jpg
