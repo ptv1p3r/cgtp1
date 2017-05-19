@@ -112,49 +112,23 @@
         constructor(position){
             super();
 
-            var mtLoader = new THREE.MTLLoader();
-            mtLoader.setPath("models/");
-            mtLoader.load( "grave.mtl", function (materials) {
-
-                materials.preload();
-
-                var objLoader = new THREE.OBJLoader();
-                objLoader.setMaterials(materials);
-
-                objLoader.setPath("models/");
-
-                objLoader.load( "grave.obj", function (object) {
-                    object.scale.set( 1, 1, 1);
-                    object.position.x = position.x;
-                    object.position.y = position.y;
-                    object.position.z = position.z;
-                    object.rotation.x = Math.PI / 2;
-
-                    object.traverse( function ( child ) {
-                        if ( child instanceof THREE.Mesh ) {
-                            child.castShadow = true;
-                        }
-                    });
-
-                    scene.add( object );
-
-                });
-
-            })
-
 //            var mtLoader = new THREE.MTLLoader();
-//            mtLoader.load( "models/Rock1.mtl", function (materials) {
+//            mtLoader.setPath("models/");
+//            mtLoader.load( "grave.mtl", function (materials) {
 //
 //                materials.preload();
 //
 //                var objLoader = new THREE.OBJLoader();
 //                objLoader.setMaterials(materials);
 //
-//                objLoader.load( "models/Rock1.obj", function (object) {
-//                    object.scale.set( 50, 50, 50);
+//                objLoader.setPath("models/");
+//
+//                objLoader.load( "grave.obj", function (object) {
+//                    object.scale.set( 1, 1, 1);
 //                    object.position.x = position.x;
 //                    object.position.y = position.y;
 //                    object.position.z = position.z;
+//                    object.rotation.x = Math.PI / 2;
 //
 //                    object.traverse( function ( child ) {
 //                        if ( child instanceof THREE.Mesh ) {
@@ -167,6 +141,32 @@
 //                });
 //
 //            })
+
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/Rock1.mtl", function (materials) {
+
+                materials.preload();
+
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+
+                objLoader.load( "models/Rock1.obj", function (object) {
+                    object.scale.set( 50, 50, 50);
+                    object.position.x = position.x;
+                    object.position.y = position.y;
+                    object.position.z = position.z;
+
+                    object.traverse( function ( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            child.castShadow = true;
+                        }
+                    });
+
+                    scene.add( object );
+
+                });
+
+            })
 
         }
 
@@ -399,7 +399,7 @@
             //SCENE
             scene = new THREE.Scene();
 
-            //scene.fog = new THREE.Fog(0xd5c7e8, 0.5, 2000);
+            scene.fog = new THREE.Fog(0xd5c7e8, 0.5, 2000);
             //scene.fog = new THREE.Fog(0xCCCFBC, 0.5, 2000); //a usar
 
 
@@ -451,7 +451,7 @@
 
             //LIGHTS
             var ambientlight = new THREE.AmbientLight(0xffffff);
-            ambientlight.intensity = 1;
+            ambientlight.intensity = 0.2;
             scene.add(ambientlight);
 
 //            var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -727,9 +727,12 @@
         new Tree({x:800,y:0,z:-900}, 3),new Tree({x:800,y:0,z:500}, 3),
         new Tree({x:200,y:0,z:-985}, 3),new Tree({x:200,y:0,z:725}, 3),
         new Tree({x:-200,y:0,z:-500}, 3),new Tree({x:-200,y:0,z:600}, 3),
+        new Rocks({x:-200,y:0,z:-200}), new Rocks({x:200,y:0,z:200}),
+        new Rocks({x:-800,y:0,z:-200}), new Rocks({x:800,y:0,z:200}),
+        new Rocks({x:-1000,y:0,z:-200}), new Rocks({x:1000,y:0,z:200}),
         new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
-        new Rocks({x:0, y:0, z:0}),
+
         new Path({x:149,y:0,z:10}, 1, 'S'),new Path({x:661,y:0,z:10}, 1, 'S'),
         new Path({x:1173,y:0,z:10}, 1, 'S'),new Path({x:1685,y:0,z:10}, 1, 'S'),
         new Path({x:2197,y:0,z:10}, 1, 'S'),new Path({x:2709,y:0,z:10}, 1, 'S'),
@@ -740,7 +743,7 @@
         // Desvio
         new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
         new Tree({x:-1500,y:0,z:10}, 3),
-        new Tree({x:-1970,y:0,z:-10}, 3),new Tree({x:-200,y:0,z:10}, 3),
+        new Tree({x:-1970,y:0,z:-255}, 3),new Tree({x:-1950,y:0,z:275}, 3),
         // cemiterio
         new Path({x:-2175,y:0,z:1135}, 6, 'L'),
         new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
