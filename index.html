@@ -690,7 +690,7 @@
             var shader = THREE.ShaderLib['cube']; // init cube shader from built-in lib
             shader.uniforms['tCube'].value = cubemap; // apply textures to shader
 
-            // create shader material
+            // shader material
             var skyBoxMaterial = new THREE.ShaderMaterial( {
                 fragmentShader: shader.fragmentShader,
                 vertexShader: shader.vertexShader,
@@ -700,7 +700,7 @@
             });
 
 
-            // create skybox mesh
+            // skybox mesh
             var skyboxSize = 8000;
 
             var skybox = new THREE.Mesh(
@@ -758,11 +758,10 @@
         new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
         new Tree({x:-1000,y:0,z:500}, 1),new Tree({x:-1900,y:0,z:500}, 1),
         new RockStack({x:-2500,y:0,z:-500},1),new RockStack({x:-2500,y:0,z:2000},1),
+        new Grave({x:-1550,y:0,z:1850}), new Grave({x:-1550,y:0,z:2150}),
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
-        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
-
-        new Grave({x:0,y:0,z:0})
+        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1)
 
     ];
 
