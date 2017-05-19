@@ -113,14 +113,17 @@
             super();
 
             var mtLoader = new THREE.MTLLoader();
-            mtLoader.load( "models/Rock1.mtl", function (materials) {
+            mtLoader.setPath("models/");
+            mtLoader.load( "streetlamp.mtl", function (materials) {
 
                 materials.preload();
 
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
 
-                objLoader.load( "models/Rock1.obj", function (object) {
+                objLoader.setPath("models/");
+
+                objLoader.load( "streetlamp.obj", function (object) {
                     object.scale.set( 50, 50, 50);
                     object.position.x = position.x;
                     object.position.y = position.y;
@@ -137,6 +140,32 @@
                 });
 
             })
+
+//            var mtLoader = new THREE.MTLLoader();
+//            mtLoader.load( "models/Rock1.mtl", function (materials) {
+//
+//                materials.preload();
+//
+//                var objLoader = new THREE.OBJLoader();
+//                objLoader.setMaterials(materials);
+//
+//                objLoader.load( "models/Rock1.obj", function (object) {
+//                    object.scale.set( 50, 50, 50);
+//                    object.position.x = position.x;
+//                    object.position.y = position.y;
+//                    object.position.z = position.z;
+//
+//                    object.traverse( function ( child ) {
+//                        if ( child instanceof THREE.Mesh ) {
+//                            child.castShadow = true;
+//                        }
+//                    });
+//
+//                    scene.add( object );
+//
+//                });
+//
+//            })
 
         }
 
@@ -201,6 +230,7 @@
                     object.position.x = position.x;
                     object.position.y = position.y;
                     object.position.z = position.z;
+                    object.side = THREE.BackSide;
 
                     scene.add( object );
                 });
@@ -698,7 +728,7 @@
         new Tree({x:-200,y:0,z:-500}, 3),new Tree({x:-200,y:0,z:600}, 3),
         new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
-
+        new Rocks({x:0, y:0, z:0}),
         new Path({x:149,y:0,z:10}, 1, 'S'),new Path({x:661,y:0,z:10}, 1, 'S'),
         new Path({x:1173,y:0,z:10}, 1, 'S'),new Path({x:1685,y:0,z:10}, 1, 'S'),
         new Path({x:2197,y:0,z:10}, 1, 'S'),new Path({x:2709,y:0,z:10}, 1, 'S'),
