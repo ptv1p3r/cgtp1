@@ -112,36 +112,6 @@
         constructor(position){
             super();
 
-//            var mtLoader = new THREE.MTLLoader();
-//            mtLoader.setPath("models/");
-//            mtLoader.load( "grave.mtl", function (materials) {
-//
-//                materials.preload();
-//
-//                var objLoader = new THREE.OBJLoader();
-//                objLoader.setMaterials(materials);
-//
-//                objLoader.setPath("models/");
-//
-//                objLoader.load( "grave.obj", function (object) {
-//                    object.scale.set( 1, 1, 1);
-//                    object.position.x = position.x;
-//                    object.position.y = position.y;
-//                    object.position.z = position.z;
-//                    object.rotation.x = Math.PI / 2;
-//
-//                    object.traverse( function ( child ) {
-//                        if ( child instanceof THREE.Mesh ) {
-//                            child.castShadow = true;
-//                        }
-//                    });
-//
-//                    scene.add( object );
-//
-//                });
-//
-//            })
-
             var mtLoader = new THREE.MTLLoader();
             mtLoader.load( "models/Rock1.mtl", function (materials) {
 
@@ -379,6 +349,45 @@
         }
     }
 
+    class Grave extends Obj{
+        constructor(position){
+            super();
+
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/dirt_grave.mtl", function (materials) {
+
+                materials.preload();
+
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+
+                objLoader.load( "models/dirt_grave.obj", function (object) {
+                    object.scale.set( 4, 4, 4);
+                    object.position.x = position.x;
+                    object.position.y = position.y;
+                    object.position.z = position.z;
+
+                    object.rotation.y = Math.PI / 2;
+
+                    object.traverse( function ( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            child.castShadow = true;
+                        }
+                    });
+
+                    scene.add( object );
+
+                });
+
+            })
+
+        }
+
+        getMesh(){
+            return this.mesh;
+        }
+    }
+
     class Aplication{
 
         /**
@@ -399,7 +408,7 @@
             //SCENE
             scene = new THREE.Scene();
 
-            scene.fog = new THREE.Fog(0xd5c7e8, 0.5, 2000);
+            //scene.fog = new THREE.Fog(0xd5c7e8, 0.5, 2000);
             //scene.fog = new THREE.Fog(0xCCCFBC, 0.5, 2000); //a usar
 
 
@@ -752,6 +761,8 @@
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
+
+        new Grave({x:0,y:0,z:0})
 
     ];
 

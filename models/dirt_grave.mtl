@@ -1,0 +1,57 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+
+newmtl rock
+	Ns 9.999999
+	Ni 1.500000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka images/rock_color.jpg
+	map_Kd images/rock_color.jpg
+	map_bump images/rock_bump.jpg
+	bump images/rock_bump.jpg
+
+newmtl cross
+	Ns 9.999999
+	Ni 1.500000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.058824 0.058824 0.058824
+	Ke 0.000000 0.000000 0.000000
+	map_Ka images/cross_color.jpg
+	map_Kd images/cross_color.jpg
+	map_bump images/cross_bump.jpg
+	bump images/cross_bump.jpg
+
+newmtl rope
+	Ns 5.000000
+	Ni 1.500000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.058824 0.058824 0.058824
+	Ke 0.000000 0.000000 0.000000
+	map_Ka images/rope_color.jpg
+	map_Kd images/rope_color.jpg
+	map_bump images/rope_bump.jpg
+	bump images/rope_bump.jpg
+
+newmtl dirt
+	Ns 5.000000
+	Ni 1.500000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.000000 0.000000 0.000000
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.058824 0.058824 0.058824
+	Ke 0.000000 0.000000 0.000000
+	map_Ka images/dirt_color.jpg
+	map_Kd images/dirt_color.jpg
+	map_bump images/dirt_bump.jpg
+	bump images/dirt_bump.jpg
