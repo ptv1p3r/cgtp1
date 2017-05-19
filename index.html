@@ -35,7 +35,7 @@
         ASPECT = WIDTH / HEIGHT,
         NEAR = 1,
         FAR = 10000,
-        MOVEMENT_SPEED = 4000;    //movement speed
+        MOVEMENT_SPEED = 10000;    //movement speed
 
     var scene, renderer, camera, controls, material;
 
@@ -251,33 +251,70 @@
     }
 
     class Path extends Obj {
-        constructor(position, rotation) {
+        constructor(position, rotation, type) {
             super();
-            this.geometry = new THREE.PlaneGeometry(512, 256);
-            this.material = new THREE.MeshLambertMaterial();
 
-            this.material.map = THREE.ImageUtils.loadTexture("images/dirt_road.jpg");
+            switch (type) {
+
+                case 'S':
+                    this.geometry = new THREE.PlaneGeometry(512, 256);
+                    this.material = new THREE.MeshLambertMaterial();
+                    this.material.map = THREE.ImageUtils.loadTexture("images/dirt_road.jpg");
+                    break;
+
+                case 'Y':
+                    this.geometry = new THREE.PlaneGeometry(1024, 1024);
+                    this.material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/Y_road.png' ), transparent: true});
+                    break;
+                case 'L':
+                    this.geometry = new THREE.PlaneGeometry(1024, 1024);
+                    this.material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/left_road.png' ), transparent: true});
+                    break;
+
+                case 'R':
+                    this.geometry = new THREE.PlaneGeometry(1024, 1024);
+                    this.material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/right_road.png' ), transparent: true});
+                    break;
+
+            }
+
 
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
             this.mesh.position.y = position.y;
             this.mesh.position.z = position.z;
-            this.mesh.rotation.x = -Math.PI / 2;
 
             switch (rotation) {
-                case 1: //Vertical
+                case 1: // Vertical
                     this.mesh.rotation.x = -Math.PI / 2;
                     break;
 
-                case 2: // right
+                case 2: // Y
+                    this.mesh.rotation.x = -Math.PI / 2;
+                    this.mesh.rotation.z = Math.PI / 2;
+                    break;
+
+                case 3: // /
+                    this.mesh.rotation.x = -Math.PI / 2;
+                    this.mesh.rotation.z = -Math.PI / 4;
+                    break;
+
+                case 4: // \
                     this.mesh.rotation.x = -Math.PI / 2;
                     this.mesh.rotation.z = Math.PI / 4;
                     break;
 
-                case 3:
+                case 5: // / -> right
                     this.mesh.rotation.x = -Math.PI / 2;
-                    this.mesh.rotation.z = -Math.PI / 4;
+                    this.mesh.rotation.z = Math.PI / 4;
+                    break;
+
+                case 6: // left <- \
+                    this.mesh.rotation.x = -Math.PI / 2;
+                    this.mesh.rotation.z = -(5 * Math.PI / 4);
+                    break;
+
             }
 
             this.mesh.receiveShadow = true;
@@ -662,24 +699,23 @@
         new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
 
-        new Path({x:149,y:0,z:10}, 1),new Path({x:661,y:0,z:10}, 1),
-        new Path({x:1173,y:0,z:10}, 1),new Path({x:1685,y:0,z:10}, 1),
-        new Path({x:2197,y:0,z:10}, 1),new Path({x:2709,y:0,z:10}, 1),
-        new Path({x:3221,y:0,z:10}, 1),new Path({x:3733,y:0,z:10}, 1),
-        new Path({x:4245,y:0,z:10}, 1),
+        new Path({x:149,y:0,z:10}, 1, 'S'),new Path({x:661,y:0,z:10}, 1, 'S'),
+        new Path({x:1173,y:0,z:10}, 1, 'S'),new Path({x:1685,y:0,z:10}, 1, 'S'),
+        new Path({x:2197,y:0,z:10}, 1, 'S'),new Path({x:2709,y:0,z:10}, 1, 'S'),
+        new Path({x:3221,y:0,z:10}, 1, 'S'),new Path({x:3733,y:0,z:10}, 1, 'S'),
+        new Path({x:4245,y:0,z:10}, 1, 'S'),
         new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
-        new Path({x:-363,y:0,z:10}, 1),new Path({x:-875,y:0,z:10}, 1),
-        new Path({x:-1252.5,y:0,z:228.5}, 2), new Path({x:-1252.5,y:0,z:-208.5}, 3),
+        new Path({x:-363,y:0,z:10}, 1, 'S'),new Path({x:-1131,y:0,z:10}, 2, 'Y'),
         // Desvio
-       // new Path({x:-1500,y:0,z:600}, 2),
+        new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
         new Tree({x:-1500,y:0,z:10}, 3),
         // cemiterio
-        //new Path({x:-2000,y:0,z:900}, 2),new Rocks({x:-2000,y:0,z:1200}),
+        new Path({x:-2175,y:0,z:1135}, 6, 'L'),//new Rocks({x:-2000,y:0,z:1200}),
         new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
         new Tree({x:-1000,y:0,z:500}, 1),new Tree({x:-1900,y:0,z:500}, 1),
         new RockStack({x:-2500,y:0,z:-500},1),new RockStack({x:-2500,y:0,z:2000},1),
         // casa
-        new Rocks({x:-2000,y:0,z:-1200}),new Tree({x:-2500,y:0,z:-1250},3),
+        new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
 
     ];
