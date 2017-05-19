@@ -237,9 +237,21 @@
             this.mesh.position.y = position.y;
             this.mesh.position.z = position.z;
 
-            this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
             this.mesh.add(sph);
+
+            this.geometry = new THREE.BoxGeometry(200, 500, 50);
+            var gravePointer = new THREE.Mesh(this.geometry, this.material);
+            gravePointer.position.x = position.x;
+            gravePointer.position.y = position.y;
+            gravePointer.position.z = position.z;
+
+            gravePointer.rotation.x = Math.PI / 2;
+            gravePointer.rotation.y = Math.PI / 2;
+
+            this.mesh.add(gravePointer);
+
+            //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
             this.mesh.castShadow = true;
             this.mesh.receiveShadow = false;
@@ -265,16 +277,22 @@
 
                 case 'Y':
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
-                    this.material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/Y_road.png' ), transparent: true});
+                    this.material = new THREE.MeshLambertMaterial();
+                    this.material.map = THREE.ImageUtils.loadTexture("images/Y_road.png");
+                    this.material.transparent = true;
                     break;
                 case 'L':
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
-                    this.material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/left_road.png' ), transparent: true});
+                    this.material = new THREE.MeshLambertMaterial();
+                    this.material.map = THREE.ImageUtils.loadTexture("images/left_road.png");
+                    this.material.transparent = true;
                     break;
 
                 case 'R':
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
-                    this.material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/right_road.png' ), transparent: true});
+                    this.material = new THREE.MeshLambertMaterial();
+                    this.material.map = THREE.ImageUtils.loadTexture("images/right_road.png");
+                    this.material.transparent = true;
                     break;
 
             }
