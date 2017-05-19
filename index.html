@@ -248,9 +248,32 @@
 
             gravePointer.rotation.z = Math.PI / 2;
 
+            // create a canvas element
+            this.canvas = document.createElement('canvas');
+            this.context = this.canvas.getContext('2d');
+            this.context.font = "Bold 15px Arial";
+            this.context.fillStyle = "rgb(0,0,0)";
+            this.context.fillText('GRAVEYARD', 0, 20);
+
+            // canvas contents will be used for a texture
+            this.texture = new THREE.Texture(this.canvas);
+            this.texture.needsUpdate = true;
+
+            this.material = new THREE.MeshLambertMaterial( {map: this.texture, side:THREE.DoubleSide } );
+            this.material.transparent = true;
+
+            this.graveMesh = new THREE.Mesh(
+                new THREE.PlaneGeometry(this.canvas.width, this.canvas.height),
+                this.material
+            );
+            this.graveMesh.position.set(-60,-105,2.55);
+            this.graveMesh.rotation.z = -Math.PI / 2;
+
+            gravePointer.add( this.graveMesh );
+
             this.mesh.add(gravePointer);
 
-            //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
+            this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
             this.mesh.castShadow = true;
             this.mesh.receiveShadow = false;
@@ -408,17 +431,16 @@
     class LightPole extends Obj{
         constructor(position){
             super();
-
             var sph = new THREE.Mesh(
-                new THREE.SphereGeometry(25, 16, 16),
+                new THREE.SphereGeometry(20, 16, 16),
                 new THREE.MeshLambertMaterial({color: 0xffff00})
             );
 
-            sph.position.x = 0;
-            sph.position.y = 220;
+            sph.position.x = 10;
+            sph.position.y = 200;
             sph.position.z = 0;
 
-            this.geometry = new THREE.CylinderGeometry(15, 25, 400);
+            this.geometry = new THREE.CylinderGeometry(10, 20, 400);
             this.material = new THREE.MeshLambertMaterial( {color: 0x2f4f4f} );
             this.poleMesh = new THREE.Mesh( this.geometry, this.material );
 
@@ -517,8 +539,9 @@
 
             //LIGHTS
             var ambientlight = new THREE.AmbientLight(0xffffff);
-            ambientlight.intensity = 0.2;
-            //scene.add(ambientlight);
+            ambientlight.intensity = 1;
+            //ambientlight.intensity = 0.2;
+            scene.add(ambientlight);
 
             var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.02);
             directionalLight.position.set( -4000, 4000, -4000 );
@@ -780,7 +803,7 @@
      */
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
-        new InformationPlate({width: 40, height: 550, depth:10},{x:-1400,y:0,z:10}),
+        new InformationPlate({width: 40, height: 550, depth:10},{x:3500,y:0,z:10}),
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
