@@ -478,8 +478,8 @@
 
             //LIGHTS
             var ambientlight = new THREE.AmbientLight(0xffffff);
-            ambientlight.intensity = 0.2;
-            scene.add(ambientlight);
+            //ambientlight.intensity = 0.2;
+            //scene.add(ambientlight);
 
 //            var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
 //           // directionalLight.position.set(100, 100, 50);
@@ -495,10 +495,10 @@
 
 //  .          scene.add( directionalLight );
 
-            var spotLight = new THREE.SpotLight( 0xf70000 );
-            spotLight.position.set( 1700, 1000, 100 );
+            var spotLight = new THREE.SpotLight( 0xffffff );
+            spotLight.position.set( -4000, 4000, -4000 );
             //spotLight.position.copy( camera.position );
-            spotLight.intensity = 0.5;
+            spotLight.intensity = 0.1;
 
             spotLight.castShadow = true;
             spotLight.shadowCameraVisible = true;
@@ -510,7 +510,7 @@
             spotLight.shadowCameraFar = 2048;
             spotLight.shadowCameraFov = 30;
 
-            scene.add( spotLight );
+            //scene.add( spotLight );
 
 
             this.createSkyBox();
