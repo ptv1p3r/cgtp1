@@ -567,12 +567,12 @@
                 objLoader.setMaterials(materials);
 
                 objLoader.load( "models/casa.obj", function (object) {
-                    object.scale.set( 4, 4, 4);
+                    object.scale.set( 13, 13, 13);
                     object.position.x = position.x;
                     object.position.y = position.y;
                     object.position.z = position.z;
 
-                    object.rotation.y = Math.PI / 2;
+                    object.rotation.y = -Math.PI/2;
 
                     object.traverse( function ( child ) {
                         if ( child instanceof THREE.Mesh ) {
@@ -697,9 +697,6 @@
             //SCENE
             scene = new THREE.Scene();
             scene.fog = new THREE.Fog( 0x000000, .5, 2500 );
-
-            var light = new THREE.AmbientLight( 0xffffff ); // soft white light
-            scene.add( light );
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -1083,7 +1080,7 @@
         new Tree({x:1750,y:0,z:-300}, 1),new Tree({x:1750,y:0,z:-1750}, 3),
         new Tree({x:1000,y:0,z:-2000}, 3),new Tree({x:1000,y:0,z:-1000}, 1),
         new Tree({x:250,y:0,z:-1700}, 1),new Tree({x:250,y:0,z:-1000}, 3),
-        new House ({x:0,y:0,z:0})
+        new House ({x:-2150,y:0,z:-2500})
     ];
 
     /**
