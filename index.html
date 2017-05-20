@@ -219,15 +219,7 @@
         constructor(size,position){
             super();
 
-            var sph = new THREE.Mesh(
-                new THREE.SphereGeometry(25, 16, 16),
-                new THREE.MeshLambertMaterial({color: 0xff00ff})
-            );
-            sph.position.x = 0;
-            sph.position.y = 250;
-            sph.position.z = 0;
-
-
+            //tabua principal
             this.geometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
             var woodTexture = THREE.ImageUtils.loadTexture('images/wood-texture.jpg'); //new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
             this.material = new THREE.MeshLambertMaterial({map:woodTexture,side:THREE.DoubleSide});
@@ -237,41 +229,99 @@
             this.mesh.position.y = position.y;
             this.mesh.position.z = position.z;
 
+            //------ Grave -----//
 
-            this.mesh.add(sph);
+            //tabua do grave
+            this.geometry = new THREE.BoxGeometry(20, 100, 5);
+            this.gravePointer = new THREE.Mesh(this.geometry, this.material);
+            this.gravePointer.position.x = 50;
+            this.gravePointer.position.y = 240;
+            this.gravePointer.position.z = 6.5;
 
-            this.geometry = new THREE.BoxGeometry(40, 100, 5);
-            var gravePointer = new THREE.Mesh(this.geometry, this.material);
-            gravePointer.position.x = 0;
-            gravePointer.position.y = 200;
-            gravePointer.position.z = 6.5;
+            this.gravePointer.traverse( function ( child ) {
+                if ( child instanceof THREE.Mesh ) {
+                    child.castShadow = true;
+                }
+            });
 
-            gravePointer.rotation.z = Math.PI / 2;
+            this.gravePointer.rotation.z = Math.PI / 2;
 
-            // create a canvas element
+            // definicao do texto na tabua
             this.canvas = document.createElement('canvas');
             this.context = this.canvas.getContext('2d');
             this.context.font = "Bold 15px Arial";
             this.context.fillStyle = "rgb(0,0,0)";
             this.context.fillText('GRAVEYARD', 0, 20);
 
-            // canvas contents will be used for a texture
+            // texture
             this.texture = new THREE.Texture(this.canvas);
             this.texture.needsUpdate = true;
 
+            // material
             this.material = new THREE.MeshLambertMaterial( {map: this.texture, side:THREE.DoubleSide } );
             this.material.transparent = true;
 
-            this.graveMesh = new THREE.Mesh(
+            // grave text mesh
+            this.graveTextMesh = new THREE.Mesh(
                 new THREE.PlaneGeometry(this.canvas.width, this.canvas.height),
                 this.material
             );
-            this.graveMesh.position.set(-60,-105,2.55);
-            this.graveMesh.rotation.z = -Math.PI / 2;
 
-            gravePointer.add( this.graveMesh );
+            // posicionar na tabua o texto
+            this.graveTextMesh.position.set(-60,-105,2.6);
+            this.graveTextMesh.rotation.z = -Math.PI / 2;
 
-            this.mesh.add(gravePointer);
+            this.gravePointer.add( this.graveTextMesh );
+
+            this.mesh.add(this.gravePointer);
+
+            //------ Mansion -----//
+
+            // tabua da mansion
+            this.geometry = new THREE.BoxGeometry(20, 100, 5);
+            this.material = new THREE.MeshLambertMaterial({map:woodTexture,side:THREE.DoubleSide});
+            this.mansionPointer = new THREE.Mesh(this.geometry, this.material);
+            this.mansionPointer.position.x = -50;
+            this.mansionPointer.position.y = 220;
+            this.mansionPointer.position.z = 6.5;
+
+            this.mansionPointer.traverse( function ( child ) {
+                if ( child instanceof THREE.Mesh ) {
+                    child.castShadow = true;
+                }
+            });
+
+            this.mansionPointer.rotation.z = Math.PI / 2;
+
+            // definicao do texto na tabua
+            this.canvas = document.createElement('canvas');
+            this.context = this.canvas.getContext('2d');
+            this.context.font = "Bold 15px Arial";
+            this.context.fillStyle = "rgb(0,0,0)";
+            this.context.fillText('MANSION', 0, 20);
+
+            // texture
+            this.texture = new THREE.Texture(this.canvas);
+            this.texture.needsUpdate = true;
+
+            // material
+            this.material = new THREE.MeshLambertMaterial( {map: this.texture, side:THREE.DoubleSide } );
+            this.material.transparent = true;
+
+            // mansion text mesh
+            this.mansionTextMesh = new THREE.Mesh(
+                new THREE.PlaneGeometry(this.canvas.width, this.canvas.height),
+                this.material
+            );
+
+            // posicionar na tabua o texto
+            this.mansionTextMesh.position.set(-60,-110,2.6);
+            this.mansionTextMesh.rotation.z = -Math.PI / 2;
+
+            this.mansionPointer.add(this.mansionTextMesh );
+
+            this.mesh.add(this.mansionPointer);
+
 
             this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
@@ -817,7 +867,7 @@
      */
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
-        //new InformationPlate({width: 40, height: 550, depth:10},{x:3500,y:0,z:10}),
+        new InformationPlate({width: 30, height: 550, depth:10},{x:-1400,y:0,z:10}),
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
