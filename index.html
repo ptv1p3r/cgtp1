@@ -510,6 +510,7 @@
             this.poleMesh.position.x = position.x;
             this.poleMesh.position.y = position.y + 200;
             this.poleMesh.position.z = position.z;
+            this.poleMesh.rotation.y = 46;
             this.poleMesh.castShadow = true;
 
             this.poleMesh.add(this.armMesh);
@@ -879,7 +880,7 @@
      */
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
-        new InformationPlate({width: 30, height: 550, depth:10},{x:-1400,y:0,z:10}),
+        new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:10}),
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
@@ -916,8 +917,8 @@
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
-        new LightPole({x:3500,y:0,z:10})
-
+        new LightPole({x:3500,y:0,z:200}),new LightPole({x:1550,y:0,z:-200}),
+        new LightPole({x:-1300,y:0,z:-10})
     ];
 
     /**
