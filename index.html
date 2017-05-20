@@ -431,7 +431,7 @@
             this.mesh.position.z = position.z;
             this.mesh.rotation.x = -Math.PI/2;
 
-            this.mesh.castShadow = true;
+            this.mesh.receiveShadow = true;
         }
 
         getMesh(){
@@ -515,7 +515,7 @@
             this.poleMesh.add(this.armMesh);
             this.poleMesh.add(this.lampMesh);
 
-            var spotlight = new THREE.SpotLight(0xffffff);
+            var spotlight = new THREE.SpotLight(0x1b150a);
             spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
             spotlight.target = this.poleMesh;
             spotlight.castShadow = true;
@@ -530,9 +530,6 @@
             this.poleMesh.add(spotlight);
 
             //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
-
-
-
         }
 
         getMesh(){
