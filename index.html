@@ -710,8 +710,7 @@
             renderer.shadowMapDarkness = 0.5;
             renderer.shadowMapWidth = SHADOWMAPWIDTH;
             renderer.shadowMapHeight = SHADOWMAPHEIGHT;
-            // to antialias the shadow
-            renderer.shadowMapType = THREE.PCFSoftShadowMap;
+            renderer.shadowMapType = THREE.PCFSoftShadowMap; // to antialias the shadow
 
             document.body.appendChild(renderer.domElement);
 
@@ -722,20 +721,6 @@
             scene.add( controls.getObject() );
 
             this.createSkyBox();
-
-            var moonLight = new THREE.DirectionalLight(0xc8bcbc);
-            moonLight.position.set( -4000, 4000, -4000 );
-            moonLight.castShadow = true;
-            moonLight.intensity = 0.1;
-            moonLight.shadowDarkness = 0.5;
-            moonLight.shadowCameraVisible = true;
-            moonLight.shadowMapWidth = SHADOWMAPWIDTH;
-            moonLight.shadowMapHeight = SHADOWMAPHEIGHT;
-            moonLight.shadowCameraNear = 100;
-            moonLight.shadowCameraFar = 2048;
-            moonLight.shadowCameraFov = 30;
-            scene.add(moonLight);
-
 
             //KEY LISTENERS
             document.addEventListener( 'keydown', this.onKeyDown, false );      //Listener da tecla ativada
@@ -951,6 +936,19 @@
             skybox.position.x = 500;
             skybox.position.y = 0;
             skybox.position.z = -500;
+
+            var moonLight = new THREE.DirectionalLight(0xc8bcbc);
+            moonLight.position.set( -4000, 4000, -4000 );
+            moonLight.castShadow = true;
+            moonLight.intensity = 0.1;
+            moonLight.shadowDarkness = 0.5;
+            moonLight.shadowCameraVisible = true;
+            moonLight.shadowMapWidth = SHADOWMAPWIDTH;
+            moonLight.shadowMapHeight = SHADOWMAPHEIGHT;
+            moonLight.shadowCameraNear = 100;
+            moonLight.shadowCameraFar = 2048;
+            moonLight.shadowCameraFov = 30;
+            skybox.add(moonLight);
 
             scene.add(skybox);
         }
