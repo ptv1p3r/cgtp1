@@ -37,7 +37,7 @@
         FAR = 10000,
         MOVEMENT_SPEED = 10000;    //movement speed
 
-    var scene, renderer, camera, controls, material;
+    var scene, renderer, camera, controls;
 
     var prevTime = performance.now();
     var velocity = new THREE.Vector3();
@@ -54,12 +54,16 @@
         constructor(){}
     }
 
+    /**
+     * Metodo construtor do modelo de monte de rochas
+     */
     class RockStack extends Obj{
         constructor(position, stackColor){
             super();
 
             var materialPath;
 
+            // tipo de rochas
             switch (stackColor) {
 
                 case 1:
@@ -81,16 +85,19 @@
 
             }
 
+            // carrega o material escolhido
             var material = new THREE.MeshLambertMaterial();
             material.map = new THREE.ImageUtils.loadTexture(materialPath);
 
+            //carrega o modelo
             var objLoader = new THREE.OBJLoader();
             objLoader.load( "models/blender_rocks.obj", function (object) {
-                object.scale.set( 50, 50, 50);
+                object.scale.set( 25, 25, 25);
                 object.position.x = position.x;
                 object.position.y = position.y;
                 object.position.z = position.z;
 
+                //ativa as sombras
                 object.traverse( function ( child ) {
                     if ( child instanceof THREE.Mesh ) {
                         child.castShadow = true;
@@ -98,6 +105,7 @@
                     }
                 });
 
+                //adiciona o modelo
                 scene.add( object );
 
             });
@@ -108,15 +116,20 @@
         }
     }
 
+    /**
+     * Metodo construtor do modelo de uma rocha
+     */
     class Rocks extends Obj{
         constructor(position){
             super();
 
+            //carrega o mtl
             var mtLoader = new THREE.MTLLoader();
             mtLoader.load( "models/Rock1.mtl", function (materials) {
 
                 materials.preload();
 
+                //carrega o obj
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
 
@@ -126,6 +139,7 @@
                     object.position.y = position.y;
                     object.position.z = position.z;
 
+                    //ativa as sombras
                     object.traverse( function ( child ) {
                         if ( child instanceof THREE.Mesh ) {
                             child.castShadow = true;
@@ -145,12 +159,16 @@
         }
     }
 
+    /**
+     * Metodo construtor dos modelos das arvores
+     */
     class Tree extends Obj{
         constructor(position, treeType){
             super();
 
             var mtlPath, objPath;
 
+            //verifica modelo da arvore
             switch (treeType) {
 
                 case 1:
@@ -176,22 +194,26 @@
 
             }
 
+            //carrega o mtl
             var mtLoader = new THREE.MTLLoader();
             mtLoader.load( mtlPath , function (materials) {
 
                 materials.preload();
 
+                //carrega o obj
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
 
                 objLoader.load( objPath, function (object) {
 
+                    //escala dos modelos
                     if (treeType === 4){
                         object.scale.set(0.5, 0.5, 0.5);
                     } else {
                         object.scale.set(1, 1, 1);
                     }
 
+                    //ativa as sombras
                     object.traverse( function ( child ) {
                         if ( child instanceof THREE.Mesh ) {
                             child.castShadow = true;
@@ -215,6 +237,9 @@
         }
     }
 
+    /**
+     * Motodo construtor para o sinal de informacao
+     */
     class InformationPlate extends Obj{
         constructor(size,position){
             super();
@@ -325,6 +350,7 @@
 
             this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
+            //ativa as sombras
             this.mesh.castShadow = true;
             this.mesh.receiveShadow = false;
 
@@ -335,32 +361,37 @@
         }
     }
 
+    /**
+     * Metodo construtor do caminho
+     */
     class Path extends Obj {
         constructor(position, rotation, type) {
             super();
 
+            //tipo de caminho
             switch (type) {
 
-                case 'S':
+                case 'S':   //direito
                     this.geometry = new THREE.PlaneGeometry(512, 256);
                     this.material = new THREE.MeshLambertMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/dirt_road.jpg");
                     break;
 
-                case 'Y':
+                case 'Y':   //Y
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
                     this.material = new THREE.MeshLambertMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/Y_road.png");
                     this.material.transparent = true;
                     break;
-                case 'L':
+
+                case 'L':   //esquerda
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
                     this.material = new THREE.MeshLambertMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/left_road.png");
                     this.material.transparent = true;
                     break;
 
-                case 'R':
+                case 'R':   //direita
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
                     this.material = new THREE.MeshLambertMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/right_road.png");
@@ -369,13 +400,14 @@
 
             }
 
-
+            //cria e posiciona a mesh
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
             this.mesh.position.y = position.y;
             this.mesh.position.z = position.z;
 
+            //rotacao da mesh, depende do path
             switch (rotation) {
                 case 1: // Vertical
                     this.mesh.rotation.x = -Math.PI / 2;
@@ -417,6 +449,9 @@
         }
     }
 
+    /**
+     * Metodo construtor do chao da cena
+     */
     class Floor extends Obj{
         constructor(size,position){
             super();
@@ -439,6 +474,9 @@
         }
     }
 
+    /**
+     * Metodo construtor de uma sepultura
+     */
     class Grave extends Obj{
         constructor(position){
             super();
@@ -478,6 +516,9 @@
         }
     }
 
+    /**
+     * Metodo construtor de um poste de luz
+     */
     class LightPole extends Obj{
         constructor(position,rotation){
             super();
@@ -552,20 +593,20 @@
 
             this.lampMesh.add(spotlight2);
 
-            var spotlight3 = new THREE.SpotLight(0x1b150a);
-            spotlight3.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
-            spotlight3.target = this.armMesh;
-            spotlight3.intensity = 2;
-            spotlight3.angle = 1;
-            spotlight3.shadowCameraVisible = true;
-            spotlight3.shadowMapWidth = 2048;
-            spotlight3.shadowMapHeight = 2048;
-
-            spotlight3.shadowCameraNear = 100;
-            spotlight3.shadowCameraFar = 2048;
-            spotlight3.shadowCameraFov = 30;
-
-            this.armMesh.add(spotlight3);
+//            var spotlight3 = new THREE.SpotLight(0x1b150a);
+//            spotlight3.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
+//            spotlight3.target = this.armMesh;
+//            spotlight3.intensity = 2;
+//            spotlight3.angle = 1;
+//            spotlight3.shadowCameraVisible = true;
+//            spotlight3.shadowMapWidth = 2048;
+//            spotlight3.shadowMapHeight = 2048;
+//
+//            spotlight3.shadowCameraNear = 100;
+//            spotlight3.shadowCameraFar = 2048;
+//            spotlight3.shadowCameraFov = 30;
+//
+//            this.armMesh.add(spotlight3);
 
 
             //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
@@ -576,6 +617,9 @@
         }
     }
 
+    /**
+     * Metodo que inicializa a aplicacao
+     */
     class Aplication{
 
         /**
@@ -944,13 +988,14 @@
         new Path({x:-2175,y:0,z:1135}, 6, 'L'),
         new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
         new Tree({x:-1000,y:0,z:500}, 1),new Tree({x:-1900,y:0,z:500}, 1),
-        new RockStack({x:-2500,y:0,z:-500},1),new RockStack({x:-2500,y:0,z:2000},1),
+        new Tree({x:-1500,y:0,z:3000},2),new Tree({x:-1900,y:0,z:500}, 1),
+        new RockStack({x:-2200,y:0,z:1900},1),new RockStack({x:-2200,y:0,z:2200},1),
         new Grave({x:-1550,y:0,z:1850}), new Grave({x:-1550,y:0,z:2150}),
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
         new LightPole({x:3500,y:0,z:200},{y:45}),new LightPole({x:1550,y:0,z:-200},{y:30}),
-        new LightPole({x:-1320,y:0,z:-10},{y:45})
+        new LightPole({x:0,y:0,z:200},{y:45}),new LightPole({x:-1325,y:0,z:10},{y:0})
     ];
 
     /**
