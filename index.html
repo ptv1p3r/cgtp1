@@ -536,11 +536,12 @@
 
             this.poleMesh.add(spotlight);
 
-            var spotlight2 = new THREE.SpotLight(0x1b150a);
+            var spotlight2 = new THREE.SpotLight(0xffffff);
             spotlight2.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
             spotlight2.target = this.poleMesh;
-            spotlight2.intensity = 10;
-            spotlight2.angle = 1;
+            spotlight2.castShadow = true;
+            spotlight2.intensity = 1;
+            spotlight2.angle = 0.5;
             spotlight2.shadowCameraVisible = true;
             spotlight2.shadowMapWidth = 2048;
             spotlight2.shadowMapHeight = 2048;
@@ -636,17 +637,17 @@
 //            ambientlight.intensity = 0.1;
 //            scene.add(ambientlight);
 
-            var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.02);
+            var directionalLight = new THREE.DirectionalLight( 0x181818, 0.1);
             directionalLight.position.set( -4000, 4000, -4000 );
             directionalLight.castShadow = true;
-            directionalLight.shadowDarkness = 0.2;
+            directionalLight.shadowDarkness = 0.1;
             directionalLight.shadowCameraVisible = true;
             directionalLight.shadowMapWidth = 2048;
             directionalLight.shadowMapHeight = 2048;
             directionalLight.shadowCameraNear = 100;
             directionalLight.shadowCameraFar = 2048;
             directionalLight.shadowCameraFov = 30;
-            //scene.add( directionalLight );
+            scene.add( directionalLight );
 
             var spotLight = new THREE.SpotLight( 0xffffff );
             spotLight.position.set( -4000, 4000, -4000 );
