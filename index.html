@@ -989,6 +989,8 @@
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
         new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:10}),
+
+        // Path
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
@@ -1005,7 +1007,6 @@
         new Rocks({x:-1000,y:0,z:-300}), new Rocks({x:1000,y:0,z:200}),
         new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
-
         new Path({x:149,y:0,z:10}, 1, 'S'),new Path({x:661,y:0,z:10}, 1, 'S'),
         new Path({x:1173,y:0,z:10}, 1, 'S'),new Path({x:1685,y:0,z:10}, 1, 'S'),
         new Path({x:2197,y:0,z:10}, 1, 'S'),new Path({x:2709,y:0,z:10}, 1, 'S'),
@@ -1018,11 +1019,13 @@
         new LightPole({x:3500,y:0,z:200},{y:45},{intensity:0.5,angle:0.5},{intensity:3,angle:1.1}),
         new LightPole({x:1550,y:0,z:-200},{y:30},{intensity:0.5,angle:0.5},{intensity:3,angle:1.1}),
         new LightPole({x:0,y:0,z:200},{y:45},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
+
         // Desvio
         new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
         new Tree({x:-1500,y:0,z:10}, 3),new Tree({x:-1300,y:0,z:-490}, 3),
         new Tree({x:-1970,y:0,z:-255}, 3),new Tree({x:-1950,y:0,z:275}, 3),
-        new LightPole({x:-1325,y:0,z:10},{y:0},{intensity:1,angle:0.5},{intensity:5,angle:1.1}),
+        new LightPole({x:-1325,y:0,z:10},{y:0},{intensity:1,angle:0.5},{intensity:3,angle:1.1}),
+
         // cemiterio
         new Path({x:-2175,y:0,z:1135}, 6, 'L'),
         new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
@@ -1036,7 +1039,6 @@
         new Tree({x:250,y:0,z:1250}, 3),new Tree({x:120,y:0,z:1174}, 1),
         new Tree({x:350,y:0,z:1000}, 4),new Tree({x:420,y:0,z:945}, 1),
         new Tree({x:650,y:0,z:1200}, 4),new Tree({x:720,y:0,z:1115}, 3),
-
         new Tree({x:-1500,y:0,z:2500}, 1),new Tree({x:-1900,y:0,z:2500}, 2),
         new Tree({x:-1000,y:0,z:1500}, 3),new Tree({x:-800,y:0,z:1500}, 4),
         new Tree({x:-1000,y:0,z:3000}, 3),new Tree({x:-800,y:0,z:2500}, 4),
@@ -1044,19 +1046,16 @@
         new Tree({x:250,y:0,z:3000}, 2),new Tree({x:120,y:0,z:1785}, 1),
         new Tree({x:350,y:0,z:1621}, 4),new Tree({x:420,y:0,z:3574}, 1),
         new Tree({x:650,y:0,z:2510}, 4),new Tree({x:720,y:0,z:500}, 2),
-
         new Tree({x:1000,y:0,z:1500}, 3),new Tree({x:800,y:0,z:1500}, 1),
         new Tree({x:1000,y:0,z:3000}, 3),new Tree({x:800,y:0,z:2500}, 1),
         new Tree({x:2000,y:0,z:2250}, 1),new Tree({x:1800,y:0,z:500}, 3),
         new Tree({x:2500,y:0,z:3000}, 3),new Tree({x:2800,y:0,z:1785}, 1),
         new Tree({x:3000,y:0,z:1621},3),new Tree({x:3800,y:0,z:3574}, 1),
         new Tree({x:3500,y:0,z:2510}, 1),new Tree({x:4000,y:0,z:500}, 3),
-
         new Tree({x:3000,y:0,z:750}, 1),new Tree({x:3000,y:0,z:500}, 3),
         new Tree({x:3250,y:0,z:1500}, 3),new Tree({x:3500,y:0,z:1785}, 1),
         new Tree({x:3750,y:0,z:750},3),new Tree({x:3800,y:0,z:3574}, 1),
         new Tree({x:4000,y:0,z:500}, 1),new Tree({x:4000,y:0,z:500}, 3),
-
         new Grave({x:-1550,y:0,z:1850}), new Grave({x:-1550,y:0,z:2150}),
         new LightPole({x:-1700,y:0,z:1450},{y:90},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
 
