@@ -657,7 +657,7 @@
         createScene() {
             //SCENE
             scene = new THREE.Scene();
-            scene.fog = new THREE.Fog( 0x000000, .5, 3000 );
+            scene.fog = new THREE.Fog( 0x000000, .5, 2500 );
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -996,9 +996,30 @@
         new Tree({x:650,y:0,z:1200}, 4),new Tree({x:720,y:0,z:1115}, 2),
         new Grave({x:-1550,y:0,z:1850}), new Grave({x:-1550,y:0,z:2150}),
         new LightPole({x:-1700,y:0,z:1450},{y:90},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
+
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
-        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1)
+        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
+        new Tree({x:4000,y:0,z:-1250}, 1),new Tree({x:4000,y:0,z:-500},1),
+        new Tree({x:3250,y:0,z:-750}, 3),new Tree({x:3250,y:0,z:-250}, 2),
+        new Tree({x:2500,y:0,z:-800}, 4),new Tree({x:2500,y:0,z:-300}, 1),
+        new Tree({x:1750,y:0,z:-600}, 1),new Tree({x:1750,y:0,z:-400}, 3),
+        new Tree({x:1000,y:0,z:-400}, 2),new Tree({x:1000,y:0,z:-700}, 1),
+        new Tree({x:250,y:0,z:-600}, 1),new Tree({x:250,y:0,z:-500}, 3),
+
+        new Tree({x:0,y:0,z:-1250}, 1),new Tree({x:-1250,y:0,z:-2500},1),
+        new Tree({x:750,y:0,z:-2500}, 3),new Tree({x:-500,y:0,z:-3000}, 4),
+        new Tree({x:1500,y:0,z:-3000}, 4),new Tree({x:250,y:0,z:-3500}, 1),
+        new Tree({x:2250,y:0,z:-2750}, 1),new Tree({x:1000,y:0,z:-2700}, 3),
+        new Tree({x:3000,y:0,z:-2500}, 3),new Tree({x:1750,y:0,z:-2200}, 1),
+        new Tree({x:3750,y:0,z:-1500}, 1),new Tree({x:2500,y:0,z:-2100}, 3),
+
+        new Tree({x:4000,y:0,z:-1500}, 1),new Tree({x:4000,y:0,z:-1200},1),
+        new Tree({x:3250,y:0,z:-1000}, 3),new Tree({x:3250,y:0,z:-3000}, 3),
+        new Tree({x:2500,y:0,z:-400}, 4),new Tree({x:2500,y:0,z:-3200}, 1),
+        new Tree({x:1750,y:0,z:-300}, 1),new Tree({x:1750,y:0,z:-1750}, 3),
+        new Tree({x:1000,y:0,z:-2000}, 3),new Tree({x:1000,y:0,z:-1000}, 1),
+        new Tree({x:250,y:0,z:-1700}, 1),new Tree({x:250,y:0,z:-1000}, 3)
     ];
 
     /**
