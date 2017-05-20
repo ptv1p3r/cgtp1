@@ -492,7 +492,7 @@
         constructor(size,position){
             super();
             this.geometry = new THREE.PlaneGeometry(size.width,size.height);
-            this.material = new THREE.MeshPhongMaterial();
+            this.material = new THREE.MeshPhongMaterial(); // lambert nao permite a correcta iluminacao
 
             this.material.map = THREE.ImageUtils.loadTexture('images/floor.jpg');
             this.mesh = new THREE.Mesh(this.geometry, this.material);
@@ -599,6 +599,7 @@
             spotlight.castShadow = true;
             spotlight.intensity = 5;
             spotlight.angle = 1;
+            spotlight.penumbra = 0.1;
             spotlight.shadowCameraVisible = true;
             spotlight.shadowMapWidth = 2048;
             spotlight.shadowMapHeight = 2048;
