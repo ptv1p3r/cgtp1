@@ -479,7 +479,7 @@
     }
 
     class LightPole extends Obj{
-        constructor(position){
+        constructor(position,rotation){
             super();
 
             this.geometry = new THREE.CubeGeometry(100, 10, 10);
@@ -510,7 +510,7 @@
             this.poleMesh.position.x = position.x;
             this.poleMesh.position.y = position.y + 150;
             this.poleMesh.position.z = position.z;
-            this.poleMesh.rotation.y = 46;
+            this.poleMesh.rotation.y = rotation.y;
             this.poleMesh.castShadow = true;
 
             this.poleMesh.add(this.armMesh);
@@ -917,8 +917,8 @@
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
-        new LightPole({x:3500,y:0,z:200}),new LightPole({x:1550,y:0,z:-200}),
-        new LightPole({x:-1300,y:0,z:-10})
+        new LightPole({x:3500,y:0,z:200},{y:45}),new LightPole({x:1550,y:0,z:-200},{y:45}),
+        new LightPole({x:-1300,y:0,z:-10},{y:45})
     ];
 
     /**
