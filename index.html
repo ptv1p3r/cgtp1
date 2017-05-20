@@ -35,7 +35,9 @@
         ASPECT = WIDTH / HEIGHT,
         NEAR = 1,
         FAR = 10000,
-        MOVEMENT_SPEED = 10000;    //movement speed
+        MOVEMENT_SPEED = 10000,
+        SHADOWMAPWIDTH = 2048,
+        SHADOWMAPHEIGHT = 2048;//movement speed
 
     var scene, renderer, camera, controls;
 
@@ -601,8 +603,8 @@
             poleLight.angle = pole.angle;
             poleLight.penumbra = 0.1;
             poleLight.shadowCameraVisible = true;
-            poleLight.shadowMapWidth = 2048;
-            poleLight.shadowMapHeight = 2048;
+            poleLight.shadowMapWidth = SHADOWMAPWIDTH;
+            poleLight.shadowMapHeight = SHADOWMAPHEIGHT;
 
             poleLight.shadowCameraNear = 100;
             poleLight.shadowCameraFar = 2048;
@@ -618,8 +620,8 @@
             lampLight.penumbra = 0.5;
             lampLight.castShadow = true;
             lampLight.shadowCameraVisible = true;
-            lampLight.shadowMapWidth = 2048;
-            lampLight.shadowMapHeight = 2048;
+            lampLight.shadowMapWidth = SHADOWMAPWIDTH;
+            lampLight.shadowMapHeight = SHADOWMAPHEIGHT;
 
             lampLight.shadowCameraNear = 100;
             lampLight.shadowCameraFar = 2048;
@@ -724,43 +726,21 @@
             controls.getObject().position.set( 4000, 0, 0);
             scene.add( controls.getObject() );
 
-            //LIGHTS
-//            var ambientlight = new THREE.AmbientLight(0xffffff);
-//            ambientlight.intensity = 0.1;
-//            ambientlight.intensity = 0.1;
-//            scene.add(ambientlight);
-
-            var directionalLight = new THREE.DirectionalLight( 0x181818, 0.1);
-            directionalLight.position.set( -4000, 4000, -4000 );
-            directionalLight.castShadow = true;
-            directionalLight.shadowDarkness = 0.1;
-            directionalLight.shadowCameraVisible = true;
-            directionalLight.shadowMapWidth = 2048;
-            directionalLight.shadowMapHeight = 2048;
-            directionalLight.shadowCameraNear = 100;
-            directionalLight.shadowCameraFar = 2048;
-            directionalLight.shadowCameraFov = 30;
-            scene.add( directionalLight );
-
-            var spotLight = new THREE.SpotLight( 0xffffff );
-            spotLight.position.set( -4000, 4000, -4000 );
-            //spotLight.position.copy( camera.position );
-            spotLight.intensity = 0.1;
-
-            spotLight.castShadow = true;
-            spotLight.shadowCameraVisible = true;
-
-            spotLight.shadowMapWidth = 2048;
-            spotLight.shadowMapHeight = 2048;
-
-            spotLight.shadowCameraNear = 100;
-            spotLight.shadowCameraFar = 2048;
-            spotLight.shadowCameraFov = 30;
-
-            //scene.add( spotLight );
-
-
             this.createSkyBox();
+
+            var moonLight = new THREE.DirectionalLight(0xc8bcbc);
+            moonLight.position.set( -4000, 4000, -4000 );
+            moonLight.castShadow = true;
+            moonLight.intensity = 0.1;
+            moonLight.shadowDarkness = 0.5;
+            moonLight.shadowCameraVisible = true;
+            moonLight.shadowMapWidth = SHADOWMAPWIDTH;
+            moonLight.shadowMapHeight = SHADOWMAPHEIGHT;
+            moonLight.shadowCameraNear = 100;
+            moonLight.shadowCameraFar = 2048;
+            moonLight.shadowCameraFov = 30;
+            scene.add(moonLight);
+
 
             //KEY LISTENERS
             document.addEventListener( 'keydown', this.onKeyDown, false );      //Listener da tecla ativada
@@ -1014,7 +994,8 @@
         new Path({x:4245,y:0,z:10}, 1, 'S'),
         new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
         new Path({x:-363,y:0,z:10}, 1, 'S'),new Path({x:-1131,y:0,z:10}, 2, 'Y'),
-        new LightPole({x:3500,y:0,z:200},{y:45},{intensity:1,angle:0.5},{intensity:5,angle:1.1}),new LightPole({x:1550,y:0,z:-200},{y:30},{intensity:1,angle:0.5},{intensity:5,angle:1.1}),
+        new LightPole({x:3500,y:0,z:200},{y:45},{intensity:1,angle:0.5},{intensity:5,angle:1.1}),
+        new LightPole({x:1550,y:0,z:-200},{y:30},{intensity:1,angle:0.5},{intensity:5,angle:1.1}),
         new LightPole({x:0,y:0,z:200},{y:45},{intensity:1,angle:0.5},{intensity:5,angle:1.1}),
         // Desvio
         new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
