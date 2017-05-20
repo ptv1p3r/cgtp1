@@ -456,7 +456,7 @@
         constructor(size,position){
             super();
             this.geometry = new THREE.PlaneGeometry(size.width,size.height);
-            this.material = new THREE.MeshLambertMaterial();
+            this.material = new THREE.MeshPhongMaterial();
 
             this.material.map = THREE.ImageUtils.loadTexture('images/floor.jpg');
             this.mesh = new THREE.Mesh(this.geometry, this.material);
@@ -557,10 +557,6 @@
             this.poleMesh.add(this.armMesh);
             this.poleMesh.add(this.lampMesh);
 
-//            var spotlight2 = new THREE.SpotLight(0xff0068);
-//            spotlight2.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
-//            this.poleMesh.add(spotlight2);
-
             var spotlight = new THREE.SpotLight(0x1b150a);
             spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
             spotlight.target = this.poleMesh;
@@ -582,6 +578,7 @@
             spotlight2.target = this.lampMesh;
             spotlight2.intensity = 1;
             spotlight2.angle = 0.5;
+            spotlight2.penumbra = 0.5;
             spotlight2.castShadow = true;
             spotlight2.shadowCameraVisible = true;
             spotlight2.shadowMapWidth = 2048;
@@ -980,10 +977,13 @@
         new Path({x:4245,y:0,z:10}, 1, 'S'),
         new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
         new Path({x:-363,y:0,z:10}, 1, 'S'),new Path({x:-1131,y:0,z:10}, 2, 'Y'),
+        new LightPole({x:3500,y:0,z:200},{y:45}),new LightPole({x:1550,y:0,z:-200},{y:30}),
+        new LightPole({x:0,y:0,z:200},{y:45}),
         // Desvio
         new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
         new Tree({x:-1500,y:0,z:10}, 3),
         new Tree({x:-1970,y:0,z:-255}, 3),new Tree({x:-1950,y:0,z:275}, 3),
+        new LightPole({x:-1330,y:0,z:-20},{y:0}),
         // cemiterio
         new Path({x:-2175,y:0,z:1135}, 6, 'L'),
         new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
@@ -994,9 +994,7 @@
         new LightPole({x:-1700,y:0,z:1450},{y:90}),
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
-        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
-        new LightPole({x:3500,y:0,z:200},{y:45}),new LightPole({x:1550,y:0,z:-200},{y:30}),
-        new LightPole({x:0,y:0,z:200},{y:45}),new LightPole({x:-1325,y:0,z:10},{y:0})
+        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1)
     ];
 
     /**
