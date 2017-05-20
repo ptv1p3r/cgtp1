@@ -524,7 +524,7 @@
             spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
             spotlight.target = this.poleMesh;
             spotlight.castShadow = true;
-            spotlight.intensity = 2;
+            spotlight.intensity = 10;
             spotlight.angle = 1;
             spotlight.shadowCameraVisible = true;
             spotlight.shadowMapWidth = 2048;
@@ -880,7 +880,7 @@
      */
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
-        new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:10}),
+        new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:30}),
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
@@ -918,7 +918,7 @@
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
         new LightPole({x:3500,y:0,z:200},{y:45}),new LightPole({x:1550,y:0,z:-200},{y:45}),
-        new LightPole({x:-1300,y:0,z:-10},{y:45})
+        new LightPole({x:-1320,y:0,z:-10},{y:45})
     ];
 
     /**
