@@ -554,6 +554,45 @@
         }
     }
 
+    class House extends Obj{
+        constructor(position){
+            super();
+
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/casa.mtl", function (materials) {
+
+                materials.preload();
+
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+
+                objLoader.load( "models/casa.obj", function (object) {
+                    object.scale.set( 4, 4, 4);
+                    object.position.x = position.x;
+                    object.position.y = position.y;
+                    object.position.z = position.z;
+
+                    object.rotation.y = Math.PI / 2;
+
+                    object.traverse( function ( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            child.castShadow = true;
+                        }
+                    });
+
+                    scene.add( object );
+
+                });
+
+            })
+
+        }
+
+        getMesh(){
+            return this.mesh;
+        }
+    }
+
     /**
      * Metodo construtor de um poste de luz
      */
@@ -658,6 +697,9 @@
             //SCENE
             scene = new THREE.Scene();
             scene.fog = new THREE.Fog( 0x000000, .5, 2500 );
+
+            var light = new THREE.AmbientLight( 0xffffff ); // soft white light
+            scene.add( light );
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -1040,7 +1082,8 @@
         new Tree({x:2500,y:0,z:-400}, 4),new Tree({x:2500,y:0,z:-3200}, 1),
         new Tree({x:1750,y:0,z:-300}, 1),new Tree({x:1750,y:0,z:-1750}, 3),
         new Tree({x:1000,y:0,z:-2000}, 3),new Tree({x:1000,y:0,z:-1000}, 1),
-        new Tree({x:250,y:0,z:-1700}, 1),new Tree({x:250,y:0,z:-1000}, 3)
+        new Tree({x:250,y:0,z:-1700}, 1),new Tree({x:250,y:0,z:-1000}, 3),
+        new House ({x:0,y:0,z:0})
     ];
 
     /**
