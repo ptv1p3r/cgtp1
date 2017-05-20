@@ -718,7 +718,7 @@
 
             document.body.appendChild(renderer.domElement);
 
-            //CAMERA CONTROL
+            //CAMERA CONTROL (As restricoes da camera foram efetuadas no PointerLockControls.js, linha 26)
             controls = new THREE.PointerLockControls( camera );
             controls.getObject().rotation.y = Math.PI/2;
             controls.getObject().position.set( 4000, 0, 0);
