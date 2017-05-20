@@ -234,7 +234,7 @@
             //tabua do grave
             this.geometry = new THREE.BoxGeometry(20, 100, 5);
             this.gravePointer = new THREE.Mesh(this.geometry, this.material);
-            this.gravePointer.position.x = 50;
+            this.gravePointer.position.x = -50;
             this.gravePointer.position.y = 240;
             this.gravePointer.position.z = 6.5;
 
@@ -281,7 +281,7 @@
             this.geometry = new THREE.BoxGeometry(20, 100, 5);
             this.material = new THREE.MeshLambertMaterial({map:woodTexture,side:THREE.DoubleSide});
             this.mansionPointer = new THREE.Mesh(this.geometry, this.material);
-            this.mansionPointer.position.x = -50;
+            this.mansionPointer.position.x = 50;
             this.mansionPointer.position.y = 220;
             this.mansionPointer.position.z = 6.5;
 
@@ -315,7 +315,7 @@
             );
 
             // posicionar na tabua o texto
-            this.mansionTextMesh.position.set(-60,-110,2.6);
+            this.mansionTextMesh.position.set(-60,-120,2.6);
             this.mansionTextMesh.rotation.z = -Math.PI / 2;
 
             this.mansionPointer.add(this.mansionTextMesh );
@@ -517,12 +517,9 @@
 
             var spotlight = new THREE.SpotLight(0xffffff);
             spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
-            spotlight.lookAt(this.lampMesh);
+            spotlight.target = this.poleMesh;
+            //spotlight.lookAt(this.lampMesh);
             this.poleMesh.add(spotlight);
-
-            //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
-
-
 
         }
 
