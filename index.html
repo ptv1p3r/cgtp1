@@ -488,7 +488,7 @@
             this.armMesh = new THREE.Mesh( this.geometry, this.material );
 
             this.armMesh .position.x = 10;
-            this.armMesh .position.y = 200;
+            this.armMesh .position.y = 180;
             this.armMesh .position.z = 0;
             this.armMesh .castShadow = true;
 
@@ -498,17 +498,17 @@
             this.lampMesh = new THREE.Mesh( this.geometry, this.material );
 
             this.lampMesh.position.x = 50;
-            this.lampMesh.position.y = 180;
+            this.lampMesh.position.y = 160;
             this.lampMesh.position.z = 0;
             this.lampMesh.castShadow = true;
 
-            this.geometry = new THREE.CylinderGeometry(10, 20, 400);
+            this.geometry = new THREE.CylinderGeometry(10, 20, 350);
             this.material = new THREE.MeshLambertMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/iron.jpg');
             this.poleMesh = new THREE.Mesh( this.geometry, this.material );
 
             this.poleMesh.position.x = position.x;
-            this.poleMesh.position.y = position.y + 200;
+            this.poleMesh.position.y = position.y + 150;
             this.poleMesh.position.z = position.z;
             this.poleMesh.rotation.y = 46;
             this.poleMesh.castShadow = true;
