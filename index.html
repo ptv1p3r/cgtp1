@@ -431,29 +431,43 @@
     class LightPole extends Obj{
         constructor(position){
             super();
-            var sph = new THREE.Mesh(
-                new THREE.SphereGeometry(20, 16, 16),
-                new THREE.MeshLambertMaterial({color: 0xffff00})
-            );
 
-            sph.position.x = 10;
-            sph.position.y = 200;
-            sph.position.z = 0;
+            this.geometry = new THREE.CubeGeometry(100, 10, 10);
+            this.material = new THREE.MeshLambertMaterial();
+            this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
+            this.armMesh = new THREE.Mesh( this.geometry, this.material );
+
+            this.armMesh .position.x = 10;
+            this.armMesh .position.y = 200;
+            this.armMesh .position.z = 0;
+            this.armMesh .castShadow = true;
+
+            this.geometry = new THREE.SphereGeometry(20, 16, 16);
+            this.material = new THREE.MeshLambertMaterial({color: 0xfff500});
+            //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
+            this.lampMesh = new THREE.Mesh( this.geometry, this.material );
+
+            this.lampMesh.position.x = 50;
+            this.lampMesh.position.y = 180;
+            this.lampMesh.position.z = 0;
+            this.lampMesh.castShadow = true;
 
             this.geometry = new THREE.CylinderGeometry(10, 20, 400);
-            this.material = new THREE.MeshLambertMaterial( {color: 0x2f4f4f} );
+            this.material = new THREE.MeshLambertMaterial();
+            this.material.map = THREE.ImageUtils.loadTexture('images/iron.jpg');
             this.poleMesh = new THREE.Mesh( this.geometry, this.material );
 
             this.poleMesh.position.x = position.x;
             this.poleMesh.position.y = position.y + 200;
             this.poleMesh.position.z = position.z;
 
-            this.poleMesh.add(sph);
+            this.poleMesh.add(this.armMesh);
+            this.poleMesh.add(this.lampMesh);
 
             var spotlight = new THREE.SpotLight(0xffffff);
-            spotlight.position.set(sph.position.x,sph.position.y,sph.position.z);
-            spotlight.lookAt(sph);
-            scene.add(spotlight);
+            spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
+            spotlight.lookAt(this.poleMesh);
+            this.poleMesh.add(spotlight);
 
             //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
@@ -541,7 +555,7 @@
             var ambientlight = new THREE.AmbientLight(0xffffff);
             ambientlight.intensity = 1;
             //ambientlight.intensity = 0.2;
-            scene.add(ambientlight);
+            //scene.add(ambientlight);
 
             var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.02);
             directionalLight.position.set( -4000, 4000, -4000 );
@@ -803,7 +817,7 @@
      */
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
-        new InformationPlate({width: 40, height: 550, depth:10},{x:3500,y:0,z:10}),
+        //new InformationPlate({width: 40, height: 550, depth:10},{x:3500,y:0,z:10}),
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
@@ -840,7 +854,7 @@
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
-        new LightPole({x:0,y:0,z:0})
+        new LightPole({x:3500,y:0,z:10})
 
     ];
 
