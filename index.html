@@ -676,14 +676,9 @@
             //SCENE
             scene = new THREE.Scene();
 
-            //scene.fog = new THREE.Fog(0xd5c7e8, 0.5, 2000);
-            //scene.fog = new THREE.Fog(0xCCCFBC, 0.5, 2000); //a usar
-
-
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
             camera.position.y = 180;
-
 
             //Cria AudioListener e adiciona a camera
             var listener = new THREE.AudioListener();
@@ -713,8 +708,8 @@
             renderer.shadowCameraFov = 50;
             renderer.shadowMapBias = 0.0039;
             renderer.shadowMapDarkness = 0.5;
-            renderer.shadowMapWidth = 1024;
-            renderer.shadowMapHeight = 1024;
+            renderer.shadowMapWidth = SHADOWMAPWIDTH;
+            renderer.shadowMapHeight = SHADOWMAPHEIGHT;
             // to antialias the shadow
             renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
