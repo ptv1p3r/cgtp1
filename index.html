@@ -247,7 +247,7 @@
             //tabua principal
             this.geometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
             var woodTexture = THREE.ImageUtils.loadTexture('images/wood-texture.jpg'); //new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
-            this.material = new THREE.MeshLambertMaterial({map:woodTexture,side:THREE.DoubleSide});
+            this.material = new THREE.MeshPhongMaterial({map:woodTexture,side:THREE.DoubleSide});
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
@@ -305,7 +305,7 @@
             this.texture.needsUpdate = true;
 
             // material
-            this.material = new THREE.MeshLambertMaterial( {map: this.texture, side:THREE.DoubleSide } );
+            this.material = new THREE.MeshPhongMaterial( {map: this.texture, side:THREE.DoubleSide } );
             this.material.transparent = true;
 
             // grave text mesh
@@ -326,7 +326,7 @@
 
             // tabua da mansion
             this.geometry = new THREE.BoxGeometry(20, 100, 5);
-            this.material = new THREE.MeshLambertMaterial({map:woodTexture,side:THREE.DoubleSide});
+            this.material = new THREE.MeshPhongMaterial({map:woodTexture,side:THREE.DoubleSide});
             this.mansionPointer = new THREE.Mesh(this.geometry, this.material);
             this.mansionPointer.position.x = 50;
             this.mansionPointer.position.y = 220;
@@ -366,7 +366,7 @@
             this.texture.needsUpdate = true;
 
             // material
-            this.material = new THREE.MeshLambertMaterial( {map: this.texture, side:THREE.DoubleSide } );
+            this.material = new THREE.MeshPhongMaterial( {map: this.texture, side:THREE.DoubleSide } );
             this.material.transparent = true;
 
             // mansion text mesh
@@ -409,27 +409,27 @@
 
                 case 'S':   //direito
                     this.geometry = new THREE.PlaneGeometry(512, 256);
-                    this.material = new THREE.MeshLambertMaterial();
+                    this.material = new THREE.MeshPhongMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/dirt_road.jpg");
                     break;
 
                 case 'Y':   //Y
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
-                    this.material = new THREE.MeshLambertMaterial();
+                    this.material = new THREE.MeshPhongMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/Y_road.png");
                     this.material.transparent = true;
                     break;
 
                 case 'L':   //esquerda
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
-                    this.material = new THREE.MeshLambertMaterial();
+                    this.material = new THREE.MeshPhongMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/left_road.png");
                     this.material.transparent = true;
                     break;
 
                 case 'R':   //direita
                     this.geometry = new THREE.PlaneGeometry(1024, 1024);
-                    this.material = new THREE.MeshLambertMaterial();
+                    this.material = new THREE.MeshPhongMaterial();
                     this.material.map = THREE.ImageUtils.loadTexture("images/right_road.png");
                     this.material.transparent = true;
                     break;
