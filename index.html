@@ -86,7 +86,7 @@
             }
 
             // carrega o material escolhido
-            var material = new THREE.MeshLambertMaterial();
+            var material = new THREE.MeshPhongMaterial();
             material.map = new THREE.ImageUtils.loadTexture(materialPath);
 
             //carrega o modelo
@@ -560,7 +560,7 @@
             super();
 
             this.geometry = new THREE.CubeGeometry(100, 10, 10);
-            this.material = new THREE.MeshLambertMaterial();
+            this.material = new THREE.MeshPhongMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
             this.armMesh = new THREE.Mesh( this.geometry, this.material );
 
@@ -570,7 +570,7 @@
             this.armMesh .castShadow = true;
 
             this.geometry = new THREE.SphereGeometry(20, 16, 16);
-            this.material = new THREE.MeshLambertMaterial({color: 0xfff500});
+            this.material = new THREE.MeshPhongMaterial({color: 0xfff500});
             //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
             this.lampMesh = new THREE.Mesh( this.geometry, this.material );
 
@@ -580,7 +580,7 @@
             this.lampMesh.castShadow = true;
 
             this.geometry = new THREE.CylinderGeometry(10, 20, 350);
-            this.material = new THREE.MeshLambertMaterial();
+            this.material = new THREE.MeshPhongMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/iron.jpg');
             this.poleMesh = new THREE.Mesh( this.geometry, this.material );
 
