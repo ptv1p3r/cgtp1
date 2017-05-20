@@ -524,7 +524,7 @@
             spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
             spotlight.target = this.poleMesh;
             spotlight.castShadow = true;
-            spotlight.intensity = 10;
+            spotlight.intensity = 5;
             spotlight.angle = 1;
             spotlight.shadowCameraVisible = true;
             spotlight.shadowMapWidth = 2048;
@@ -537,11 +537,11 @@
             this.poleMesh.add(spotlight);
 
             var spotlight2 = new THREE.SpotLight(0xffffff);
-            spotlight2.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
-            spotlight2.target = this.poleMesh;
-            spotlight2.castShadow = true;
+            spotlight2.position.set(this.lampMesh.position.x,this.lampMesh.position.y-10,this.lampMesh.position.z);
+            spotlight2.target = this.lampMesh;
             spotlight2.intensity = 1;
             spotlight2.angle = 0.5;
+            spotlight2.castShadow = true;
             spotlight2.shadowCameraVisible = true;
             spotlight2.shadowMapWidth = 2048;
             spotlight2.shadowMapHeight = 2048;
@@ -550,7 +550,22 @@
             spotlight2.shadowCameraFar = 2048;
             spotlight2.shadowCameraFov = 30;
 
-            this.armMesh.add(spotlight2);
+            this.lampMesh.add(spotlight2);
+
+            var spotlight3 = new THREE.SpotLight(0x1b150a);
+            spotlight3.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
+            spotlight3.target = this.armMesh;
+            spotlight3.intensity = 2;
+            spotlight3.angle = 1;
+            spotlight3.shadowCameraVisible = true;
+            spotlight3.shadowMapWidth = 2048;
+            spotlight3.shadowMapHeight = 2048;
+
+            spotlight3.shadowCameraNear = 100;
+            spotlight3.shadowCameraFar = 2048;
+            spotlight3.shadowCameraFov = 30;
+
+            this.armMesh.add(spotlight3);
 
 
             //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
