@@ -271,6 +271,28 @@
 
             this.gravePointer.rotation.z = Math.PI / 2;
 
+            //----- Parafusos -----//
+            this.nailMaterial = new THREE.MeshBasicMaterial({
+                color: 0x000000
+            });
+
+            this.radius = .5;
+            this.segments = 32; //<-- Increase or decrease for more resolution I guess
+
+            this.circleGeometry = new THREE.CircleGeometry( this.radius, this.segments );
+            this.circle1 = new THREE.Mesh( this.circleGeometry, this.nailMaterial );
+
+            this.circle1.position.x = 5;
+            this.circle1.position.y = -46;
+            this.circle1.position.z = 2.6;
+            this.gravePointer.add( this.circle1 );
+
+            this.circle2 = new THREE.Mesh( this.circleGeometry, this.nailMaterial );
+            this.circle2.position.x = -5;
+            this.circle2.position.y = -46;
+            this.circle2.position.z = 2.6;
+            this.gravePointer.add( this.circle2 );
+
             // definicao do texto na tabua
             this.canvas = document.createElement('canvas');
             this.context = this.canvas.getContext('2d');
@@ -293,7 +315,7 @@
             );
 
             // posicionar na tabua o texto
-            this.graveTextMesh.position.set(-60,-105,2.6);
+            this.graveTextMesh.position.set(-60,-102,2.6);
             this.graveTextMesh.rotation.z = -Math.PI / 2;
 
             this.gravePointer.add( this.graveTextMesh );
@@ -318,6 +340,20 @@
 
             this.mansionPointer.rotation.z = Math.PI / 2;
 
+            //----- Parafusos -----//
+
+            this.circle3 = new THREE.Mesh( this.circleGeometry, this.nailMaterial );
+            this.circle3.position.x = -15;
+            this.circle3.position.y = -54;
+            this.circle3.position.z = 2.6;
+            this.gravePointer.add( this.circle3 );
+
+            this.circle4 = new THREE.Mesh( this.circleGeometry, this.nailMaterial );
+            this.circle4.position.x = -25;
+            this.circle4.position.y = -54;
+            this.circle4.position.z = 2.6;
+            this.gravePointer.add( this.circle4 );
+
             // definicao do texto na tabua
             this.canvas = document.createElement('canvas');
             this.context = this.canvas.getContext('2d');
@@ -340,7 +376,7 @@
             );
 
             // posicionar na tabua o texto
-            this.mansionTextMesh.position.set(-60,-120,2.6);
+            this.mansionTextMesh.position.set(-60,-120,2.61);
             this.mansionTextMesh.rotation.z = -Math.PI / 2;
 
             this.mansionPointer.add(this.mansionTextMesh );
@@ -953,7 +989,7 @@
      */
     let objs = [
         new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
-        new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:30}),
+        new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:10}),
         new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
         new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
         new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
