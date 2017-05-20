@@ -518,8 +518,20 @@
             var spotlight = new THREE.SpotLight(0xffffff);
             spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
             spotlight.target = this.poleMesh;
-            //spotlight.lookAt(this.lampMesh);
+            spotlight.castShadow = true;
+            spotlight.shadowCameraVisible = true;
+            spotlight.shadowMapWidth = 2048;
+            spotlight.shadowMapHeight = 2048;
+
+            spotlight.shadowCameraNear = 100;
+            spotlight.shadowCameraFar = 2048;
+            spotlight.shadowCameraFov = 30;
+
             this.poleMesh.add(spotlight);
+
+            //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
+
+
 
         }
 
