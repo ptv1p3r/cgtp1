@@ -579,7 +579,7 @@
             this.lampMesh.position.z = 0;
             this.lampMesh.castShadow = true;
 
-            this.geometry = new THREE.CylinderGeometry(10, 20, 350);
+            this.geometry = new THREE.CylinderGeometry(10, 10, 350);
             this.material = new THREE.MeshPhongMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/iron.jpg');
             this.poleMesh = new THREE.Mesh( this.geometry, this.material );
@@ -593,39 +593,39 @@
             this.poleMesh.add(this.armMesh);
             this.poleMesh.add(this.lampMesh);
 
-            var spotlight = new THREE.SpotLight(0x1b150a);
-            spotlight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
-            spotlight.target = this.poleMesh;
-            spotlight.castShadow = true;
-            spotlight.intensity = 5;
-            spotlight.angle = 1;
-            spotlight.penumbra = 0.1;
-            spotlight.shadowCameraVisible = true;
-            spotlight.shadowMapWidth = 2048;
-            spotlight.shadowMapHeight = 2048;
+            var poleLight = new THREE.SpotLight(0x1b150a);
+            poleLight.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
+            poleLight.target = this.poleMesh;
+            poleLight.castShadow = true;
+            poleLight.intensity = 5;
+            poleLight.angle = 1.1;
+            poleLight.penumbra = 0.1;
+            poleLight.shadowCameraVisible = true;
+            poleLight.shadowMapWidth = 2048;
+            poleLight.shadowMapHeight = 2048;
 
-            spotlight.shadowCameraNear = 100;
-            spotlight.shadowCameraFar = 2048;
-            spotlight.shadowCameraFov = 30;
+            poleLight.shadowCameraNear = 100;
+            poleLight.shadowCameraFar = 2048;
+            poleLight.shadowCameraFov = 30;
 
-            this.poleMesh.add(spotlight);
+            this.poleMesh.add(poleLight);
 
-            var spotlight2 = new THREE.SpotLight(0xffffff);
-            spotlight2.position.set(this.lampMesh.position.x,this.lampMesh.position.y-10,this.lampMesh.position.z);
-            spotlight2.target = this.lampMesh;
-            spotlight2.intensity = 1;
-            spotlight2.angle = 0.5;
-            spotlight2.penumbra = 0.5;
-            spotlight2.castShadow = true;
-            spotlight2.shadowCameraVisible = true;
-            spotlight2.shadowMapWidth = 2048;
-            spotlight2.shadowMapHeight = 2048;
+            var lampLight = new THREE.SpotLight(0xffffff);
+            lampLight.position.set(this.lampMesh.position.x,this.lampMesh.position.y-10,this.lampMesh.position.z);
+            lampLight.target = this.lampMesh;
+            lampLight.intensity = 1;
+            lampLight.angle = 0.5;
+            lampLight.penumbra = 0.5;
+            lampLight.castShadow = true;
+            lampLight.shadowCameraVisible = true;
+            lampLight.shadowMapWidth = 2048;
+            lampLight.shadowMapHeight = 2048;
 
-            spotlight2.shadowCameraNear = 100;
-            spotlight2.shadowCameraFar = 2048;
-            spotlight2.shadowCameraFov = 30;
+            lampLight.shadowCameraNear = 100;
+            lampLight.shadowCameraFar = 2048;
+            lampLight.shadowCameraFov = 30;
 
-            this.lampMesh.add(spotlight2);
+            this.lampMesh.add(lampLight);
 
 //            var spotlight3 = new THREE.SpotLight(0x1b150a);
 //            spotlight3.position.set(this.lampMesh.position.x,this.lampMesh.position.y,this.lampMesh.position.z);
