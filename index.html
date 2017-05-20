@@ -569,13 +569,13 @@
             this.armMesh .position.z = 0;
             this.armMesh .castShadow = true;
 
-            this.geometry = new THREE.SphereGeometry(20, 16, 16);
+            this.geometry = new THREE.CubeGeometry(20, 40, 20);
             this.material = new THREE.MeshPhongMaterial({color: 0xfff500});
             //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
             this.lampMesh = new THREE.Mesh( this.geometry, this.material );
 
             this.lampMesh.position.x = 50;
-            this.lampMesh.position.y = 160;
+            this.lampMesh.position.y = 155;
             this.lampMesh.position.z = 0;
             this.lampMesh.castShadow = true;
 
