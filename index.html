@@ -631,10 +631,10 @@
             scene.add( controls.getObject() );
 
             //LIGHTS
-            var ambientlight = new THREE.AmbientLight(0xffffff);
-            ambientlight.intensity = 1;
-            //ambientlight.intensity = 0.2;
-            //scene.add(ambientlight);
+//            var ambientlight = new THREE.AmbientLight(0xffffff);
+//            ambientlight.intensity = 0.1;
+//            ambientlight.intensity = 0.1;
+//            scene.add(ambientlight);
 
             var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.02);
             directionalLight.position.set( -4000, 4000, -4000 );
@@ -933,7 +933,7 @@
         // casa
         new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
         new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
-        new LightPole({x:3500,y:0,z:200},{y:45}),new LightPole({x:1550,y:0,z:-200},{y:45}),
+        new LightPole({x:3500,y:0,z:200},{y:45}),new LightPole({x:1550,y:0,z:-200},{y:30}),
         new LightPole({x:-1320,y:0,z:-10},{y:45})
     ];
 
