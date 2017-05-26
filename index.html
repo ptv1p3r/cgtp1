@@ -660,19 +660,51 @@
 
             var line = new THREE.Line(geometry, material);
 
-            this.geometry = new THREE.CubeGeometry(20, 40, 20);
-            this.material = new THREE.MeshPhongMaterial({color: 0xfff800});
-            //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
-            flieMesh = new THREE.Mesh( this.geometry, this.material );
-            flieMesh.position.x = 100;
-            flieMesh.position.y = 0;
-            flieMesh.position.z = 0;
-            flieMesh.castShadow = true;
+
+            //carrega o mtl
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/fly.mtl", function (materials) {
+
+                materials.preload();
+
+                //carrega o obj
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+
+                objLoader.load( "models/fly.obj", function (flieMesh) {
+                    flieMesh.scale.set( 10, 10, 10);
+                    flieMesh.position.x = 100;
+                    flieMesh.position.y = 0;
+                    flieMesh.position.z = 0;
+
+                    //ativa as sombras
+                    flieMesh.traverse( function ( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            child.castShadow = true;
+                        }
+                    });
+
+                    //scene.add( flieMesh );
+
+                });
+
+            });
+
+
+
+//            this.geometry = new THREE.CubeGeometry(20, 40, 20);
+//            this.material = new THREE.MeshPhongMaterial({color: 0xfff800});
+//            //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
+//            flieMesh = new THREE.Mesh( this.geometry, this.material );
+//            flieMesh.position.x = 100;
+//            flieMesh.position.y = 0;
+//            flieMesh.position.z = 0;
+//            flieMesh.castShadow = true;
 
             this.lampMesh.add(line);
             this.lampMesh.add(flieMesh);
 
-            setInterval(this.moveFlies, 100);
+            //setInterval(this.moveFlies, 100);
 
             this.geometry = new THREE.CylinderGeometry(10, 10, 350);
             this.material = new THREE.MeshPhongMaterial();
@@ -697,12 +729,12 @@
             poleLight.angle = pole.angle;
             poleLight.penumbra = 0.1;
             poleLight.shadowCameraVisible = true;
-            poleLight.shadowMapWidth = SHADOWMAPWIDTH;
-            poleLight.shadowMapHeight = SHADOWMAPHEIGHT;
+            poleLight.shadow.mapSize.width = SHADOWMAPWIDTH;
+            poleLight.shadow.mapSize.height = SHADOWMAPHEIGHT;
 
-            poleLight.shadowCameraNear = 100;
-            poleLight.shadowCameraFar = 2048;
-            poleLight.shadowCameraFov = 30;
+            poleLight.shadow.camera.near = 100;
+            poleLight.shadow.camera.far = 2048;
+            poleLight.shadow.camera.fov = 30;
 
             this.poleMesh.add(poleLight);
 
@@ -714,12 +746,12 @@
             lampLight.penumbra = 0.8;
             lampLight.castShadow = true;
             lampLight.shadowCameraVisible = true;
-            lampLight.shadowMapWidth = SHADOWMAPWIDTH;
-            lampLight.shadowMapHeight = SHADOWMAPHEIGHT;
+            lampLight.shadow.mapSize.width = SHADOWMAPWIDTH;
+            lampLight.shadow.mapSize.height = SHADOWMAPHEIGHT;
 
-            lampLight.shadowCameraNear = 100;
-            lampLight.shadowCameraFar = 2048;
-            lampLight.shadowCameraFov = 30;
+            lampLight.shadow.camera.near = 100;
+            lampLight.shadow.camera.far = 2048;
+            lampLight.shadow.camera.fov = 30;
 
             this.lampMesh.add(lampLight);
             //scene.add(this.poleMesh);
@@ -799,7 +831,7 @@
             renderer.setClearColor(0x000000);
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(WIDTH, HEIGHT);
-            renderer.shadowMapEnabled = true;
+            renderer.shadowMap.enabled = true;
             renderer.shadowMapSoft = true;
             renderer.shadowCameraNear = 3;
             renderer.shadowCameraFar = camera.far;
@@ -808,7 +840,7 @@
             renderer.shadowMapDarkness = 0.5;
             renderer.shadowMapWidth = SHADOWMAPWIDTH;
             renderer.shadowMapHeight = SHADOWMAPHEIGHT;
-            renderer.shadowMapType = THREE.PCFSoftShadowMap; // to antialias the shadow
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap; // to antialias the shadow
 
             document.body.appendChild(renderer.domElement);
 
@@ -1008,6 +1040,7 @@
                 "images/nightsky_up.jpg", "images/nightsky_dn.jpg",
                  "images/nightsky_bk.jpg", "images/nightsky_ft.jpg"];
 
+
             var cubemap = THREE.ImageUtils.loadTextureCube(urls); // load textures
             cubemap.format = THREE.RGBFormat;
 
@@ -1040,13 +1073,13 @@
             moonLight.position.set( -4000, 4000, -4000 );
             moonLight.castShadow = true;
             moonLight.intensity = 0.1;
-            moonLight.shadowDarkness = 0.5;
+            //moonLight.shadowDarkness = 0.5;
             moonLight.shadowCameraVisible = true;
-            moonLight.shadowMapWidth = SHADOWMAPWIDTH;
-            moonLight.shadowMapHeight = SHADOWMAPHEIGHT;
-            moonLight.shadowCameraNear = 100;
-            moonLight.shadowCameraFar = 2048;
-            moonLight.shadowCameraFov = 30;
+            moonLight.shadow.mapSize.width = SHADOWMAPWIDTH;
+            moonLight.shadow.mapSize.height = SHADOWMAPHEIGHT;
+            moonLight.shadow.camera.near = 100;
+            moonLight.shadow.camera.far = 2048;
+            moonLight.shadow.camera.fov = 30;
             skybox.add(moonLight);
 
             scene.add(skybox);
