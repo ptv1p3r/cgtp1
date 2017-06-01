@@ -662,49 +662,49 @@
 
 
             //carrega o mtl
-            var mtLoader = new THREE.MTLLoader();
-            mtLoader.load( "models/fly.mtl", function (materials) {
+//            var mtLoader = new THREE.MTLLoader();
+//            mtLoader.load( "models/fly.mtl", function (materials) {
+//
+//                materials.preload();
+//
+//                //carrega o obj
+//                var objLoader = new THREE.OBJLoader();
+//                objLoader.setMaterials(materials);
+//
+//                objLoader.load( "models/fly.obj", function (flieMesh) {
+//                    flieMesh.scale.set( 10, 10, 10);
+//                    flieMesh.position.x = 100;
+//                    flieMesh.position.y = 0;
+//                    flieMesh.position.z = 0;
+//
+//                    //ativa as sombras
+//                    flieMesh.traverse( function ( child ) {
+//                        if ( child instanceof THREE.Mesh ) {
+//                            child.castShadow = true;
+//                        }
+//                    });
+//
+//                    //scene.add( flieMesh );
+//
+//                });
+//
+//            });
 
-                materials.preload();
-
-                //carrega o obj
-                var objLoader = new THREE.OBJLoader();
-                objLoader.setMaterials(materials);
-
-                objLoader.load( "models/fly.obj", function (flieMesh) {
-                    flieMesh.scale.set( 10, 10, 10);
-                    flieMesh.position.x = 100;
-                    flieMesh.position.y = 0;
-                    flieMesh.position.z = 0;
-
-                    //ativa as sombras
-                    flieMesh.traverse( function ( child ) {
-                        if ( child instanceof THREE.Mesh ) {
-                            child.castShadow = true;
-                        }
-                    });
-
-                    //scene.add( flieMesh );
-
-                });
-
-            });
 
 
-
-//            this.geometry = new THREE.CubeGeometry(20, 40, 20);
-//            this.material = new THREE.MeshPhongMaterial({color: 0xfff800});
-//            //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
-//            flieMesh = new THREE.Mesh( this.geometry, this.material );
-//            flieMesh.position.x = 100;
-//            flieMesh.position.y = 0;
-//            flieMesh.position.z = 0;
-//            flieMesh.castShadow = true;
+            this.geometry = new THREE.CubeGeometry(20, 40, 20);
+            this.material = new THREE.MeshPhongMaterial({color: 0xfff800});
+            //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
+            flieMesh = new THREE.Mesh( this.geometry, this.material );
+            flieMesh.position.x = 100;
+            flieMesh.position.y = 0;
+            flieMesh.position.z = 0;
+            flieMesh.castShadow = true;
 
             this.lampMesh.add(line);
             this.lampMesh.add(flieMesh);
 
-            //setInterval(this.moveFlies, 100);
+            setInterval(this.moveFlies, 100);
 
             this.geometry = new THREE.CylinderGeometry(10, 10, 350);
             this.material = new THREE.MeshPhongMaterial();
