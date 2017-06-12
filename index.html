@@ -58,8 +58,9 @@
     var counter = 0 ;
     var flieMesh = null;
 
-    Physijs.scripts.worker = "js/physijs_worker.js";
-    Physijs.scripts.ammo = "ammo.js";
+    //physijs.worker = "js/physijs-worker.js";
+    //physijs.ammo = "ammo.js";
+
 
     class Obj{
         constructor(){}
@@ -618,8 +619,8 @@
             this.geometry = new THREE.CubeGeometry(100, 10, 10);
             this.material = new THREE.MeshPhongMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
-            this.armMesh = new THREE.Mesh( this.geometry, this.material );
-            //this.armMesh = new Physijs.BoxMesh( this.geometry, this.material );
+            //this.armMesh = new THREE.Mesh( this.geometry, this.material );
+            this.armMesh = new physijs.Box( this.geometry, this.material );
 
             this.armMesh .position.x = 10;
             this.armMesh .position.y = 180;
@@ -629,8 +630,8 @@
             this.geometry = new THREE.CubeGeometry(20, 40, 20);
             this.material = new THREE.MeshPhongMaterial({color: 0xfff500});
             //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
-            this.lampMesh = new THREE.Mesh( this.geometry, this.material );
-            //this.lampMesh = new Physijs.BoxMesh( this.geometry, this.material );
+            //this.lampMesh = new THREE.Mesh( this.geometry, this.material );
+            this.lampMesh = new physijs.Box( this.geometry, this.material );
 
             this.lampMesh.position.x = 50;
             this.lampMesh.position.y = 155;
@@ -709,8 +710,8 @@
             this.geometry = new THREE.CylinderGeometry(10, 10, 350);
             this.material = new THREE.MeshPhongMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/iron.jpg');
-            this.poleMesh = new THREE.Mesh( this.geometry, this.material );
-            //this.poleMesh = new Physijs.CylinderMesh( this.geometry, this.material );
+            //this.poleMesh = new THREE.Mesh( this.geometry, this.material );
+            this.poleMesh = new physijs.Cylinder( this.geometry, this.material );
 
             this.poleMesh.position.x = position.x;
             this.poleMesh.position.y = position.y + 150;
@@ -801,8 +802,8 @@
          */
         createScene() {
             //SCENE
-            scene = new THREE.Scene();
-            //scene = new Physijs.Scene;
+            //scene = new THREE.Scene();
+            scene = new physijs.Scene('js/physijs-worker.js');
 
             scene.fog = new THREE.Fog( 0x000000, .5, 2000 );
 
