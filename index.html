@@ -36,9 +36,11 @@
         ASPECT = WIDTH / HEIGHT,
         NEAR = 1,
         FAR = 10000,
-        MOVEMENT_SPEED = 2250,
+        //MOVEMENT_SPEED = 2250,
+        MOVEMENT_SPEED = 10000,
         SHADOWMAPWIDTH = 2048,
-        SHADOWMAPHEIGHT = 2048;//movement speed
+        SHADOWMAPHEIGHT = 2048,
+        physics_framerate = 1000 / 60;
 
     var scene, renderer, camera, controls, spline;
 
@@ -509,8 +511,8 @@
             this.material = new THREE.MeshPhongMaterial(); // lambert nao permite a correcta iluminacao
 
             this.material.map = THREE.ImageUtils.loadTexture('images/floor.jpg');
-            this.mesh = new THREE.Mesh(this.geometry, this.material);
-            //this.mesh = new Physijs.BoxMesh( this.geometry, this.material);
+            //this.mesh = new THREE.Mesh(this.geometry, this.material);
+            this.mesh = new physijs.Box( this.geometry, this.material, {friction: 20});
 
             this.mesh.position.x = position.x;
             this.mesh.position.y = position.y;
@@ -805,7 +807,49 @@
             //scene = new THREE.Scene();
             scene = new physijs.Scene('js/physijs-worker.js');
 
-            scene.fog = new THREE.Fog( 0x000000, .5, 2000 );
+            //scene.fog = new THREE.Fog( 0x000000, .5, 2000 );
+
+            //---------- physics test ------------//
+
+            var sphere_geometry = new THREE.SphereGeometry( 200, 120, 120 );
+            var normal_material = new THREE.MeshNormalMaterial();
+            var sphere = new physijs.Sphere( sphere_geometry, normal_material, { mass: 0, type: 'RIGID' } );
+
+            sphere.position.set( 0, 200, 0 );
+            scene.add( sphere );
+
+            var box = new physijs.Box(
+                new THREE.BoxGeometry( 100, 100, 100 ), normal_material
+                , { mass: 200 }
+            );
+
+            box.position.set( 0, 1000, 0 );
+            box.physics.linear_velocity.y = -5;
+            box.rotation.x = 0.05;
+
+            scene.add( box );
+
+            sphere.addEventListener(
+                'physics.contactStart',
+                function( event ) {
+                    console.log( 'collided at', event.relative_linear_velocity.length() );
+                }
+            );
+            sphere.addEventListener(
+                'physics.contactContinue',
+                function( event ) {
+                    console.log( 'continued at', event.relative_linear_velocity.length() );
+                }
+            );
+            sphere.addEventListener(
+                'physics.contactEnd',
+                function( event ) {
+                    console.log( 'ended at', event.relative_linear_velocity.length() );
+                }
+            );
+
+
+            //---------- physics test ------------//
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -862,6 +906,12 @@
 
         }
 
+        //---------- physics test ------------//
+        onStep() {
+            renderer.render( scene, camera );
+            setTimeout( scene.step.bind( scene, physics_framerate / 1000, undefined, this.onStep ), physics_framerate );
+        }
+        //---------- physics test ------------//
 
         /**
          * Metodo que controla o evento KeyUp do teclado
@@ -1015,8 +1065,12 @@
             }
             //scene.simulate(); // run physics
 
+            //---------- physics test ------------//
+            scene.step( physics_framerate / 1000, undefined, this.onStep );
+            //---------- physics test ------------//
+
             //controls.update( clock.getDelta() );
-            renderer.render(scene, camera);
+            //renderer.render(scene, camera);
         }
 
         /**
@@ -1070,18 +1124,23 @@
             skybox.position.y = 0;
             skybox.position.z = -500;
 
-            var moonLight = new THREE.DirectionalLight(0xc8bcbc);
-            moonLight.position.set( -4000, 4000, -4000 );
-            moonLight.castShadow = true;
-            moonLight.intensity = 0.1;
-            //moonLight.shadowDarkness = 0.5;
-            moonLight.shadowCameraVisible = true;
-            moonLight.shadow.mapSize.width = SHADOWMAPWIDTH;
-            moonLight.shadow.mapSize.height = SHADOWMAPHEIGHT;
-            moonLight.shadow.camera.near = 100;
-            moonLight.shadow.camera.far = 2048;
-            moonLight.shadow.camera.fov = 30;
-            skybox.add(moonLight);
+            //---------- physics test ------------//
+            var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+            scene.add( light );
+            //---------- physics test ------------//
+
+//            var moonLight = new THREE.DirectionalLight(0xc8bcbc);
+//            moonLight.position.set( -4000, 4000, -4000 );
+//            moonLight.castShadow = true;
+//            moonLight.intensity = 0.1;
+//            //moonLight.shadowDarkness = 0.5;
+//            moonLight.shadowCameraVisible = true;
+//            moonLight.shadow.mapSize.width = SHADOWMAPWIDTH;
+//            moonLight.shadow.mapSize.height = SHADOWMAPHEIGHT;
+//            moonLight.shadow.camera.near = 100;
+//            moonLight.shadow.camera.far = 2048;
+//            moonLight.shadow.camera.fov = 30;
+//            skybox.add(moonLight);
 
 //            var helper = new THREE.CameraHelper( moonLight.shadow.camera );
 //             scene.add( helper );
