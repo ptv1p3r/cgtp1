@@ -1053,13 +1053,13 @@
                 controls.getObject().translateX( velocity.x * delta );
                 controls.getObject().translateZ( velocity.z * delta );
 
-                if (velocity.z < velocidadeMin && velocity.z > -velocidadeMin && velocity.x < velocidadeMin && velocity.x > -velocidadeMin) {
-
-                    if (updateCam === 1) {
-                        controls.updatePosition();  //atualiza a camera com a variacao de 50 graus para todos os lados
-                        updateCam=0;
-                    }
-                }
+//                if (velocity.z < velocidadeMin && velocity.z > -velocidadeMin && velocity.x < velocidadeMin && velocity.x > -velocidadeMin) {
+//
+//                    if (updateCam === 1) {
+//                        controls.updatePosition();  //atualiza a camera com a variacao de 50 graus para todos os lados
+//                        updateCam=0;
+//                    }
+//                }
 
                 prevTime = time;
             }

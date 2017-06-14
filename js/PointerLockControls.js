@@ -31,22 +31,22 @@ THREE.PointerLockControls = function ( camera ) {
 		var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
         // Original
-        // yawObject.rotation.y -= movementX * 0.002;
-        // pitchObject.rotation.x -= movementY * 0.002;
+        yawObject.rotation.y -= movementX * 0.002;
+        pitchObject.rotation.x -= movementY * 0.002;
 
-        if ( movementX > 0 && yawObject.rotation.y > lowerAngle) {	// DIREITA (D)
-            yawObject.rotation.y -= movementX * turningSpeed;
-
-        } else if ( movementX < 0 && yawObject.rotation.y < upperAngle) {	// ESQUERDA (A)
-            yawObject.rotation.y -= movementX * turningSpeed;
-        }
-
-        if ( movementY > 0 && pitchObject.rotation.x > -angle) {	// CIMA (W)
-            pitchObject.rotation.x -= movementY * turningSpeed;
-
-        } else if ( movementY < 0 && pitchObject.rotation.x < angle) {	// BAIXO (S)
-            pitchObject.rotation.x -= movementY * turningSpeed;
-        }
+        // if ( movementX > 0 && yawObject.rotation.y > lowerAngle) {	// DIREITA (D)
+        //     yawObject.rotation.y -= movementX * turningSpeed;
+        //
+        // } else if ( movementX < 0 && yawObject.rotation.y < upperAngle) {	// ESQUERDA (A)
+        //     yawObject.rotation.y -= movementX * turningSpeed;
+        // }
+        //
+        // if ( movementY > 0 && pitchObject.rotation.x > -angle) {	// CIMA (W)
+        //     pitchObject.rotation.x -= movementY * turningSpeed;
+        //
+        // } else if ( movementY < 0 && pitchObject.rotation.x < angle) {	// BAIXO (S)
+        //     pitchObject.rotation.x -= movementY * turningSpeed;
+        // }
 
 
 
