@@ -598,6 +598,16 @@
             this.graveMesh.position.y = position.y;
             this.graveMesh.position.z = position.z;
 
+            this.geometry = new THREE.BoxGeometry(50, 100, 50);
+            this.material = new THREE.MeshPhongMaterial({color: 0x00ff00});
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.graveCrossMesh = new physijs.Box(this.geometry, this.material);
+            this.graveCrossMesh.position.x = 50;
+           // this.graveCrossMesh.position.y = 500;
+            //this.graveCrossMesh.position.z = -5;
+
+            this.graveMesh.add(this.graveCrossMesh);
+
         }
 
         getMesh(){
