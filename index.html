@@ -405,8 +405,9 @@
             this.mesh.receiveShadow = false;
 
             //---------- physics test ------------//
-            this.geometry = new THREE.BoxGeometry(size.width*7, size.height, size.depth);
+            this.geometry = new THREE.BoxGeometry(size.width*7, size.height, size.depth*1.5);
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            //this.material = new THREE.MeshPhongMaterial();
             this.testMesh = new physijs.Box(this.geometry, this.material);
 
             this.testMesh.position.x = position.x;
@@ -634,8 +635,8 @@
             this.geometry = new THREE.CubeGeometry(100, 10, 10);
             this.material = new THREE.MeshPhongMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
-            //this.armMesh = new THREE.Mesh( this.geometry, this.material );
-            this.armMesh = new physijs.Box( this.geometry, this.material );
+            this.armMesh = new THREE.Mesh( this.geometry, this.material );
+            //this.armMesh = new physijs.Box( this.geometry, this.material );
 
             this.armMesh .position.x = 10;
             this.armMesh .position.y = 180;
@@ -645,8 +646,8 @@
             this.geometry = new THREE.CubeGeometry(20, 40, 20);
             this.material = new THREE.MeshPhongMaterial({color: 0xfff500});
             //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
-            //this.lampMesh = new THREE.Mesh( this.geometry, this.material );
-            this.lampMesh = new physijs.Box( this.geometry, this.material );
+            this.lampMesh = new THREE.Mesh( this.geometry, this.material );
+            //this.lampMesh = new physijs.Box( this.geometry, this.material );
 
             this.lampMesh.position.x = 50;
             this.lampMesh.position.y = 155;
@@ -728,10 +729,10 @@
             //this.poleMesh = new THREE.Mesh( this.geometry, this.material );
             this.poleMesh = new physijs.Cylinder( this.geometry, this.material );
 
-            this.poleMesh.position.x = position.x;
-            this.poleMesh.position.y = position.y + 150;
-            this.poleMesh.position.z = position.z;
-            this.poleMesh.rotation.y = rotation.y;
+//            this.poleMesh.position.x = position.x;
+//            this.poleMesh.position.y = position.y + 150;
+//            this.poleMesh.position.z = position.z;
+//            this.poleMesh.rotation.y = rotation.y;
             this.poleMesh.castShadow = true;
 
             this.poleMesh.add(this.armMesh);
@@ -771,10 +772,24 @@
 
             this.lampMesh.add(lampLight);
             //scene.add(this.poleMesh);
+
+            //---------- physics test ------------//
+            this.geometry = new THREE.BoxGeometry(120, 370, 25);
+            //this.material = new THREE.MeshPhongMaterial();
+            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.testMesh = new physijs.Box(this.geometry, this.material);
+
+            this.testMesh.position.x = position.x;
+            this.testMesh.position.y = position.y + 150;
+            this.testMesh.position.z = position.z;
+            this.testMesh.rotation.y = rotation.y;
+
+            this.testMesh.add(this.poleMesh);
+            //---------- physics test ------------//
         }
 
         getMesh(){
-            return this.poleMesh;
+            return this.testMesh;
         }
 
         moveFlies() {
@@ -836,9 +851,10 @@
                 , { mass: 200 }
             );
 
-            box.position.set( -1300, 1000, 70 );
+            //box.position.set( -1300, 1000, 70 ); -> sinalizador
+            box.position.set( 3500, 1000, 200 ); //-> 1 poste
             box.physics.linear_velocity.y = -5;
-            box.rotation.x = 0.05;
+            box.rotation.x = 0.5;
 
             scene.add( box );
 
@@ -1139,6 +1155,7 @@
 
             //---------- physics test ------------//
             var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+            light.intensity = 5;
             scene.add( light );
             //---------- physics test ------------//
 
