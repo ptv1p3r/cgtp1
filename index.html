@@ -630,10 +630,21 @@
 
             })
 
+            // aplicação do motor de fisica
+            this.geometry = new THREE.BoxGeometry(800, 750, 800);
+            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.houseMesh = new physijs.Box(this.geometry, this.material);
+
+            this.houseMesh.position.x = position.x;
+            this.houseMesh.position.y = position.y;
+            this.houseMesh.position.z = position.z;
+
+
         }
 
         getMesh(){
-            return this.mesh;
+            return this.houseMesh;
         }
     }
 
@@ -1298,7 +1309,7 @@
 //        new Tree({x:1750,y:0,z:-300}, 1),new Tree({x:1750,y:0,z:-1750}, 3),
 //        new Tree({x:1000,y:0,z:-2000}, 3),new Tree({x:1000,y:0,z:-1000}, 1),
 //        new Tree({x:250,y:0,z:-1700}, 1),new Tree({x:250,y:0,z:-1000}, 3),
-//        new House ({x:-2150,y:0,z:-2500}),
+        new House ({x:-2150,y:0,z:-2500})
 //        new LightPole({x:-2300,y:0,z:-2000},{y:0},{intensity:1,angle:0.5},{intensity:3,angle:1})
     ];
 
