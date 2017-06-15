@@ -586,12 +586,22 @@
 
                 });
 
-            })
+            });
+
+            // aplicação do motor de fisica
+            this.geometry = new THREE.BoxGeometry(325, 67, 150);
+            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.graveMesh = new physijs.Box(this.geometry, this.material);
+
+            this.graveMesh.position.x = position.x + 10;
+            this.graveMesh.position.y = position.y;
+            this.graveMesh.position.z = position.z;
 
         }
 
         getMesh(){
-            return this.mesh;
+            return this.graveMesh;
         }
     }
 
@@ -628,7 +638,7 @@
 
                 });
 
-            })
+            });
 
             // aplicação do motor de fisica
             this.geometry = new THREE.BoxGeometry(800, 750, 800);
@@ -1283,7 +1293,7 @@
 //        new Tree({x:3250,y:0,z:1500}, 3),new Tree({x:3500,y:0,z:1785}, 1),
 //        new Tree({x:3750,y:0,z:750},3),new Tree({x:3800,y:0,z:3574}, 1),
 //        new Tree({x:4000,y:0,z:500}, 1),new Tree({x:4000,y:0,z:500}, 3),
-//        new Grave({x:-1550,y:0,z:1850}), new Grave({x:-1550,y:0,z:2150}),
+        new Grave({x:-1550,y:0,z:1850}), new Grave({x:-1550,y:0,z:2150}),
 //        new LightPole({x:-1700,y:0,z:1450},{y:90},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
 //
 //        // casa
