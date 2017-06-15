@@ -1050,6 +1050,7 @@
          * Metodo que efetua o render da cena
          */
         render(){
+
             requestAnimationFrame(() => {
                 this.render();
                 scene.step( physics_framerate / 1000, undefined, this.onStep );
@@ -1099,6 +1100,7 @@
 
             //controls.update( clock.getDelta() );
             //renderer.render(scene, camera);
+
         }
 
         /**
@@ -1192,7 +1194,7 @@
         new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:10}),
 
         // Path
-//        new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
+        new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
 //        new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
 //        new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
 //        new Tree({x:3000,y:0,z:-200}, 2),new Tree({x:3000,y:0,z:200}, 4),
