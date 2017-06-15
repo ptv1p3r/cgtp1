@@ -123,10 +123,21 @@
                 scene.add( object );
 
             });
+
+            //---------- physics test ------------//
+            this.geometry = new THREE.BoxGeometry(110, 125, 120);
+            //this.material = new THREE.MeshPhongMaterial();
+            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.testMesh = new physijs.Box(this.geometry, this.material);
+
+            this.testMesh.position.x = position.x-5;
+            this.testMesh.position.y = position.y;
+            this.testMesh.position.z = position.z-60;
+            //---------- physics test ------------//
         }
 
         getMesh(){
-            return this.mesh;
+            return this.testMesh;
         }
     }
 
@@ -164,12 +175,23 @@
 
                 });
 
-            })
+            });
+
+            //---------- physics test ------------//
+            this.geometry = new THREE.BoxGeometry(150, 135, 170);
+            //this.material = new THREE.MeshPhongMaterial();
+            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.testMesh = new physijs.Box(this.geometry, this.material);
+
+            this.testMesh.position.x = position.x-10;
+            this.testMesh.position.y = position.y;
+            this.testMesh.position.z = position.z;
+            //---------- physics test ------------//
 
         }
 
         getMesh(){
-            return this.mesh;
+            return this.testMesh;
         }
     }
 
@@ -244,17 +266,57 @@
 
             });
 
-
             //---------- physics test ------------//
-            this.geometry = new THREE.CylinderGeometry(10, 10, 800);
-            this.material = new THREE.MeshPhongMaterial();
-            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+            switch (treeType) {
 
-            this.testMesh.position.x = position.x;
-            this.testMesh.position.y = position.y;
-            this.testMesh.position.z = position.z;
+                case 1:
+                    this.geometry = new THREE.CylinderGeometry(30, 30, 1000);
+                    //this.material = new THREE.MeshPhongMaterial();
+                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+
+                    this.testMesh.position.x = position.x-7.5;
+                    this.testMesh.position.y = position.y;
+                    this.testMesh.position.z = position.z-7.5;
+                    break;
+
+                case 2: //mini 1
+                    this.geometry = new THREE.CylinderGeometry(15, 15, 400);
+                    //this.material = new THREE.MeshPhongMaterial();
+                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+
+                    this.testMesh.position.x = position.x-5;
+                    this.testMesh.position.y = position.y;
+                    this.testMesh.position.z = position.z-5;
+                    break;
+
+                case 3:
+                    this.geometry = new THREE.CylinderGeometry(85, 85, 1700);
+                    //this.material = new THREE.MeshPhongMaterial();
+                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+
+                    this.testMesh.position.x = position.x;
+                    this.testMesh.position.y = position.y;
+                    this.testMesh.position.z = position.z;
+                    break;
+
+                case 4: //mini 3
+                    this.geometry = new THREE.CylinderGeometry(30, 30, 850);
+                    //this.material = new THREE.MeshPhongMaterial();
+                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+
+                    this.testMesh.position.x = position.x;
+                    this.testMesh.position.y = position.y;
+                    this.testMesh.position.z = position.z;
+                    break;
+
+
+            }
             //---------- physics test ------------//
+
 
         }
 
@@ -477,8 +539,8 @@
             }
 
             //cria e posiciona a mesh
-            this.mesh = new THREE.Mesh(this.geometry, this.material);
-            //this.mesh = new Physijs.PlaneMesh(this.geometry, this.material);
+            //this.mesh = new THREE.Mesh(this.geometry, this.material);
+            this.mesh = new physijs.Box(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
             this.mesh.position.y = position.y;
@@ -598,15 +660,15 @@
             this.graveMesh.position.y = position.y;
             this.graveMesh.position.z = position.z;
 
-            this.geometry = new THREE.BoxGeometry(50, 100, 50);
+            this.geometry = new THREE.BoxGeometry(25, 200, 80);
             this.material = new THREE.MeshPhongMaterial({color: 0x00ff00});
             //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.graveCrossMesh = new physijs.Box(this.geometry, this.material);
-            this.graveCrossMesh.position.x = 50;
-           // this.graveCrossMesh.position.y = 500;
-            //this.graveCrossMesh.position.z = -5;
+            this.graveCrossMesh.position.x = position.x - 165;
+            this.graveCrossMesh.position.y = position.y;
+            this.graveCrossMesh.position.z = position.z;
 
-            this.graveMesh.add(this.graveCrossMesh);
+            scene.add(this.graveCrossMesh);
 
         }
 
@@ -651,9 +713,9 @@
             });
 
             // aplicação do motor de fisica
-            this.geometry = new THREE.BoxGeometry(800, 750, 800);
-            this.material = new THREE.MeshPhongMaterial();
-            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.geometry = new THREE.BoxGeometry(830, 750, 850);
+            //this.material = new THREE.MeshPhongMaterial();
+            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.houseMesh = new physijs.Box(this.geometry, this.material);
 
             this.houseMesh.position.x = position.x;
@@ -891,11 +953,12 @@
 
             var box = new physijs.Box(
                 new THREE.BoxGeometry( 100, 100, 100 ), normal_material
-                , { mass: 200 }
+                , { mass: 20000 }
             );
 
             //box.position.set( -1300, 1000, 70 ); -> sinalizador
-            box.position.set( 3500, 1000, 200 ); //-> 1 poste
+            //box.position.set( 3500, 1000, 200 ); //-> 1 poste
+            box.position.set( -1700, 400, 2150 ); //-> grave
             box.physics.linear_velocity.y = -5;
             box.rotation.x = 0.5;
 
@@ -1238,9 +1301,10 @@
 
         // Path
         new Tree({x:300,y:0,z:-200}, 1),//new Tree({x:300,y:0,z:200}, 1),
-//        new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
-//        new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
-//        new Tree({x:3000,y:0,z:-200}, 2),new Tree({x:3000,y:0,z:200}, 4),
+        new Tree({x:1000,y:0,z:-200}, 2),//new Tree({x:1000,y:0,z:200}, 2),
+        new Tree({x:2000,y:0,z:-200}, 3),//new Tree({x:2000,y:0,z:200}, 3),
+//        new Tree({x:3000,y:0,z:-200}, 2),
+        new Tree({x:3000,y:0,z:200}, 4),
 //        new Tree({x:4000,y:0,z:-200}, 1),new Tree({x:3700,y:0,z:325}, 2),
 //        new Tree({x:2652,y:0,z:-400}, 3),new Tree({x:2500,y:0,z:700}, 3),
 //        new Tree({x:1500,y:0,z:-485}, 3),new Tree({x:1500,y:0,z:700}, 3),
@@ -1248,11 +1312,11 @@
 //        new Tree({x:800,y:0,z:-400}, 3),new Tree({x:800,y:0,z:500}, 3),
 //        new Tree({x:200,y:0,z:-485}, 3),new Tree({x:200,y:0,z:725}, 3),
 //        new Tree({x:-200,y:0,z:-400}, 3),new Tree({x:-200,y:0,z:600}, 3),
-//        new Rocks({x:-200,y:0,z:-200}), new Rocks({x:200,y:0,z:200}),
+        new Rocks({x:-200,y:0,z:-200}), new Rocks({x:200,y:0,z:200}),
 //        new Rocks({x:-800,y:0,z:-200}), new Rocks({x:800,y:0,z:200}),
 //        new Rocks({x:-1000,y:0,z:-300}), new Rocks({x:1000,y:0,z:200}),
-//        new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
-//        new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
+        new RockStack({x:55,y:0,z:-1778}, 2),//new RockStack({x:1000,y:0,z:1000}, 3),
+        new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
 //        new Path({x:149,y:0,z:10}, 1, 'S'),new Path({x:661,y:0,z:10}, 1, 'S'),
 //        new Path({x:1173,y:0,z:10}, 1, 'S'),new Path({x:1685,y:0,z:10}, 1, 'S'),
 //        new Path({x:2197,y:0,z:10}, 1, 'S'),new Path({x:2709,y:0,z:10}, 1, 'S'),
@@ -1278,7 +1342,7 @@
 //        new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
 //        new Tree({x:-1000,y:0,z:500}, 1),new Tree({x:-1900,y:0,z:500}, 1),
 //        new Tree({x:-1500,y:0,z:3000},2),new Tree({x:-1900,y:0,z:500}, 1),
-//        new RockStack({x:-2200,y:0,z:1900},1),new RockStack({x:-2200,y:0,z:2200},1),
+        new RockStack({x:-2200,y:0,z:1900},1),//new RockStack({x:-2200,y:0,z:2200},1),
 //        new Tree({x:-1500,y:0,z:3000}, 1),new Tree({x:-1900,y:0,z:3000}, 3),
 //        new Tree({x:-1000,y:0,z:3000}, 3),new Tree({x:-800,y:0,z:3000}, 4),
 //        new Tree({x:-1000,y:0,z:1500}, 3),new Tree({x:-800,y:0,z:1700}, 4),
