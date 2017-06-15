@@ -935,13 +935,6 @@
 
         }
 
-        //---------- physics test ------------//
-        onStep() {
-            renderer.render( scene, camera );
-            setTimeout( scene.step.bind( scene, physics_framerate / 1000, undefined, this.onStep ), physics_framerate );
-        }
-        //---------- physics test ------------//
-
         /**
          * Metodo que controla o evento KeyUp do teclado
          */
@@ -1044,11 +1037,22 @@
         }
 
         /**
+         * Metodo que inicia o motor de fisica e associa a cena fazendo render
+         * */
+        onStep() {
+            renderer.render( scene, camera );
+            if (physijs.is_stepping === false) {
+                setTimeout(scene.step.bind(scene, physics_framerate / 1000, undefined, this.onStep), physics_framerate);
+            }
+        }
+
+        /**
          * Metodo que efetua o render da cena
          */
         render(){
             requestAnimationFrame(() => {
                 this.render();
+                scene.step( physics_framerate / 1000, undefined, this.onStep );
             });
 
             if ( controlsEnabled ) { //Aplica o movimento com o WASD
@@ -1092,11 +1096,6 @@
 
                 prevTime = time;
             }
-            //scene.simulate(); // run physics
-
-            //---------- physics test ------------//
-            scene.step( physics_framerate / 1000, undefined, this.onStep );
-            //---------- physics test ------------//
 
             //controls.update( clock.getDelta() );
             //renderer.render(scene, camera);
