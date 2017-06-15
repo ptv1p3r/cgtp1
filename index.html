@@ -405,7 +405,7 @@
             this.mesh.receiveShadow = false;
 
             //---------- physics test ------------//
-            this.geometry = new THREE.BoxGeometry(size.width*7, size.height, size.depth*2);
+            this.geometry = new THREE.BoxGeometry(size.width*7, size.height, size.depth);
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.testMesh = new physijs.Box(this.geometry, this.material);
 
