@@ -264,9 +264,9 @@
             this.material = new THREE.MeshPhongMaterial({map:woodTexture,side:THREE.DoubleSide});
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-            this.mesh.position.x = position.x;
-            this.mesh.position.y = position.y;
-            this.mesh.position.z = position.z;
+//            this.mesh.position.x = position.x;
+//            this.mesh.position.y = position.y;
+//            this.mesh.position.z = position.z;
 
             //------ Grave -----//
 
@@ -398,16 +398,29 @@
             this.mesh.add(this.mansionPointer);
 
 
-            this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
+            //this.mesh.rotation.y = Math.PI / 2; //tabua de frente para o utilizador
 
             //ativa as sombras
             this.mesh.castShadow = true;
             this.mesh.receiveShadow = false;
 
+            //---------- physics test ------------//
+            this.geometry = new THREE.BoxGeometry(size.width*7, size.height, size.depth*2);
+            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.testMesh = new physijs.Box(this.geometry, this.material);
+
+            this.testMesh.position.x = position.x;
+            this.testMesh.position.y = position.y;
+            this.testMesh.position.z = position.z;
+
+            this.testMesh.rotation.y = Math.PI / 2;
+
+            this.testMesh.add(this.mesh);
+            //---------- physics test ------------//
         }
 
         getMesh(){
-            return this.mesh;
+            return this.testMesh;
         }
     }
 
@@ -816,14 +829,14 @@
             var sphere = new physijs.Sphere( sphere_geometry, normal_material, { mass: 0, type: 'RIGID' } );
 
             sphere.position.set( 0, 200, 0 );
-            scene.add( sphere );
+            //scene.add( sphere );
 
             var box = new physijs.Box(
                 new THREE.BoxGeometry( 100, 100, 100 ), normal_material
                 , { mass: 200 }
             );
 
-            box.position.set( 0, 1000, 0 );
+            box.position.set( -1300, 1000, 70 );
             box.physics.linear_velocity.y = -5;
             box.rotation.x = 0.05;
 
