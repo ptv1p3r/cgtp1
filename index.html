@@ -18,6 +18,32 @@
     </div>
 </div>
 
+<table id ="headerBox" >
+    <tbody>
+    <tr>
+        <td>The Red Rose Aventure</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Tempo restante:</td>
+        <td>05:59:00</td>
+        <td>Objectos recuperados:</td>
+        <td>0/5</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<table id ="footerBox" >
+    <tbody>
+    <tr>
+        <td width="20%"></td>
+        <td style="white-space: nowrap;"><div id="playersLife"></div></td>
+        <td width="20%"></td>
+    </tr>
+    </tbody>
+</table>
+
 <script src="js/three.js"></script>
 <script src="js/physi.js"></script>
 <script src="js/OrbitControls.js"></script>
@@ -29,6 +55,8 @@
     var myCanvas = document.getElementById('myCanvas');
     var blocker = document.getElementById( 'blocker' );             //chama o blocker, para ativacao do utilizador e comecar o lock
     var instructions = document.getElementById( 'instructions' );   //janela de instrucoes
+    var headerBox = document.getElementById('headerBox');
+    var footerBox = document.getElementById('footerBox');
 
     var WIDTH = window.innerWidth,
         HEIGHT = window.innerHeight,
@@ -59,11 +87,32 @@
     var up = new THREE.Vector3(0, 1, 0);
     var counter = 0 ;
     var flieMesh = null;
+    var playerProfile = null;
 
-    //physijs.worker = "js/physijs-worker.js";
-    //physijs.ammo = "ammo.js";
+    //document.getElementById('playersLife').innerHTML = "||||||||||";
 
+    /**
+     * Classe para jogador
+     *
+     */
+    class Player {
+        constructor(id){
+            this.id             = id;           // identificador interno do jogador
+            this.life           = 10;           // vida inicial do jogador
+        };
 
+        setUpdate(life) {
+            if (this.life != 0) {
+                this.life -= life;        // update a vida do jogador
+            }
+
+        }
+    }
+
+    /**
+     * Classe generico
+     *
+     */
     class Obj{
         constructor(){}
     }
@@ -1037,8 +1086,14 @@
             document.addEventListener( 'keyup', this.onKeyUp, false );          //listener para desativar as teclas
             window.addEventListener( 'resize', this.onWindowResize, false );    //listener para o resize
 
+            this.newPlayer();
+
             this.render();
 
+        }
+
+        newPlayer () {
+            playerProfile = new Player(1);
         }
 
         /**
@@ -1098,6 +1153,8 @@
                         controlsEnabled = true;
                         controls.enabled = true;
                         blocker.style.display = 'none';
+                        headerBox.style.display = 'block';
+                        footerBox.style.display = 'block';
                     } else {
                         controls.enabled = false;
                         blocker.style.display = '-webkit-box';
@@ -1137,6 +1194,7 @@
          * Metodo que controla o evento Window Resize do browse
          */
         onWindowResize() {
+            playerProfile.setUpdate(2);
             camera.aspect = window.innerWidth / window.innerHeight;
             renderer.setSize( window.innerWidth, window.innerHeight );
             camera.updateProjectionMatrix();
@@ -1202,6 +1260,9 @@
 //                }
 
                 prevTime = time;
+
+
+                document.getElementById('playersLife').innerHTML = playerProfile.life;
             }
 
             //controls.update( clock.getDelta() );
