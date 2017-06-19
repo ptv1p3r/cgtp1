@@ -64,13 +64,16 @@
         ASPECT = WIDTH / HEIGHT,
         NEAR = 1,
         FAR = 10000,
-        //MOVEMENT_SPEED = 2250,
-        MOVEMENT_SPEED = 10000,
+        MOVEMENT_SPEED = 2250,
+        //MOVEMENT_SPEED = 10000,
         SHADOWMAPWIDTH = 2048,
         SHADOWMAPHEIGHT = 2048,
-        physics_framerate = 1000 / 60;
+        physics_framerate = 1000 / 60,
+        player;
 
     var scene, renderer, camera, controls, spline;
+
+    var vector = new THREE.Vector3();
 
     var prevTime = performance.now();
     var velocity = new THREE.Vector3();
@@ -177,7 +180,7 @@
             this.geometry = new THREE.BoxGeometry(110, 125, 120);
             //this.material = new THREE.MeshPhongMaterial();
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.testMesh = new physijs.Box(this.geometry, this.material);
+            this.testMesh = new physijs.Box(this.geometry, this.material, );
 
             this.testMesh.position.x = position.x-5;
             this.testMesh.position.y = position.y;
@@ -230,7 +233,7 @@
             this.geometry = new THREE.BoxGeometry(150, 135, 170);
             //this.material = new THREE.MeshPhongMaterial();
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.testMesh = new physijs.Box(this.geometry, this.material);
+            this.testMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
 
             this.testMesh.position.x = position.x-10;
             this.testMesh.position.y = position.y;
@@ -528,18 +531,19 @@
             this.mesh.receiveShadow = false;
 
             //---------- physics test ------------//
-            this.geometry = new THREE.BoxGeometry(size.width*7, size.height, size.depth*1.5);
-            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            //this.material = new THREE.MeshPhongMaterial();
-            this.testMesh = new physijs.Box(this.geometry, this.material);
+            this.geometry = new THREE.BoxGeometry(size.width*7, size.height/2, size.depth*2);
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.material = new THREE.MeshPhongMaterial();
+            this.testMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
             this.testMesh.position.x = position.x;
             this.testMesh.position.y = position.y;
             this.testMesh.position.z = position.z;
 
             this.testMesh.rotation.y = Math.PI / 2;
+            this.testMesh.rotation.x = -Math.PI / 12;
 
-            this.testMesh.add(this.mesh);
+            scene.add(this.testMesh);
             //---------- physics test ------------//
         }
 
@@ -649,7 +653,7 @@
 
             this.material.map = THREE.ImageUtils.loadTexture('images/floor.jpg');
             //this.mesh = new THREE.Mesh(this.geometry, this.material);
-            this.mesh = new physijs.Box( this.geometry, this.material, {friction: 20});
+            this.mesh = new physijs.Box( this.geometry, this.material, {friction: 100000});
 
             this.mesh.position.x = position.x;
             this.mesh.position.y = position.y;
@@ -703,18 +707,18 @@
             this.geometry = new THREE.BoxGeometry(325, 67, 150);
             this.material = new THREE.MeshPhongMaterial();
             //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.graveMesh = new physijs.Box(this.geometry, this.material);
+            this.graveMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
 
             this.graveMesh.position.x = position.x + 10;
             this.graveMesh.position.y = position.y;
             this.graveMesh.position.z = position.z;
 
-            this.geometry = new THREE.BoxGeometry(25, 200, 80);
+            this.geometry = new THREE.BoxGeometry(30, 100, 80);
             this.material = new THREE.MeshPhongMaterial({color: 0x00ff00});
             //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.graveCrossMesh = new physijs.Box(this.geometry, this.material);
+            this.graveCrossMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
             this.graveCrossMesh.position.x = position.x - 165;
-            this.graveCrossMesh.position.y = position.y;
+            this.graveCrossMesh.position.y = position.y+75;
             this.graveCrossMesh.position.z = position.z;
 
             scene.add(this.graveCrossMesh);
@@ -765,7 +769,7 @@
             this.geometry = new THREE.BoxGeometry(830, 750, 850);
             //this.material = new THREE.MeshPhongMaterial();
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.houseMesh = new physijs.Box(this.geometry, this.material);
+            this.houseMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
 
             this.houseMesh.position.x = position.x;
             this.houseMesh.position.y = position.y;
@@ -883,10 +887,10 @@
             //this.poleMesh = new THREE.Mesh( this.geometry, this.material );
             this.poleMesh = new physijs.Cylinder( this.geometry, this.material );
 
-//            this.poleMesh.position.x = position.x;
-//            this.poleMesh.position.y = position.y + 150;
-//            this.poleMesh.position.z = position.z;
-//            this.poleMesh.rotation.y = rotation.y;
+            this.poleMesh.position.x = position.x;
+            this.poleMesh.position.y = position.y + 150;
+            this.poleMesh.position.z = position.z;
+            this.poleMesh.rotation.y = rotation.y;
             this.poleMesh.castShadow = true;
 
             this.poleMesh.add(this.armMesh);
@@ -925,25 +929,25 @@
             lampLight.shadow.camera.fov = 30;
 
             this.lampMesh.add(lampLight);
-            //scene.add(this.poleMesh);
+            scene.add(this.poleMesh);
 
             //---------- physics test ------------//
-            this.geometry = new THREE.BoxGeometry(120, 370, 25);
-            //this.material = new THREE.MeshPhongMaterial();
-            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.testMesh = new physijs.Box(this.geometry, this.material);
+            this.geometry = new THREE.BoxGeometry(120, 370, 40);
+            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.testMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
             this.testMesh.position.x = position.x;
             this.testMesh.position.y = position.y + 150;
             this.testMesh.position.z = position.z;
             this.testMesh.rotation.y = rotation.y;
 
-            this.testMesh.add(this.poleMesh);
+            scene.add(this.testMesh);
             //---------- physics test ------------//
         }
 
         getMesh(){
-            return this.testMesh;
+            return this.poleMesh;
         }
 
         moveFlies() {
@@ -1013,24 +1017,7 @@
 
             scene.add( box );
 
-            sphere.addEventListener(
-                'physics.contactStart',
-                function( event ) {
-                    console.log( 'collided at', event.relative_linear_velocity.length() );
-                }
-            );
-            sphere.addEventListener(
-                'physics.contactContinue',
-                function( event ) {
-                    console.log( 'continued at', event.relative_linear_velocity.length() );
-                }
-            );
-            sphere.addEventListener(
-                'physics.contactEnd',
-                function( event ) {
-                    console.log( 'ended at', event.relative_linear_velocity.length() );
-                }
-            );
+            //physicColision(sphere);
 
 
             //---------- physics test ------------//
@@ -1072,6 +1059,16 @@
             renderer.shadowMap.type = THREE.PCFSoftShadowMap; // to antialias the shadow
 
             document.body.appendChild(renderer.domElement);
+
+            var player_geometry = new THREE.CylinderGeometry(50, 50, 210);
+            var player_material = new THREE.MeshPhongMaterial();
+            player = new physijs.Cylinder( player_geometry, player_material, { mass: 0, type: 'RIGID' });
+            player.rotation.y = Math.PI/2;
+            player.position.set(3500, 100, 0);
+
+            scene.add(player);
+
+            physicColision(player);
 
             //CAMERA CONTROL (As restricoes da camera foram efetuadas no PointerLockControls.js, linha 26)
             controls = new THREE.PointerLockControls( camera );
@@ -1251,6 +1248,9 @@
                 controls.getObject().translateX( velocity.x * delta );
                 controls.getObject().translateZ( velocity.z * delta );
 
+                //player.translateX( velocity.x * delta );
+                //player.translateZ( velocity.z * delta );
+
 //                if (velocity.z < velocidadeMin && velocity.z > -velocidadeMin && velocity.x < velocidadeMin && velocity.x > -velocidadeMin) {
 //
 //                    if (updateCam === 1) {
@@ -1263,6 +1263,8 @@
 
 
                 document.getElementById('playersLife').innerHTML = playerProfile.life;
+
+                player.position.set(controls.getObject().position.x - 500 , controls.getObject().position.y+100, controls.getObject().position.z);
             }
 
             //controls.update( clock.getDelta() );
@@ -1351,6 +1353,33 @@
     let app = new Aplication(); // instancia nova aplicação
 
     //window.load(app);
+
+    function physicColision ( object ) {
+
+        object.addEventListener(
+            'physics.contactStart',
+            function( event ) {
+                console.log( 'collided at', event.relative_linear_velocity.length() );
+                player.position.set(player.position.x, player.position.y , player.position.z - 100);
+                controls.getObject().position.set( controls.getObject().position.x, controls.getObject().position.y , controls.getObject().position.z - 100 );
+            }
+        );
+        object.addEventListener(
+            'physics.contactContinue',
+            function( event ) {
+                console.log( 'continued at', event.relative_linear_velocity.length() );
+                player.position.set(player.position.x, player.position.y , player.position.z - 100);
+                controls.getObject().position.set( controls.getObject().position.x, controls.getObject().position.y , controls.getObject().position.z - 100 );
+            }
+        );
+        object.addEventListener(
+            'physics.contactEnd',
+            function( event ) {
+                console.log( 'ended at', event.relative_linear_velocity.length() );
+            }
+        );
+
+    }
 
     /**
      * Lista de objectos da cena
