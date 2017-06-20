@@ -64,8 +64,8 @@
         ASPECT = WIDTH / HEIGHT,
         NEAR = 1,
         FAR = 10000,
-        MOVEMENT_SPEED = 2250,
-        //MOVEMENT_SPEED = 10000,
+        //MOVEMENT_SPEED = 2250,
+        MOVEMENT_SPEED = 10000,
         SHADOWMAPWIDTH = 2048,
         SHADOWMAPHEIGHT = 2048,
         physics_framerate = 1000 / 60,
@@ -107,6 +107,9 @@
         setUpdate(life) {
             if (this.life != 0) {
                 this.life -= life;        // update a vida do jogador
+                console.log("hit");
+            } else {
+                console.log("You are dead");
             }
 
         }
@@ -177,19 +180,20 @@
             });
 
             //---------- physics test ------------//
-            this.geometry = new THREE.BoxGeometry(110, 125, 120);
-            //this.material = new THREE.MeshPhongMaterial();
-            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.testMesh = new physijs.Box(this.geometry, this.material, );
+            this.geometry = new THREE.BoxGeometry(110, 60, 120);
+            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.physicsMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' } );
 
-            this.testMesh.position.x = position.x-5;
-            this.testMesh.position.y = position.y;
-            this.testMesh.position.z = position.z-60;
+            this.physicsMesh.position.x = position.x-5;
+            this.physicsMesh.position.y = position.y + 30;
+            this.physicsMesh.position.z = position.z-60;
+            scene.add(this.physicsMesh);
             //---------- physics test ------------//
         }
 
         getMesh(){
-            return this.testMesh;
+            return this.physicsMesh;
         }
     }
 
@@ -230,20 +234,21 @@
             });
 
             //---------- physics test ------------//
-            this.geometry = new THREE.BoxGeometry(150, 135, 170);
-            //this.material = new THREE.MeshPhongMaterial();
-            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.testMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
+            this.geometry = new THREE.BoxGeometry(150, 75, 170);
+            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.physicsMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
 
-            this.testMesh.position.x = position.x-10;
-            this.testMesh.position.y = position.y;
-            this.testMesh.position.z = position.z;
+            this.physicsMesh.position.x = position.x - 10;
+            this.physicsMesh.position.y = position.y+ 75/2;
+            this.physicsMesh.position.z = position.z;
+            scene.add(this.physicsMesh);
             //---------- physics test ------------//
 
         }
 
         getMesh(){
-            return this.testMesh;
+            return this.physicsMesh;
         }
     }
 
@@ -322,47 +327,47 @@
             switch (treeType) {
 
                 case 1:
-                    this.geometry = new THREE.CylinderGeometry(30, 30, 1000);
-                    //this.material = new THREE.MeshPhongMaterial();
-                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+                    this.geometry = new THREE.CylinderGeometry(30, 30, 500);
+                    this.material = new THREE.MeshPhongMaterial();
+                    //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.physicsMesh = new physijs.Cylinder(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
-                    this.testMesh.position.x = position.x-7.5;
-                    this.testMesh.position.y = position.y;
-                    this.testMesh.position.z = position.z-7.5;
+                    this.physicsMesh.position.x = position.x-7.5;
+                    this.physicsMesh.position.y = position.y + 250;
+                    this.physicsMesh.position.z = position.z-7.5;
                     break;
 
                 case 2: //mini 1
-                    this.geometry = new THREE.CylinderGeometry(15, 15, 400);
-                    //this.material = new THREE.MeshPhongMaterial();
-                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+                    this.geometry = new THREE.CylinderGeometry(15, 15, 200);
+                    this.material = new THREE.MeshPhongMaterial();
+                    //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.physicsMesh = new physijs.Cylinder(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
-                    this.testMesh.position.x = position.x-5;
-                    this.testMesh.position.y = position.y;
-                    this.testMesh.position.z = position.z-5;
+                    this.physicsMesh.position.x = position.x-5;
+                    this.physicsMesh.position.y = position.y + 100;
+                    this.physicsMesh.position.z = position.z-5;
                     break;
 
                 case 3:
-                    this.geometry = new THREE.CylinderGeometry(85, 85, 1700);
-                    //this.material = new THREE.MeshPhongMaterial();
-                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+                    this.geometry = new THREE.CylinderGeometry(85, 85, 850);
+                    this.material = new THREE.MeshPhongMaterial();
+                    //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.physicsMesh = new physijs.Cylinder(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
-                    this.testMesh.position.x = position.x;
-                    this.testMesh.position.y = position.y;
-                    this.testMesh.position.z = position.z;
+                    this.physicsMesh.position.x = position.x;
+                    this.physicsMesh.position.y = position.y + 425;
+                    this.physicsMesh.position.z = position.z;
                     break;
 
                 case 4: //mini 3
-                    this.geometry = new THREE.CylinderGeometry(30, 30, 850);
-                    //this.material = new THREE.MeshPhongMaterial();
-                    this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-                    this.testMesh = new physijs.Cylinder(this.geometry, this.material);
+                    this.geometry = new THREE.CylinderGeometry(30, 30, 425);
+                    this.material = new THREE.MeshPhongMaterial();
+                    //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+                    this.physicsMesh = new physijs.Cylinder(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
-                    this.testMesh.position.x = position.x;
-                    this.testMesh.position.y = position.y;
-                    this.testMesh.position.z = position.z;
+                    this.physicsMesh.position.x = position.x;
+                    this.physicsMesh.position.y = position.y + 212.5;
+                    this.physicsMesh.position.z = position.z;
                     break;
 
 
@@ -373,7 +378,7 @@
         }
 
         getMesh(){
-            return this.testMesh;
+            return this.physicsMesh;
         }
     }
 
@@ -390,9 +395,10 @@
             this.material = new THREE.MeshPhongMaterial({map:woodTexture,side:THREE.DoubleSide});
             this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-//            this.mesh.position.x = position.x;
-//            this.mesh.position.y = position.y;
-//            this.mesh.position.z = position.z;
+            this.mesh.rotation.y = Math.PI / 2;
+            this.mesh.position.x = position.x;
+            this.mesh.position.y = position.y;
+            this.mesh.position.z = position.z;
 
             //------ Grave -----//
 
@@ -534,21 +540,20 @@
             this.geometry = new THREE.BoxGeometry(size.width*7, size.height/2, size.depth*2);
             //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.material = new THREE.MeshPhongMaterial();
-            this.testMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
+            this.physicsMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
-            this.testMesh.position.x = position.x;
-            this.testMesh.position.y = position.y;
-            this.testMesh.position.z = position.z;
+            this.physicsMesh.position.x = position.x;
+            this.physicsMesh.position.y = position.y + (size.height/4);
+            this.physicsMesh.position.z = position.z;
 
-            this.testMesh.rotation.y = Math.PI / 2;
-            this.testMesh.rotation.x = -Math.PI / 12;
+            this.physicsMesh.rotation.y = Math.PI / 2;
 
-            scene.add(this.testMesh);
+            scene.add(this.physicsMesh);
             //---------- physics test ------------//
         }
 
         getMesh(){
-            return this.testMesh;
+            return this.mesh;
         }
     }
 
@@ -704,13 +709,13 @@
             });
 
             // aplicação do motor de fisica
-            this.geometry = new THREE.BoxGeometry(325, 67, 150);
+            this.geometry = new THREE.BoxGeometry(325, 66, 150);
             this.material = new THREE.MeshPhongMaterial();
             //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.graveMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
 
             this.graveMesh.position.x = position.x + 10;
-            this.graveMesh.position.y = position.y;
+            this.graveMesh.position.y = position.y + 33;
             this.graveMesh.position.z = position.z;
 
             this.geometry = new THREE.BoxGeometry(30, 100, 80);
@@ -718,7 +723,7 @@
             //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.graveCrossMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
             this.graveCrossMesh.position.x = position.x - 165;
-            this.graveCrossMesh.position.y = position.y+75;
+            this.graveCrossMesh.position.y = position.y+50;
             this.graveCrossMesh.position.z = position.z;
 
             scene.add(this.graveCrossMesh);
@@ -767,12 +772,12 @@
 
             // aplicação do motor de fisica
             this.geometry = new THREE.BoxGeometry(830, 750, 850);
-            //this.material = new THREE.MeshPhongMaterial();
-            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.houseMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
 
             this.houseMesh.position.x = position.x;
-            this.houseMesh.position.y = position.y;
+            this.houseMesh.position.y = position.y+325;
             this.houseMesh.position.z = position.z;
 
 
@@ -884,8 +889,8 @@
             this.geometry = new THREE.CylinderGeometry(10, 10, 350);
             this.material = new THREE.MeshPhongMaterial();
             this.material.map = THREE.ImageUtils.loadTexture('images/iron.jpg');
-            //this.poleMesh = new THREE.Mesh( this.geometry, this.material );
-            this.poleMesh = new physijs.Cylinder( this.geometry, this.material );
+            this.poleMesh = new THREE.Mesh( this.geometry, this.material );
+            //this.poleMesh = new physijs.Cylinder( this.geometry, this.material );
 
             this.poleMesh.position.x = position.x;
             this.poleMesh.position.y = position.y + 150;
@@ -933,16 +938,16 @@
 
             //---------- physics test ------------//
             this.geometry = new THREE.BoxGeometry(120, 370, 40);
-            //this.material = new THREE.MeshPhongMaterial();
-            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.testMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
+            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            this.physicsMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
-            this.testMesh.position.x = position.x;
-            this.testMesh.position.y = position.y + 150;
-            this.testMesh.position.z = position.z;
-            this.testMesh.rotation.y = rotation.y;
+            this.physicsMesh.position.x = position.x;
+            this.physicsMesh.position.y = position.y + 185;
+            this.physicsMesh.position.z = position.z;
+            this.physicsMesh.rotation.y = rotation.y;
 
-            scene.add(this.testMesh);
+            scene.add(this.physicsMesh);
             //---------- physics test ------------//
         }
 
@@ -992,35 +997,9 @@
             //SCENE
             //scene = new THREE.Scene();
             scene = new physijs.Scene('js/physijs-worker.js');
+            scene.gravity = new THREE.Vector3( 0, -5000, 0 );
 
             //scene.fog = new THREE.Fog( 0x000000, .5, 2000 );
-
-            //---------- physics test ------------//
-
-            var sphere_geometry = new THREE.SphereGeometry( 200, 120, 120 );
-            var normal_material = new THREE.MeshNormalMaterial();
-            var sphere = new physijs.Sphere( sphere_geometry, normal_material, { mass: 0, type: 'RIGID' } );
-
-            sphere.position.set( 0, 200, 0 );
-            //scene.add( sphere );
-
-            var box = new physijs.Box(
-                new THREE.BoxGeometry( 100, 100, 100 ), normal_material
-                , { mass: 20000 }
-            );
-
-            //box.position.set( -1300, 1000, 70 ); -> sinalizador
-            //box.position.set( 3500, 1000, 200 ); //-> 1 poste
-            box.position.set( -1700, 400, 2150 ); //-> grave
-            box.physics.linear_velocity.y = -5;
-            box.rotation.x = 0.5;
-
-            scene.add( box );
-
-            //physicColision(sphere);
-
-
-            //---------- physics test ------------//
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -1192,7 +1171,7 @@
          * Metodo que controla o evento Window Resize do browse
          */
         onWindowResize() {
-            playerProfile.setUpdate(2);
+            //playerProfile.setUpdate(2);
             camera.aspect = window.innerWidth / window.innerHeight;
             renderer.setSize( window.innerWidth, window.innerHeight );
             camera.updateProjectionMatrix();
@@ -1372,14 +1351,13 @@
             'physics.contactContinue',
             function( event ) {
                 console.log( 'continued at', event.relative_linear_velocity.length() );
-                player.position.set(player.position.x - (100*vector.x), player.position.y , player.position.z - (100*vector.z));
-                controls.getObject().position.set( controls.getObject().position.x - (100*vector.x), controls.getObject().position.y , controls.getObject().position.z - (100*vector.z));
             }
         );
 
         object.addEventListener(
             'physics.contactEnd',
             function( event ) {
+                playerProfile.setUpdate(1);
                 console.log( 'ended at', event.relative_linear_velocity.length() );
             }
         );
@@ -1391,7 +1369,7 @@
      * @type {[*]}
      */
     let objs = [
-        new Floor({width: 8000, height: 8000},{x:500,y:-1.8,z:-500}),
+        new Floor({width: 8000, height: 8000},{x:500,y:0,z:-500}),
         new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:10}),
 
         // Path
