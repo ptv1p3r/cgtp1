@@ -933,8 +933,8 @@
 
             //---------- physics test ------------//
             this.geometry = new THREE.BoxGeometry(120, 370, 40);
-            this.material = new THREE.MeshPhongMaterial();
-            //this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            //this.material = new THREE.MeshPhongMaterial();
+            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             this.testMesh = new physijs.Box(this.geometry, this.material, { mass: 2000, type: 'RIGID' });
 
             this.testMesh.position.x = position.x;
@@ -1061,10 +1061,11 @@
             document.body.appendChild(renderer.domElement);
 
             var player_geometry = new THREE.CylinderGeometry(50, 50, 210);
-            var player_material = new THREE.MeshPhongMaterial();
+            //var player_material = new THREE.MeshPhongMaterial();
+            var player_material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
             player = new physijs.Cylinder( player_geometry, player_material, { mass: 0, type: 'RIGID' });
             player.rotation.y = Math.PI/2;
-            player.position.set(3500, 100, 0);
+            //player.position.set(4000, 100, 0);
 
             scene.add(player);
 
@@ -1264,7 +1265,7 @@
 
                 document.getElementById('playersLife').innerHTML = playerProfile.life;
 
-                player.position.set(controls.getObject().position.x - 500 , controls.getObject().position.y+100, controls.getObject().position.z);
+                player.position.set(controls.getObject().position.x , controls.getObject().position.y+100, controls.getObject().position.z);
             }
 
             //controls.update( clock.getDelta() );
@@ -1359,19 +1360,23 @@
         object.addEventListener(
             'physics.contactStart',
             function( event ) {
+                vector = camera.getWorldDirection( vector );
+
                 console.log( 'collided at', event.relative_linear_velocity.length() );
-                player.position.set(player.position.x, player.position.y , player.position.z - 100);
-                controls.getObject().position.set( controls.getObject().position.x, controls.getObject().position.y , controls.getObject().position.z - 100 );
+                player.position.set(player.position.x - (100*vector.x), player.position.y , player.position.z - (100*vector.z));
+                controls.getObject().position.set( controls.getObject().position.x -  (100*vector.x), controls.getObject().position.y , controls.getObject().position.z - (100*vector.z));
             }
         );
+
         object.addEventListener(
             'physics.contactContinue',
             function( event ) {
                 console.log( 'continued at', event.relative_linear_velocity.length() );
-                player.position.set(player.position.x, player.position.y , player.position.z - 100);
-                controls.getObject().position.set( controls.getObject().position.x, controls.getObject().position.y , controls.getObject().position.z - 100 );
+                player.position.set(player.position.x - (100*vector.x), player.position.y , player.position.z - (100*vector.z));
+                controls.getObject().position.set( controls.getObject().position.x - (100*vector.x), controls.getObject().position.y , controls.getObject().position.z - (100*vector.z));
             }
         );
+
         object.addEventListener(
             'physics.contactEnd',
             function( event ) {
