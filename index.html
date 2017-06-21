@@ -784,9 +784,9 @@
 
             // aplicação do motor de fisica
             this.geometry = new THREE.BoxGeometry(830, 750, 850);
-            this.material = new THREE.MeshPhongMaterial();
+            //this.material = new THREE.MeshPhongMaterial();
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            //this.houseMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
+            this.houseMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
 
             this.houseMesh.position.x = position.x;
             this.houseMesh.position.y = position.y+325;
