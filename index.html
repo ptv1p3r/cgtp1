@@ -857,11 +857,11 @@
             //load a spline mesh invisivel para adicionar a mosca
             this.geometry = new THREE.CubeGeometry(20, 40, 20);
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            var splineMesh = new THREE.Mesh( this.geometry, this.material );
-            splineMesh.position.x = 100;
-            splineMesh.position.y = 0;
-            splineMesh.position.z = 0;
-            splineMesh.castShadow = true;
+            flieMesh = new THREE.Mesh( this.geometry, this.material );
+            flieMesh.position.x = 100;
+            flieMesh.position.y = 0;
+            flieMesh.position.z = 0;
+            flieMesh.castShadow = true;
 
             //carrega o mtl
             var mtLoader = new THREE.MTLLoader();
@@ -873,29 +873,29 @@
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
 
-                objLoader.load( "models/fly.obj", function (flieMesh) {
-                    flieMesh.scale.set( 0.5, 0.5, 0.5);
-                    flieMesh.rotation.y = -Math.PI/4;
-                    flieMesh.rotation.z = Math.PI/2;
-                    flieMesh.castShadow = true;
+                objLoader.load( "models/fly.obj", function (object) {
+                    object.scale.set( 0.5, 0.5, 0.5);
+                    object.rotation.y = -Math.PI/4;
+                    object.rotation.z = Math.PI/2;
+                    object.castShadow = true;
 
                     //ativa as sombras
-                    flieMesh.traverse( function ( child ) {
+                    object.traverse( function ( child ) {
                         if ( child instanceof THREE.Mesh ) {
                             child.castShadow = true;
                         }
                     });
 
-                    splineMesh.add(flieMesh);
+                    flieMesh.add(object);
 
                 });
 
             });
 
             this.lampMesh.add(line);
-            this.lampMesh.add(splineMesh);
+            this.lampMesh.add(flieMesh);
 
-            setInterval(this.moveFlies(splineMesh), 100);
+            setInterval(this.moveFlies, 100);
 
             this.geometry = new THREE.CylinderGeometry(10, 10, 350);
             this.material = new THREE.MeshPhongMaterial();
@@ -966,9 +966,9 @@
             return this.physicsMesh;
         }
 
-        moveFlies(splineMesh) {
+        moveFlies() {
             if (counter <= 1) {
-                splineMesh.position.copy( spline.getPointAt(counter) );
+                flieMesh.position.copy( spline.getPointAt(counter) );
 
                 tangent = spline.getTangentAt(counter).normalize();
 
@@ -976,7 +976,7 @@
 
                 var radians = Math.acos(up.dot(tangent));
 
-                splineMesh.quaternion.setFromAxisAngle(axis, radians);
+                flieMesh.quaternion.setFromAxisAngle(axis, radians);
 
                 counter += 0.005
             } else {
