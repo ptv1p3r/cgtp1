@@ -604,7 +604,7 @@
             this.mesh = new physijs.Box(this.geometry, this.material);
 
             this.mesh.position.x = position.x;
-            this.mesh.position.y = position.y;
+            this.mesh.position.y = position.y+.1;
             this.mesh.position.z = position.z;
 
             //rotacao da mesh, depende do path
@@ -857,50 +857,48 @@
             var line = new THREE.Line(geometry, material);
 
 
-            //carrega o mtl
-//            var mtLoader = new THREE.MTLLoader();
-//            mtLoader.load( "models/fly.mtl", function (materials) {
-//
-//                materials.preload();
-//
-//                //carrega o obj
-//                var objLoader = new THREE.OBJLoader();
-//                objLoader.setMaterials(materials);
-//
-//                objLoader.load( "models/fly.obj", function (flieMesh) {
-//                    flieMesh.scale.set( 10, 10, 10);
-//                    flieMesh.position.x = 100;
-//                    flieMesh.position.y = 0;
-//                    flieMesh.position.z = 0;
-//
-//                    //ativa as sombras
-//                    flieMesh.traverse( function ( child ) {
-//                        if ( child instanceof THREE.Mesh ) {
-//                            child.castShadow = true;
-//                        }
-//                    });
-//
-//                    //scene.add( flieMesh );
-//
-//                });
-//
-//            });
-
-
-
+            //load a spline mesh invisivel para adicionar a mosca
             this.geometry = new THREE.CubeGeometry(20, 40, 20);
-            this.material = new THREE.MeshPhongMaterial({color: 0xfff800});
-            //this.material.map = THREE.ImageUtils.loadTexture('images/wood-texture.jpg');
-            flieMesh = new THREE.Mesh( this.geometry, this.material );
-            flieMesh.position.x = 100;
-            flieMesh.position.y = 0;
-            flieMesh.position.z = 0;
-            flieMesh.castShadow = true;
+            this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
+            var splineMesh = new THREE.Mesh( this.geometry, this.material );
+            splineMesh.position.x = 100;
+            splineMesh.position.y = 0;
+            splineMesh.position.z = 0;
+            splineMesh.castShadow = true;
+
+            //carrega o mtl
+            var mtLoader = new THREE.MTLLoader();
+            mtLoader.load( "models/fly.mtl", function (materials) {
+
+                materials.preload();
+
+                //carrega o obj
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+
+                objLoader.load( "models/fly.obj", function (flieMesh) {
+                    flieMesh.scale.set( 0.5, 0.5, 0.5);
+                    flieMesh.rotation.y = -Math.PI/4;
+                    flieMesh.rotation.z = Math.PI/2;
+                    flieMesh.castShadow = true;
+
+                    //ativa as sombras
+                    flieMesh.traverse( function ( child ) {
+                        if ( child instanceof THREE.Mesh ) {
+                            child.castShadow = true;
+                        }
+                    });
+
+                    splineMesh.add(flieMesh);
+
+                });
+
+            });
 
             this.lampMesh.add(line);
-            this.lampMesh.add(flieMesh);
+            this.lampMesh.add(splineMesh);
 
-            setInterval(this.moveFlies, 100);
+            setInterval(this.moveFlies(splineMesh), 100);
 
             this.geometry = new THREE.CylinderGeometry(10, 10, 350);
             this.material = new THREE.MeshPhongMaterial();
@@ -952,7 +950,7 @@
             this.lampMesh.add(lampLight);
             scene.add(this.poleMesh);
 
-            //---------- physics test ------------//
+
             this.geometry = new THREE.BoxGeometry(120, 370, 40);
             //this.material = new THREE.MeshPhongMaterial();
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
@@ -964,16 +962,16 @@
             this.physicsMesh.rotation.y = rotation.y;
 
             scene.add(this.physicsMesh);
-            //---------- physics test ------------//
+
         }
 
         getMesh(){
             return this.physicsMesh;
         }
 
-        moveFlies() {
+        moveFlies(splineMesh) {
             if (counter <= 1) {
-                flieMesh.position.copy( spline.getPointAt(counter) );
+                splineMesh.position.copy( spline.getPointAt(counter) );
 
                 tangent = spline.getTangentAt(counter).normalize();
 
@@ -981,7 +979,7 @@
 
                 var radians = Math.acos(up.dot(tangent));
 
-                flieMesh.quaternion.setFromAxisAngle(axis, radians);
+                splineMesh.quaternion.setFromAxisAngle(axis, radians);
 
                 counter += 0.005
             } else {
@@ -1537,101 +1535,101 @@
         new InformationPlate({width: 30, height: 550, depth:10},{x:-1300,y:0,z:10}),
 
         // Path
-        new Tree({x:300,y:0,z:-200}, 1),//new Tree({x:300,y:0,z:200}, 1),
-        new Tree({x:1000,y:0,z:-200}, 2),//new Tree({x:1000,y:0,z:200}, 2),
-        new Tree({x:2000,y:0,z:-200}, 3),//new Tree({x:2000,y:0,z:200}, 3),
-//        new Tree({x:3000,y:0,z:-200}, 2),
+        new Tree({x:300,y:0,z:-200}, 1),new Tree({x:300,y:0,z:200}, 1),
+        new Tree({x:1000,y:0,z:-200}, 2),new Tree({x:1000,y:0,z:200}, 2),
+        new Tree({x:2000,y:0,z:-200}, 3),new Tree({x:2000,y:0,z:200}, 3),
+        new Tree({x:3000,y:0,z:-200}, 2),
         new Tree({x:3000,y:0,z:200}, 4),
-//        new Tree({x:4000,y:0,z:-200}, 1),new Tree({x:3700,y:0,z:325}, 2),
-//        new Tree({x:2652,y:0,z:-400}, 3),new Tree({x:2500,y:0,z:700}, 3),
-//        new Tree({x:1500,y:0,z:-485}, 3),new Tree({x:1500,y:0,z:700}, 3),
-//        new Tree({x:3500,y:0,z:-200}, 3),new Tree({x:3250,y:0,z:300}, 3),
-//        new Tree({x:800,y:0,z:-400}, 3),new Tree({x:800,y:0,z:500}, 3),
-//        new Tree({x:200,y:0,z:-485}, 3),new Tree({x:200,y:0,z:725}, 3),
-//        new Tree({x:-200,y:0,z:-400}, 3),new Tree({x:-200,y:0,z:600}, 3),
+        new Tree({x:4000,y:0,z:-200}, 1),new Tree({x:3700,y:0,z:325}, 2),
+        new Tree({x:2652,y:0,z:-400}, 3),new Tree({x:2500,y:0,z:700}, 3),
+        new Tree({x:1500,y:0,z:-485}, 3),new Tree({x:1500,y:0,z:700}, 3),
+        new Tree({x:3500,y:0,z:-200}, 3),new Tree({x:3250,y:0,z:300}, 3),
+        new Tree({x:800,y:0,z:-400}, 3),new Tree({x:800,y:0,z:500}, 3),
+        new Tree({x:200,y:0,z:-485}, 3),new Tree({x:200,y:0,z:725}, 3),
+        new Tree({x:-200,y:0,z:-400}, 3),new Tree({x:-200,y:0,z:600}, 3),
         new Rocks({x:-200,y:0,z:-200}), new Rocks({x:200,y:0,z:200}),
-//        new Rocks({x:-800,y:0,z:-200}), new Rocks({x:800,y:0,z:200}),
-//        new Rocks({x:-1000,y:0,z:-300}), new Rocks({x:1000,y:0,z:200}),
-        new RockStack({x:55,y:0,z:-1778}, 2),//new RockStack({x:1000,y:0,z:1000}, 3),
+        new Rocks({x:-800,y:0,z:-200}), new Rocks({x:800,y:0,z:200}),
+        new Rocks({x:-1000,y:0,z:-300}), new Rocks({x:1000,y:0,z:200}),
+        new RockStack({x:55,y:0,z:-1778}, 2),new RockStack({x:1000,y:0,z:1000}, 3),
         new RockStack({x:2000,y:0,z:-2455}, 3),new RockStack({x:3000,y:0,z:2856}, 4),
-//        new Path({x:149,y:0,z:10}, 1, 'S'),new Path({x:661,y:0,z:10}, 1, 'S'),
-//        new Path({x:1173,y:0,z:10}, 1, 'S'),new Path({x:1685,y:0,z:10}, 1, 'S'),
-//        new Path({x:2197,y:0,z:10}, 1, 'S'),new Path({x:2709,y:0,z:10}, 1, 'S'),
-//        new Path({x:3221,y:0,z:10}, 1, 'S'),new Path({x:3733,y:0,z:10}, 1, 'S'),
-//        new Path({x:4245,y:0,z:10}, 1, 'S'),
-//        new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
-//        new Tree({x:1300,y:0,z:-200}, 1),new Tree({x:1300,y:0,z:200}, 4),
-//        new Tree({x:-150,y:0,z:-200}, 2),new Tree({x:-150,y:0,z:200}, 3),
-//        new Path({x:-363,y:0,z:10}, 1, 'S'),new Path({x:-1131,y:0,z:10}, 2, 'Y'),
+        new Path({x:149,y:0,z:10}, 1, 'S'),new Path({x:661,y:0,z:10}, 1, 'S'),
+        new Path({x:1173,y:0,z:10}, 1, 'S'),new Path({x:1685,y:0,z:10}, 1, 'S'),
+        new Path({x:2197,y:0,z:10}, 1, 'S'),new Path({x:2709,y:0,z:10}, 1, 'S'),
+        new Path({x:3221,y:0,z:10}, 1, 'S'),new Path({x:3733,y:0,z:10}, 1, 'S'),
+        new Path({x:4245,y:0,z:10}, 1, 'S'),
+        new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
+        new Tree({x:1300,y:0,z:-200}, 1),new Tree({x:1300,y:0,z:200}, 4),
+        new Tree({x:-150,y:0,z:-200}, 2),new Tree({x:-150,y:0,z:200}, 3),
+        new Path({x:-363,y:0,z:10}, 1, 'S'),new Path({x:-1131,y:0,z:10}, 2, 'Y'),
         new LightPole({x:3500,y:0,z:200},{y:45},{intensity:0.5,angle:0.5},{intensity:3,angle:1.1}),
         new LightPole({x:1550,y:0,z:-200},{y:30},{intensity:0.5,angle:0.5},{intensity:3,angle:1.1}),
         new LightPole({x:0,y:0,z:200},{y:45},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
-//
-//        // Desvio
-//        new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
-//        new Tree({x:-1500,y:0,z:10}, 3),new Tree({x:-1300,y:0,z:-490}, 3),
-//        new Tree({x:-1970,y:0,z:-255}, 3),new Tree({x:-1950,y:0,z:275}, 3),
-//        new Tree({x:-2250,y:0,z:-150}, 3),new Tree({x:-2000,y:0,z:100}, 1),
-//        new LightPole({x:-1325,y:0,z:10},{y:0},{intensity:1,angle:0.5},{intensity:3,angle:1.1}),
-//
-//        // cemiterio
-//        new Path({x:-2175,y:0,z:1135}, 6, 'L'),
-//        new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
-//        new Tree({x:-1000,y:0,z:500}, 1),new Tree({x:-1900,y:0,z:500}, 1),
-//        new Tree({x:-1500,y:0,z:3000},2),new Tree({x:-1900,y:0,z:500}, 1),
-        new RockStack({x:-2200,y:0,z:1900},1),//new RockStack({x:-2200,y:0,z:2200},1),
-//        new Tree({x:-1500,y:0,z:3000}, 1),new Tree({x:-1900,y:0,z:3000}, 3),
-//        new Tree({x:-1000,y:0,z:3000}, 3),new Tree({x:-800,y:0,z:3000}, 4),
-//        new Tree({x:-1000,y:0,z:1500}, 3),new Tree({x:-800,y:0,z:1700}, 4),
-//        new Tree({x:-200,y:0,z:1500}, 1),new Tree({x:-150,y:0,z:1700}, 4),
-//        new Tree({x:250,y:0,z:1250}, 3),new Tree({x:120,y:0,z:1174}, 1),
-//        new Tree({x:350,y:0,z:1000}, 4),new Tree({x:420,y:0,z:945}, 1),
-//        new Tree({x:650,y:0,z:1200}, 4),new Tree({x:720,y:0,z:1115}, 3),
-//        new Tree({x:-1500,y:0,z:2500}, 1),new Tree({x:-1900,y:0,z:2500}, 2),
-//        new Tree({x:-1000,y:0,z:1500}, 3),new Tree({x:-800,y:0,z:1500}, 4),
-//        new Tree({x:-1000,y:0,z:3000}, 3),new Tree({x:-800,y:0,z:2500}, 4),
-//        new Tree({x:-200,y:0,z:2250}, 1),new Tree({x:-150,y:0,z:500}, 4),
-//        new Tree({x:250,y:0,z:3000}, 2),new Tree({x:120,y:0,z:1785}, 1),
-//        new Tree({x:350,y:0,z:1621}, 4),new Tree({x:420,y:0,z:3574}, 1),
-//        new Tree({x:650,y:0,z:2510}, 4),new Tree({x:720,y:0,z:500}, 2),
-//        new Tree({x:1000,y:0,z:1500}, 3),new Tree({x:800,y:0,z:1500}, 1),
-//        new Tree({x:1000,y:0,z:3000}, 3),new Tree({x:800,y:0,z:2500}, 1),
-//        new Tree({x:2000,y:0,z:2250}, 1),new Tree({x:1800,y:0,z:500}, 3),
-//        new Tree({x:2500,y:0,z:3000}, 3),new Tree({x:2800,y:0,z:1785}, 1),
-//        new Tree({x:3000,y:0,z:1621},3),new Tree({x:3800,y:0,z:3574}, 1),
-//        new Tree({x:3500,y:0,z:2510}, 1),new Tree({x:4000,y:0,z:500}, 3),
-//        new Tree({x:3000,y:0,z:750}, 1),new Tree({x:3000,y:0,z:500}, 3),
-//        new Tree({x:3250,y:0,z:1500}, 3),new Tree({x:3500,y:0,z:1785}, 1),
-//        new Tree({x:3750,y:0,z:750},3),new Tree({x:3800,y:0,z:3574}, 1),
-//        new Tree({x:4000,y:0,z:500}, 1),new Tree({x:4000,y:0,z:500}, 3),
+
+        // Desvio
+        new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
+        new Tree({x:-1500,y:0,z:10}, 3),new Tree({x:-1300,y:0,z:-490}, 3),
+        new Tree({x:-1970,y:0,z:-255}, 3),new Tree({x:-1950,y:0,z:275}, 3),
+        new Tree({x:-2250,y:0,z:-150}, 3),new Tree({x:-2000,y:0,z:100}, 1),
+        new LightPole({x:-1325,y:0,z:10},{y:0},{intensity:1,angle:0.5},{intensity:3,angle:1.1}),
+
+        // cemiterio
+        new Path({x:-2175,y:0,z:1135}, 6, 'L'),
+        new Tree({x:-2500,y:0,z:1250}, 3),new Tree({x:-1500,y:0,z:1250}, 3),
+        new Tree({x:-1000,y:0,z:500}, 1),new Tree({x:-1900,y:0,z:500}, 1),
+        new Tree({x:-1500,y:0,z:3000},2),new Tree({x:-1900,y:0,z:500}, 1),
+        new RockStack({x:-2200,y:0,z:1900},1),new RockStack({x:-2200,y:0,z:2200},1),
+        new Tree({x:-1500,y:0,z:3000}, 1),new Tree({x:-1900,y:0,z:3000}, 3),
+        new Tree({x:-1000,y:0,z:3000}, 3),new Tree({x:-800,y:0,z:3000}, 4),
+        new Tree({x:-1000,y:0,z:1500}, 3),new Tree({x:-800,y:0,z:1700}, 4),
+        new Tree({x:-200,y:0,z:1500}, 1),new Tree({x:-150,y:0,z:1700}, 4),
+        new Tree({x:250,y:0,z:1250}, 3),new Tree({x:120,y:0,z:1174}, 1),
+        new Tree({x:350,y:0,z:1000}, 4),new Tree({x:420,y:0,z:945}, 1),
+        new Tree({x:650,y:0,z:1200}, 4),new Tree({x:720,y:0,z:1115}, 3),
+        new Tree({x:-1500,y:0,z:2500}, 1),new Tree({x:-1900,y:0,z:2500}, 2),
+        new Tree({x:-1000,y:0,z:1500}, 3),new Tree({x:-800,y:0,z:1500}, 4),
+        new Tree({x:-1000,y:0,z:3000}, 3),new Tree({x:-800,y:0,z:2500}, 4),
+        new Tree({x:-200,y:0,z:2250}, 1),new Tree({x:-150,y:0,z:500}, 4),
+        new Tree({x:250,y:0,z:3000}, 2),new Tree({x:120,y:0,z:1785}, 1),
+        new Tree({x:350,y:0,z:1621}, 4),new Tree({x:420,y:0,z:3574}, 1),
+        new Tree({x:650,y:0,z:2510}, 4),new Tree({x:720,y:0,z:500}, 2),
+        new Tree({x:1000,y:0,z:1500}, 3),new Tree({x:800,y:0,z:1500}, 1),
+        new Tree({x:1000,y:0,z:3000}, 3),new Tree({x:800,y:0,z:2500}, 1),
+        new Tree({x:2000,y:0,z:2250}, 1),new Tree({x:1800,y:0,z:500}, 3),
+        new Tree({x:2500,y:0,z:3000}, 3),new Tree({x:2800,y:0,z:1785}, 1),
+        new Tree({x:3000,y:0,z:1621},3),new Tree({x:3800,y:0,z:3574}, 1),
+        new Tree({x:3500,y:0,z:2510}, 1),new Tree({x:4000,y:0,z:500}, 3),
+        new Tree({x:3000,y:0,z:750}, 1),new Tree({x:3000,y:0,z:500}, 3),
+        new Tree({x:3250,y:0,z:1500}, 3),new Tree({x:3500,y:0,z:1785}, 1),
+        new Tree({x:3750,y:0,z:750},3),new Tree({x:3800,y:0,z:3574}, 1),
+        new Tree({x:4000,y:0,z:500}, 1),new Tree({x:4000,y:0,z:500}, 3),
         new Grave({x:-1550,y:0,z:1850}), new Grave({x:-1550,y:0,z:2150}),
-//        new LightPole({x:-1700,y:0,z:1450},{y:90},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
-//
-//        // casa
-//        new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
-//        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
-//        new Tree({x:4000,y:0,z:-1250}, 1),new Tree({x:4000,y:0,z:-500},1),
-//        new Tree({x:3250,y:0,z:-750}, 3),new Tree({x:3250,y:0,z:-250}, 2),
-//        new Tree({x:2500,y:0,z:-800}, 4),new Tree({x:2500,y:0,z:-300}, 1),
-//        new Tree({x:1750,y:0,z:-600}, 1),new Tree({x:1750,y:0,z:-400}, 3),
-//        new Tree({x:1000,y:0,z:-400}, 2),new Tree({x:1000,y:0,z:-700}, 1),
-//        new Tree({x:250,y:0,z:-600}, 1),new Tree({x:250,y:0,z:-500}, 3),
-//
-//        new Tree({x:0,y:0,z:-1250}, 1),new Tree({x:-1250,y:0,z:-2500},1),
-//        new Tree({x:750,y:0,z:-2500}, 3),new Tree({x:-500,y:0,z:-3000}, 4),
-//        new Tree({x:1500,y:0,z:-3000}, 4),new Tree({x:250,y:0,z:-3500}, 1),
-//        new Tree({x:2250,y:0,z:-2750}, 1),new Tree({x:1000,y:0,z:-2700}, 3),
-//        new Tree({x:3000,y:0,z:-2500}, 3),new Tree({x:1750,y:0,z:-2200}, 1),
-//        new Tree({x:3750,y:0,z:-1500}, 1),new Tree({x:2500,y:0,z:-2100}, 3),
-//
-//        new Tree({x:4000,y:0,z:-1500}, 1),new Tree({x:4000,y:0,z:-1200},1),
-//        new Tree({x:3250,y:0,z:-1000}, 3),new Tree({x:3250,y:0,z:-3000}, 3),
-//        new Tree({x:2500,y:0,z:-400}, 4),new Tree({x:2500,y:0,z:-3200}, 1),
-//        new Tree({x:1750,y:0,z:-300}, 1),new Tree({x:1750,y:0,z:-1750}, 3),
-//        new Tree({x:1000,y:0,z:-2000}, 3),new Tree({x:1000,y:0,z:-1000}, 1),
-//        new Tree({x:250,y:0,z:-1700}, 1),new Tree({x:250,y:0,z:-1000}, 3),
-        new House ({x:-2150,y:0,z:-2500})
-//        new LightPole({x:-2300,y:0,z:-2000},{y:0},{intensity:1,angle:0.5},{intensity:3,angle:1})
+        new LightPole({x:-1700,y:0,z:1450},{y:90},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
+
+        // casa
+        new Path({x:-2175.5,y:0,z:-1112.5}, 5, 'R'),new Tree({x:-2500,y:0,z:-1250},3),
+        new Tree({x:-1500,y:0,z:-1250}, 1),new Tree({x:-1000,y:0,z:-500}, 1),
+        new Tree({x:4000,y:0,z:-1250}, 1),new Tree({x:4000,y:0,z:-500},1),
+        new Tree({x:3250,y:0,z:-750}, 3),new Tree({x:3250,y:0,z:-250}, 2),
+        new Tree({x:2500,y:0,z:-800}, 4),new Tree({x:2500,y:0,z:-300}, 1),
+        new Tree({x:1750,y:0,z:-600}, 1),new Tree({x:1750,y:0,z:-400}, 3),
+        new Tree({x:1000,y:0,z:-400}, 2),new Tree({x:1000,y:0,z:-700}, 1),
+        new Tree({x:250,y:0,z:-600}, 1),new Tree({x:250,y:0,z:-500}, 3),
+
+        new Tree({x:0,y:0,z:-1250}, 1),new Tree({x:-1250,y:0,z:-2500},1),
+        new Tree({x:750,y:0,z:-2500}, 3),new Tree({x:-500,y:0,z:-3000}, 4),
+        new Tree({x:1500,y:0,z:-3000}, 4),new Tree({x:250,y:0,z:-3500}, 1),
+        new Tree({x:2250,y:0,z:-2750}, 1),new Tree({x:1000,y:0,z:-2700}, 3),
+        new Tree({x:3000,y:0,z:-2500}, 3),new Tree({x:1750,y:0,z:-2200}, 1),
+        new Tree({x:3750,y:0,z:-1500}, 1),new Tree({x:2500,y:0,z:-2100}, 3),
+
+        new Tree({x:4000,y:0,z:-1500}, 1),new Tree({x:4000,y:0,z:-1200},1),
+        new Tree({x:3250,y:0,z:-1000}, 3),new Tree({x:3250,y:0,z:-3000}, 3),
+        new Tree({x:2500,y:0,z:-400}, 4),new Tree({x:2500,y:0,z:-3200}, 1),
+        new Tree({x:1750,y:0,z:-300}, 1),new Tree({x:1750,y:0,z:-1750}, 3),
+        new Tree({x:1000,y:0,z:-2000}, 3),new Tree({x:1000,y:0,z:-1000}, 1),
+        new Tree({x:250,y:0,z:-1700}, 1),new Tree({x:250,y:0,z:-1000}, 3),
+        new House ({x:-2150,y:0,z:-2500}),
+        new LightPole({x:-2300,y:0,z:-2000},{y:0},{intensity:1,angle:0.5},{intensity:3,angle:1})
     ];
 
     /**

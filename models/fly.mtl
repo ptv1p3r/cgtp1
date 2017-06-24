@@ -1,148 +1,20 @@
-# 3ds Max Wavefront OBJ Exporter v0.94b - (c)2007 guruware
-# File Created: 07.07.2008 11:41:16
+# Blender MTL File: 'Fly.blend'
+# Material Count: 2
 
-newmtl FLYTCUE
-	Ns 40.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 1.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.0000 0.0000 0.0000
-	Ks 0.8500 0.8500 0.8500
-	Ke 0.0000 0.0000 0.0000
-	map_Ka images/FLYTCUE.jpg
-	map_Kd images/FLYTCUE.jpg
-	map_bump images/FLYTCUE.jpg
-	bump images/FLYTCUE.jpg
-	map_refl images/lakeREM.jpg
+newmtl Material
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
 
-newmtl FLYPATA
-	Ns 40.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 1.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.1451 0.1451 0.1451
-	Ks 0.3700 0.3700 0.3700
-	Ke 0.0000 0.0000 0.0000
-	map_Ka images/Tex__2_Noise.tga
-	map_Kd images/Tex__2_Noise.tga
-	map_bump -bm 0.4000 images/Tex__2_Noise.tga
-	map_refl images/lakeREM.jpg
-
-newmtl FLYPELO
-	Ns 80.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 1.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.1569 0.0980 0.0471
-	Ks 0.7600 0.7600 0.7600
-	Ke 0.0000 0.0000 0.0000
-
-newmtl FLYALAS
-	Ns 55.0000
-	Ni 1.5000
-	d 0.9000
-	Tr 0.9000
-	Tf 0.9000 0.9000 0.9000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.1922 0.1451 0.0667
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_d images/FLYOALA.jpg
-	map_bump images/FLYBALA.jpg
-	bump images/FLYBALA.jpg
-	map_refl images/lakeREM.jpg
-
-newmtl FLYNEAL
-	Ns 52.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 1.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.1725 0.1529 0.1137
-	Ks 0.3600 0.3600 0.3600
-	Ke 0.0000 0.0000 0.0000
-
-newmtl FLYTCORT
-	Ns 42.0000
-	Ni 1.5000
-	d 0.8000
-	Tr 0.8000
-	Tf 0.8000 0.8000 0.8000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.6510 0.6471 0.5333
-	Ks 0.1300 0.1300 0.1300
-	Ke 0.0000 0.0000 0.0000
-	map_bump -bm 0.1500 images/Tex__1_Noise.tga
-
-newmtl FLYTCAB
-	Ns 40.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 1.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.0000 0.0000 0.0000
-	Ks 0.8000 0.8000 0.8000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka images/FLYTCAB.jpg
-	map_Kd images/FLYTCAB.jpg
-	map_bump images/FLYTCAB.jpg
-	bump images/FLYTCAB.jpg
-	map_refl images/lakeREM.jpg
-
-newmtl FLYOJOS
-	Ns 32.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 1.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.2784 0.0510 0.0314
-	Ks 0.6587 0.5280 0.4933
-	Ke 0.1058 0.0194 0.0119
-	map_Ka images/Tex__3_Gradient.tga
-	map_Kd images/Tex__3_Gradient.tga
-	map_bump -bm 0.7300 images/Tex__3_Gradient.tga
-	map_refl images/lakeREM.jpg
-
-newmtl FLYTCUL
-	Ns 40.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 1.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.0000 0.0000 0.0000
-	Ks 0.7000 0.7000 0.7000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka images/FLYTCUL.jpg
-	map_Kd images/FLYTCUL.jpg
-	map_bump images/FLYTCUL.jpg
-	bump images/FLYTCUL.jpg
-	map_refl images/lakeREM.jpg
-
-newmtl wire_165165165
-	Ns 32
-	d 1
-	Tr 1
-	Tf 1 1 1
-	illum 2
-	Ka 0.0000 0.0000 0.0000
-	Kd 0.6471 0.6471 0.6471
-	Ks 0.3500 0.3500 0.3500
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
