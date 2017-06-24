@@ -1269,14 +1269,13 @@
 
             //console.log(blocker.style.display);
             document.getElementById('playersLife').innerHTML = "";
-
-            for (var i=0; i<= playerProfile.life; i++){
-
-                document.getElementById('playersLife').innerHTML += '|';
+            if (playerProfile.life !== 0){
+                for (var i=0; i<= playerProfile.life; i++){
+                    document.getElementById('playersLife').innerHTML += '|';
+                }
+            } else {
+                document.getElementById('playersLife').innerHTML = '|';
             }
-
-
-
         }
 
         /**
