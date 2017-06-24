@@ -94,12 +94,10 @@
     var playerProfile = null;
     var endTime = 60*5; // 5 minutos
 
-    //document.getElementById('playersLife').innerHTML = "||||||||||";
     document.getElementById('timer').innerHTML = '05' + ":" + '00';
 
     /**
      * Classe para jogador
-     *
      */
     class Player {
         constructor(id){
@@ -108,7 +106,7 @@
         };
 
         setUpdate(life) {
-            if (this.life != 0) {
+            if (this.life !== 0) {
                 this.life -= life;        // update a vida do jogador
                 console.log("hit");
             } else {
@@ -120,7 +118,6 @@
 
     /**
      * Classe generico
-     *
      */
     class Obj{
         constructor(){}
@@ -1078,9 +1075,7 @@
             window.addEventListener( 'resize', this.onWindowResize, false );    //listener para o resize
 
             this.newPlayer();
-
             this.startTimer(endTime);
-
             this.render();
 
         }
@@ -1149,7 +1144,6 @@
                 case 27: // esc
                     sound.stop();
                     break;
-
             }
         };
 
@@ -1166,8 +1160,9 @@
                         controlsEnabled = true;
                         controls.enabled = true;
                         blocker.style.display = 'none';
-                        headerBox.style.display = 'block';
-                        footerBox.style.display = 'block';
+                        //headerBox.style.display = 'inline';
+                        //footerBox.style.display = 'block';
+
                     } else {
                         controls.enabled = false;
                         blocker.style.display = '-webkit-box';
@@ -1192,6 +1187,9 @@
 
                 instructions.addEventListener( 'click', function ( event ) {
                     instructions.style.display = 'none';
+
+
+
                     // Ask the browser to lock the pointer
                     element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
                     element.requestPointerLock();
@@ -1264,26 +1262,20 @@
                 controls.getObject().translateX( velocity.x * delta );
                 controls.getObject().translateZ( velocity.z * delta );
 
-                //player.translateX( velocity.x * delta );
-                //player.translateZ( velocity.z * delta );
-
-//                if (velocity.z < velocidadeMin && velocity.z > -velocidadeMin && velocity.x < velocidadeMin && velocity.x > -velocidadeMin) {
-//
-//                    if (updateCam === 1) {
-//                        controls.updatePosition();  //atualiza a camera com a variacao de 50 graus para todos os lados
-//                        updateCam=0;
-//                    }
-//                }
-
                 prevTime = time;
-
-                document.getElementById('playersLife').innerHTML = playerProfile.life;
 
                 player.position.set(controls.getObject().position.x , controls.getObject().position.y+100, controls.getObject().position.z);
             }
 
-            //controls.update( clock.getDelta() );
-            //renderer.render(scene, camera);
+            //console.log(blocker.style.display);
+            document.getElementById('playersLife').innerHTML = "";
+
+            for (var i=0; i<= playerProfile.life; i++){
+
+                document.getElementById('playersLife').innerHTML += '|';
+            }
+
+
 
         }
 
