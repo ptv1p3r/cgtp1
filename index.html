@@ -28,7 +28,7 @@
         <td>Tempo restante:</td>
         <td><span id="timer"></span></td>
         <td>Objectos recuperados:</td>
-        <td>0/5</td>
+        <td><span id="objects"></span></td>
         <td></td>
     </tr>
     </tbody>
@@ -96,8 +96,11 @@
     var playerProfile = null;
     var endTime = 60*5; // 5 minutos
     var keys = [];
+    var found = 0;
+    var toFind = 5;
 
     document.getElementById('timer').innerHTML = '05' + ":" + '00';
+    document.getElementById('objects').innerHTML = '0' + "/" + '5';
 
     /**
      * Classe para jogador
@@ -1630,6 +1633,22 @@
                         controls.getObject().position.set(controls.getObject().position.x - (100 * vector.x), controls.getObject().position.y,
                             controls.getObject().position.z - (100 * vector.z));
                     }
+
+                    var i;
+                    for ( i in keys ) {
+
+
+                        if ( (((controls.getObject().position.x + 300) > keys[i].position.x) && ((controls.getObject().position.x - 300) < keys[i].position.x)) &&
+                            (((controls.getObject().position.z + 300) > keys[i].position.z) && ((controls.getObject().position.z - 300) < keys[i].position.z))) {
+
+                            found += 1
+                            document.getElementById('objects').innerHTML = found + "/" + toFind;
+
+                            console.log("works");
+                            keys.remove(keys[i]);
+                        }
+                    }
+
                 }
             );
 
