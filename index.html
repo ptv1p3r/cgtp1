@@ -170,19 +170,19 @@
             this.geometry = new THREE.BoxGeometry(30, 10, 20);
             //this.material = new THREE.MeshPhongMaterial();
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
-            this.physicsMesh = new physijs.Box(this.geometry, this.material,  { mass: 2000, type: 'RIGID' });
+            this.keyMesh = new THREE.Mesh(this.geometry, this.material);
 
-            this.physicsMesh.position.x = position.x + 5;
-            this.physicsMesh.position.y = position.y + 5;
-            this.physicsMesh.position.z = position.z;
-            this.physicsMesh.position.z = position.z;
-            scene.add(this.physicsMesh);
-            keys.push(this.physicsMesh);
+            this.keyMesh.position.x = position.x + 5;
+            this.keyMesh.position.y = position.y + 5;
+            this.keyMesh.position.z = position.z;
+            this.keyMesh.position.z = position.z;
+            scene.add(this.keyMesh);
+            keys.push(this.keyMesh);
 
         }
 
         getMesh(){
-            return this.physicsMesh;
+            return this.keyMesh;
         }
     }
 
@@ -1098,7 +1098,7 @@
             line.visible = false;
 
             scene.add(line);
-
+            monsterMesh.position.copy( monsterSpline.getPointAt(monsterCounter) );
             setInterval(this.moveMonster, 10);
 
         }
@@ -1636,14 +1636,13 @@
 
                     for ( var i in keys ) {
 
-
                         if ( (((controls.getObject().position.x + 300) > keys[i].position.x) && ((controls.getObject().position.x - 300) < keys[i].position.x)) &&
-                            (((controls.getObject().position.z + 300) > keys[i].position.z) && ((controls.getObject().position.z - 300) < keys[i].position.z))) {
+                            (((controls.getObject().position.z + 300) > keys[i].position.z) && ((controls.getObject().position.z - 300) < keys[i].position.z)) ) {
 
                             found += 1;
                             document.getElementById('objects').innerHTML = found + "/" + toFind;
 
-                            //console.log("works");
+                            console.log("works");
                             delete keys[i];
                         }
                     }
@@ -1706,14 +1705,14 @@
 //        new Tree({x:-600,y:0,z:-200}, 1),new Tree({x:-600,y:0,z:200}, 2),
 //        new Tree({x:1300,y:0,z:-200}, 1),new Tree({x:1300,y:0,z:200}, 4),
 //        new Tree({x:-150,y:0,z:-200}, 2),new Tree({x:-150,y:0,z:200}, 3),
-//        new Path({x:-363,y:0,z:10}, 1, 'S'),new Path({x:-1131,y:0,z:10}, 2, 'Y'),
         new LightPole({x:3500,y:0,z:200},{y:45},{intensity:0.5,angle:0.5},{intensity:3,angle:1.1}),
 //        new LightPole({x:1550,y:0,z:-200},{y:30},{intensity:0.5,angle:0.5},{intensity:3,angle:1.1}),
 //        new LightPole({x:0,y:0,z:200},{y:45},{intensity:0.5,angle:0.5},{intensity:3,angle:1}),
 
         // Desvio
+        new Path({x:-363,y:0,z:10}, 1, 'S'),new Path({x:-1131,y:0,z:10}, 2, 'Y'),
         new Path({x:-1632.5,y:0,z:-569.5}, 3, 'S'), new Path({x:-1632.5,y:0,z:591.5}, 4, 'S'),
-        new Tree({x:-1500,y:0,z:10}, 3),new Tree({x:-1300,y:0,z:-490}, 3),
+        new Tree({x:-1500,y:0,z:10}, 3),new Tree({x:-1200,y:0,z:-550}, 3),
         new Tree({x:-1970,y:0,z:-255}, 3),new Tree({x:-1950,y:0,z:275}, 3),
         new Tree({x:-2250,y:0,z:-150}, 3),new Tree({x:-2000,y:0,z:100}, 1),
         new LightPole({x:-1325,y:0,z:10},{y:0},{intensity:1,angle:0.5},{intensity:3,angle:1.1}),
