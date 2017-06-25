@@ -109,6 +109,7 @@
         constructor(id){
             this.id             = id;           // identificador interno do jogador
             this.life           = 10;           // vida inicial do jogador
+            this.isAlive        = true;
         };
 
         setUpdate(life) {
@@ -1147,7 +1148,6 @@
          */
         createScene() {
             //SCENE
-            //scene = new THREE.Scene();
             scene = new physijs.Scene('js/physijs-worker.js');
             scene.gravity = new THREE.Vector3( 0, -5000, 0 );
 
@@ -1416,6 +1416,15 @@
                 }
             } else {
                 document.getElementById('playersLife').innerHTML = '|';
+            }
+
+            if (playerProfile.life === 1) {
+                playerProfile.isAlive = false;
+            }
+
+            if (playerProfile.isAlive === false) {
+                controls.enabled = false;
+
             }
         }
 
