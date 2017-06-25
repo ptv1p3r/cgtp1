@@ -112,6 +112,8 @@
     var keys = [];
     var found = 0;
     var toFind = 5;
+    var minutes = 0;
+    var seconds = 0;
 
     document.getElementById('timer').innerHTML = '05' + ":" + '00';
     document.getElementById('objects').innerHTML = '0' + "/" + '5';
@@ -124,6 +126,8 @@
             this.id             = id;           // identificador interno do jogador
             this.life           = 10;           // vida inicial do jogador
             this.isAlive        = true;
+            this.objectives     = 0;
+            this.hit            = 0;
         };
 
         setUpdate(life) {
@@ -1257,7 +1261,7 @@
          * Metodo que inicia um timer countdown
          */
         startTimer(duration) {
-            var timer = duration, minutes, seconds;
+            var timer = duration;
             setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
@@ -1459,6 +1463,10 @@
                 controls.enabled = false;
                 gameState.style.display = 'block';
                 conditionLoose.style.display = 'block';
+            }
+
+            if (minutes === 0 && seconds === 0) {
+                controls.enabled = false;
             }
         }
 
@@ -1677,16 +1685,21 @@
                             controls.getObject().position.z - (100 * vector.z));
                     }
 
+                    playerProfile.hit = 1;
+
                     for ( var i in keys ) {
 
                         if ( (((controls.getObject().position.x + 300) > keys[i].position.x) && ((controls.getObject().position.x - 300) < keys[i].position.x)) &&
                             (((controls.getObject().position.z + 300) > keys[i].position.z) && ((controls.getObject().position.z - 300) < keys[i].position.z)) ) {
 
-                            found += 1;
-                            document.getElementById('objects').innerHTML = found + "/" + toFind;
+                            //found += 1;
+                            playerProfile.objectives += 1;
+                            document.getElementById('objects').innerHTML = playerProfile.objectives  + "/" + toFind;
 
                             console.log("works");
                             delete keys[i];
+
+                            playerProfile.hit = 0;
                         }
                     }
 
@@ -1703,7 +1716,10 @@
             object.addEventListener(
                 'physics.contactEnd',
                 function (event) {
-                    playerProfile.setUpdate(1);
+                    if (playerProfile.hit) {
+                        playerProfile.setUpdate(1);
+                        playerProfile.hit = 0;
+                    }
                     console.log('ended at', event.relative_linear_velocity.length());
                 }
             );
