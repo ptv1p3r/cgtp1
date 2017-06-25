@@ -1377,31 +1377,33 @@
                 var delta = ( time - prevTime ) / 1000;
                 var velocidadeMin = 10;
 
-                velocity.x -= velocity.x * 10.0 * delta;
-                velocity.z -= velocity.z * 10.0 * delta;
+                if ( playerProfile.isAlive ) {
+                    velocity.x -= velocity.x * 10.0 * delta;
+                    velocity.z -= velocity.z * 10.0 * delta;
 
-                if ( moveForward ) {
-                    velocity.z -= MOVEMENT_SPEED * delta;
-                    updateCam=1;    //confirma a existencia de um movimento
+                    if (moveForward) {
+                        velocity.z -= MOVEMENT_SPEED * delta;
+                        updateCam = 1;    //confirma a existencia de um movimento
+                    }
+
+                    if (moveBackward) {
+                        velocity.z += MOVEMENT_SPEED * delta;
+                        updateCam = 1;    //confirma a existencia de um movimento
+                    }
+
+                    if (moveLeft) {
+                        velocity.x -= MOVEMENT_SPEED * delta;
+                        updateCam = 1;    //confirma a existencia de um movimento
+                    }
+
+                    if (moveRight) {
+                        velocity.x += MOVEMENT_SPEED * delta;
+                        updateCam = 1;    //confirma a existencia de um movimento
+                    }
+
+                    controls.getObject().translateX(velocity.x * delta);
+                    controls.getObject().translateZ(velocity.z * delta);
                 }
-
-                if ( moveBackward ) {
-                    velocity.z += MOVEMENT_SPEED * delta;
-                    updateCam=1;    //confirma a existencia de um movimento
-                }
-
-                if ( moveLeft ) {
-                    velocity.x -= MOVEMENT_SPEED * delta;
-                    updateCam=1;    //confirma a existencia de um movimento
-                }
-
-                if ( moveRight ) {
-                    velocity.x += MOVEMENT_SPEED * delta;
-                    updateCam=1;    //confirma a existencia de um movimento
-                }
-
-                controls.getObject().translateX( velocity.x * delta );
-                controls.getObject().translateZ( velocity.z * delta );
 
                 prevTime = time;
 
