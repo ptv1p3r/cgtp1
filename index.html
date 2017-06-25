@@ -18,6 +18,17 @@
     </div>
 </div>
 
+<div id="gameState">
+    <div id="Win">
+        <span style="font-size:40px">The Red Rose ! - VITORIA!</span>
+        <br />
+    </div>
+    <div id="Loose">
+        <span style="font-size:40px">The Red Rose ! - DERROTA!</span>
+        <br />
+    </div>
+</div>
+
 <table id ="headerBox" >
     <tbody>
     <tr>
@@ -115,25 +126,25 @@
         setUpdate(life) {
             if (this.life !== 0) {
                 this.life -= life;        // update a vida do jogador
-                console.log("hit");
+                //console.log("hit");
 
-                setTimeout(function() { // start a delay
+                setTimeout(function() { // inicia o delay
                     document.getElementById('hitMarker').innerHTML = '-' + life;
-                    var fade = document.getElementById("hitMarker"); // get required element
-                    fade.style.opacity = 1; // set opacity for the element to 1
-                    var timerId = setInterval(function() { // start interval loop
-                        var opacity = fade.style.opacity; // get current opacity
-                        if (opacity == 0) { // check if its 0 yet
-                            clearInterval(timerId); // if so, exit from interval loop
+                    var fade = document.getElementById("hitMarker");
+                    fade.style.opacity = 1; // opacidade a 1
+                    var timerId = setInterval(function() { // inicia loop de intervalo
+                        var opacity = fade.style.opacity; // get da opacidade
+                        if (opacity === 0) {
+                            clearInterval(timerId);
                         } else {
-                            fade.style.opacity = opacity - 0.05; // else remove 0.05 from opacity
+                            fade.style.opacity = opacity - 0.05; // remove 0.05 da opacidade
                         }
-                    }, 100); // run every 0.1 second
-                }, 10); // wait to run after 1 seconds
+                    }, 100); // corre a cada 0.1 segundos
+                }, 5); // espera e corre apos 0.05 segundos
 
             } else {
 
-                console.log("You are dead");
+                //console.log("You are dead");
             }
 
         }
