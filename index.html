@@ -31,6 +31,10 @@
     </div>
 </div>
 
+<div id="keysPickup">
+    <span>Chave recuperada...Hmm é melhor colocar no inventário!</span>
+</div>
+
 <table id ="headerBox" >
     <tbody>
     <tr>
@@ -74,6 +78,7 @@
     var conditionWin = document.getElementById('conditionWin');
     var conditionLoose = document.getElementById('conditionLoose');
     var gameState = document.getElementById('gameState');
+    var keysPickup = document.getElementById('keysPickup');
 
     var WIDTH = window.innerWidth,
         HEIGHT = window.innerHeight,
@@ -1685,11 +1690,26 @@
                         if ( (((controls.getObject().position.x + 300) > keys[i].position.x) && ((controls.getObject().position.x - 300) < keys[i].position.x)) &&
                             (((controls.getObject().position.z + 300) > keys[i].position.z) && ((controls.getObject().position.z - 300) < keys[i].position.z)) ) {
 
+                            keysPickup.style.display = 'block';
+
+                            setTimeout(function() { // inicia o delay
+                                //document.getElementById('hitMarker').innerHTML = '-' + life;
+                                var fade = document.getElementById("keysPickup");
+                                fade.style.opacity = 1; // opacidade a 1
+                                var timerId = setInterval(function() { // inicia loop de intervalo
+                                    var opacity = fade.style.opacity; // get da opacidade
+                                    if (opacity === 0) {
+                                        clearInterval(timerId);
+                                    } else {
+                                        fade.style.opacity = opacity - 0.05; // remove 0.05 da opacidade
+                                    }
+                                }, 100); // corre a cada 0.1 segundos
+                            }, 25000); // espera e corre apos x segundos
 
                             playerProfile.objectives += 1;
                             document.getElementById('objects').innerHTML = playerProfile.objectives  + "/" + toFind;
 
-                            console.log("works");
+                            //console.log("works");
                             delete keys[i];
 
                             playerProfile.hit = 0;

@@ -31,6 +31,18 @@ a {color: #00B7FF;}
     text-align: center;
 }
 
+#keysPickup {
+    position: absolute;
+    margin:0 auto;
+    width: 800px;
+    display: none;
+    bottom: 22px;
+    font: 24px "Lucida Grande", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    background-color: rgba(0,0,0,0.5);
+}
+
+
 #gameState {
     position: absolute;
     width: 100%;
