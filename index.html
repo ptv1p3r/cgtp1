@@ -86,8 +86,8 @@
         ASPECT = WIDTH / HEIGHT,
         NEAR = 1,
         FAR = 10000,
-        //MOVEMENT_SPEED = 2250,
-        MOVEMENT_SPEED = 10000,
+        MOVEMENT_SPEED = 2250,
+        //MOVEMENT_SPEED = 10000,
         SHADOWMAPWIDTH = 2048,
         SHADOWMAPHEIGHT = 2048,
         physics_framerate = 1000 / 60,
@@ -1183,7 +1183,7 @@
             scene = new physijs.Scene('js/physijs-worker.js');
             scene.gravity = new THREE.Vector3( 0, -5000, 0 );
 
-            //scene.fog = new THREE.Fog( 0x000000, .5, 2000 );
+            scene.fog = new THREE.Fog( 0x000000, .5, 2000 );
 
             //CAMERA
             camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -1202,7 +1202,7 @@
                 sound.setBuffer( buffer );
                 sound.setLoop(true);
                 sound.setVolume(0.5);
-                //sound.play();
+                sound.play();
             });
 
             //RENDERER
@@ -1520,9 +1520,9 @@
             skybox.position.z = -500;
 
             //---------- physics test ------------//
-            var light = new THREE.AmbientLight( 0x404040 ); // soft white light
-            light.intensity = 5;
-            scene.add( light );
+//            var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+//            light.intensity = 5;
+//            scene.add( light );
 
             this.geometry = new THREE.BoxGeometry(8000, 1000, 1000);
             this.material = new THREE.MeshPhongMaterial({transparent: true, opacity: 0});
@@ -1570,21 +1570,21 @@
 
             //---------- physics test ------------//
 
-//            var moonLight = new THREE.DirectionalLight(0xc8bcbc);
-//            moonLight.position.set( -4000, 4000, -4000 );
-//            moonLight.castShadow = true;
-//            moonLight.intensity = 0.1;
-//            //moonLight.shadowDarkness = 0.5;
-//            moonLight.shadowCameraVisible = true;
-//            moonLight.shadow.mapSize.width = SHADOWMAPWIDTH;
-//            moonLight.shadow.mapSize.height = SHADOWMAPHEIGHT;
-//            moonLight.shadow.camera.near = 100;
-//            moonLight.shadow.camera.far = 2048;
-//            moonLight.shadow.camera.fov = 30;
-//            skybox.add(moonLight);
+            var moonLight = new THREE.DirectionalLight(0xc8bcbc);
+            moonLight.position.set( -4000, 4000, -4000 );
+            moonLight.castShadow = true;
+            moonLight.intensity = 0.1;
+            //moonLight.shadowDarkness = 0.5;
+            moonLight.shadowCameraVisible = true;
+            moonLight.shadow.mapSize.width = SHADOWMAPWIDTH;
+            moonLight.shadow.mapSize.height = SHADOWMAPHEIGHT;
+            moonLight.shadow.camera.near = 100;
+            moonLight.shadow.camera.far = 2048;
+            moonLight.shadow.camera.fov = 30;
+            skybox.add(moonLight);
 
-//            var helper = new THREE.CameraHelper( moonLight.shadow.camera );
-//             scene.add( helper );
+            var helper = new THREE.CameraHelper( moonLight.shadow.camera );
+             scene.add( helper );
 
             scene.add(skybox);
         }
