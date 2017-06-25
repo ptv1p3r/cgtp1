@@ -108,12 +108,12 @@
     var flieMesh = null;
     var monsterMesh = null;
     var playerProfile = null;
-    var endTime = 60*5; // 5 minutos
+    var endTime = 10; // 5 minutos
     var keys = [];
     var found = 0;
     var toFind = 5;
     var minutes = 0;
-    var seconds = 0;
+    var seconds = 10;
 
     document.getElementById('timer').innerHTML = '05' + ":" + '00';
     document.getElementById('objects').innerHTML = '0' + "/" + '5';
@@ -1262,7 +1262,7 @@
          */
         startTimer(duration) {
             var timer = duration;
-            setInterval(function () {
+            var interval = setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
 
@@ -1272,7 +1272,12 @@
                 document.getElementById('timer').innerHTML = minutes + ":" + seconds;
 
                 if (--timer < 0) {
-                    timer = duration;
+                    clearInterval(interval);
+                    controls.enabled = false;
+                    playerProfile.isAlive = false;
+                    gameState.style.display = 'block';
+                    conditionLoose.style.display = 'block';
+//                    timer = duration;
                 }
             }, 1000);
         }
@@ -1463,10 +1468,6 @@
                 controls.enabled = false;
                 gameState.style.display = 'block';
                 conditionLoose.style.display = 'block';
-            }
-
-            if (minutes === 0 && seconds === 0) {
-                controls.enabled = false;
             }
         }
 
