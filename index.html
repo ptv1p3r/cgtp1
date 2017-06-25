@@ -1634,18 +1634,18 @@
                             controls.getObject().position.z - (100 * vector.z));
                     }
 
-                    var i;
-                    for ( i in keys ) {
+                    for ( var i in keys ) {
 
 
                         if ( (((controls.getObject().position.x + 300) > keys[i].position.x) && ((controls.getObject().position.x - 300) < keys[i].position.x)) &&
                             (((controls.getObject().position.z + 300) > keys[i].position.z) && ((controls.getObject().position.z - 300) < keys[i].position.z))) {
 
-                            found += 1
+                            found += 1;
                             document.getElementById('objects').innerHTML = found + "/" + toFind;
 
                             console.log("works");
-                            keys.remove(keys[i]);
+                            //keys.remove(keys[i]);
+                            delete keys[i];
                         }
                     }
 
