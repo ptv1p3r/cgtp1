@@ -129,7 +129,7 @@
                             fade.style.opacity = opacity - 0.05; // else remove 0.05 from opacity
                         }
                     }, 100); // run every 0.1 second
-                }, 1000); // wait to run after 5 seconds
+                }, 10); // wait to run after 1 seconds
 
             } else {
 
@@ -1427,9 +1427,6 @@
 
                 player.position.set(controls.getObject().position.x , controls.getObject().position.y+100, controls.getObject().position.z);
             }
-
-            //console.log(blocker.style.display);
-            //document.getElementById('hitMarker').innerHTML= " ";
 
             document.getElementById('playersLife').innerHTML = "";
             if (playerProfile.life !== 0){
