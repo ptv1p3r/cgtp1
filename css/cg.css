@@ -14,6 +14,10 @@ canvas {
 
 a {color: #00B7FF;}
 
+#hitMarker {
+    color: red;
+}
+
 #footerBox {
     position: absolute;
     bottom:0px;
