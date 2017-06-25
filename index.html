@@ -19,11 +19,11 @@
 </div>
 
 <div id="gameState">
-    <div id="Win">
+    <div id="conditionWin">
         <span style="font-size:40px">The Red Rose ! - VITORIA!</span>
         <br />
     </div>
-    <div id="Loose">
+    <div id="conditionLoose">
         <span style="font-size:40px">The Red Rose ! - DERROTA!</span>
         <br />
     </div>
@@ -69,6 +69,9 @@
     var headerBox = document.getElementById('headerBox');
     var footerBox = document.getElementById('footerBox');
     var hitMarker = document.getElementById('hitMarker');
+    var conditionWin = document.getElementById('conditionWin');
+    var conditionLoose = document.getElementById('conditionLoose');
+    var gameState = document.getElementById('gameState');
 
     var WIDTH = window.innerWidth,
         HEIGHT = window.innerHeight,
@@ -1454,6 +1457,8 @@
 
             if (playerProfile.isAlive === false) {
                 controls.enabled = false;
+                gameState.style.display = 'block';
+                conditionLoose.style.display = 'block';
             }
         }
 
