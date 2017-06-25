@@ -112,12 +112,12 @@
     var flieMesh = null;
     var monsterMesh = null;
     var playerProfile = null;
-    var endTime = 10; // 5 minutos
+    var endTime = 60*5; // 5 minutos
     var keys = [];
-    var found = 0;
     var toFind = 5;
     var minutes = 0;
-    var seconds = 10;
+    var seconds = 0;
+    var isRunning = true;
 
     document.getElementById('timer').innerHTML = '05' + ":" + '00';
     document.getElementById('objects').innerHTML = '0' + "/" + '5';
@@ -1422,7 +1422,7 @@
                 var delta = ( time - prevTime ) / 1000;
                 var velocidadeMin = 10;
 
-                if ( playerProfile.isAlive ) {
+                if ( isRunning ) {
                     velocity.x -= velocity.x * 10.0 * delta;
                     velocity.z -= velocity.z * 10.0 * delta;
 
@@ -1465,6 +1465,7 @@
             }
 
             if (playerProfile.life === 0) {
+                isRunning=false;
                 playerProfile.isAlive = false;
             }
 
@@ -1697,7 +1698,7 @@
                         if ( (((controls.getObject().position.x + 300) > keys[i].position.x) && ((controls.getObject().position.x - 300) < keys[i].position.x)) &&
                             (((controls.getObject().position.z + 300) > keys[i].position.z) && ((controls.getObject().position.z - 300) < keys[i].position.z)) ) {
 
-                            //found += 1;
+
                             playerProfile.objectives += 1;
                             document.getElementById('objects').innerHTML = playerProfile.objectives  + "/" + toFind;
 
@@ -1705,6 +1706,13 @@
                             delete keys[i];
 
                             playerProfile.hit = 0;
+
+                            if(playerProfile.objectives === 5) {
+                                isRunning = false;
+                                controls.enabled = false;
+                                gameState.style.display = 'block';
+                                conditionWin.style.display = 'block';
+                            }
                         }
                     }
 
