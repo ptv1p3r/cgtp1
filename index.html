@@ -38,7 +38,7 @@
     <tbody>
     <tr>
         <td width="20%"></td>
-        <td style="white-space: nowrap;"><div id="playersLife"></div></td>
+        <td style="white-space: nowrap;"><div id="playersLife"></div><div id="hitMarker"></div></td>
         <td width="20%"></td>
     </tr>
     </tbody>
@@ -57,7 +57,7 @@
     var instructions = document.getElementById( 'instructions' );   //janela de instrucoes
     var headerBox = document.getElementById('headerBox');
     var footerBox = document.getElementById('footerBox');
-    var timerBox = document.getElementById('timer');
+    var hitMarker = document.getElementById('hitMarker');
 
     var WIDTH = window.innerWidth,
         HEIGHT = window.innerHeight,
@@ -116,11 +116,29 @@
             if (this.life !== 0) {
                 this.life -= life;        // update a vida do jogador
                 console.log("hit");
+
+                setTimeout(function() { // start a delay
+                    document.getElementById('hitMarker').innerHTML = '-' + life;
+                    var fade = document.getElementById("hitMarker"); // get required element
+                    fade.style.opacity = 1; // set opacity for the element to 1
+                    var timerId = setInterval(function() { // start interval loop
+                        var opacity = fade.style.opacity; // get current opacity
+                        if (opacity == 0) { // check if its 0 yet
+                            clearInterval(timerId); // if so, exit from interval loop
+                        } else {
+                            fade.style.opacity = opacity - 0.05; // else remove 0.05 from opacity
+                        }
+                    }, 100); // run every 0.1 second
+                }, 1000); // wait to run after 5 seconds
+
             } else {
+
                 console.log("You are dead");
             }
 
         }
+
+
     }
 
     /**
@@ -1411,22 +1429,23 @@
             }
 
             //console.log(blocker.style.display);
+            //document.getElementById('hitMarker').innerHTML= " ";
+
             document.getElementById('playersLife').innerHTML = "";
             if (playerProfile.life !== 0){
                 for (var i=0; i<= playerProfile.life; i++){
                     document.getElementById('playersLife').innerHTML += '|';
                 }
             } else {
-                document.getElementById('playersLife').innerHTML = '|';
+                document.getElementById('playersLife').innerHTML = '-';
             }
 
-            if (playerProfile.life === 1) {
+            if (playerProfile.life === 0) {
                 playerProfile.isAlive = false;
             }
 
             if (playerProfile.isAlive === false) {
                 controls.enabled = false;
-
             }
         }
 
@@ -1677,6 +1696,7 @@
             );
 
         }
+
     }
 
     let app = new Aplication(); // instancia nova aplicação
